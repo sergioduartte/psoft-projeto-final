@@ -1,5 +1,6 @@
 package com.example.projeto_final_psoft.entidades;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
@@ -13,19 +14,31 @@ import java.util.TreeSet;
  *
  */
 
+@Entity
 public class Cidadao {
 	
 	private String nome;
 	private String endereco;
+
+	@Column(unique = true)
 	private String cpf;
 	private String numeroSUS;
 	private String email;
-	private LocalDate dataNascimento;  //pensar em como fazer manipular essa data, temp   
+	private LocalDate dataNascimento;
 	private String telefone;
 	private String profissao;
-	private Set<String> comorbidades;    //pode ser array tambem, podemos discutir isso
-	
-	/**
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name="cidadao_comorbidade",
+            joinColumns = @JoinColumn(name = "cpf"))
+    @Column(name="comorbidades")
+    private Set<String> comorbidades;
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    /**
 	 * Construtor de Cidadao
 	 * 
 	 * @param nome
@@ -53,8 +66,13 @@ public class Cidadao {
         this.setDataNascimento(LocalDate.parse(dataNascimento, formatter));
         setComorbidades(comorbidades);
 	}
-	
-	/**
+
+    public Cidadao() {
+
+    }
+
+
+    /**
 	 * Metodo que adiciona comorbidade.
 	 *     
 	 * @param comorbidade
@@ -144,5 +162,14 @@ public class Cidadao {
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-    
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
+    }
 }
