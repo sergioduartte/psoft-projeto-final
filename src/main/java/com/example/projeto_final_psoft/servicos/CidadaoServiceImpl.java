@@ -1,4 +1,4 @@
-package com.example.projeto_final_psoft.service;
+package com.example.projeto_final_psoft.servicos;
 
 import com.example.projeto_final_psoft.entidades.*;
 import com.example.projeto_final_psoft.repositorios.CidadaoRepository;
@@ -16,7 +16,7 @@ public class CidadaoServiceImpl implements CidadaoService {
     @Override
     public Cidadao adicionaCidadao(Cidadao cidadao) {
         Cidadao novoCidadao = new Cidadao(cidadao.getNome(), cidadao.getEndereco(), cidadao.getCpf(), cidadao.getNumeroSUS(),
-                cidadao.getEmail(), cidadao.getDataNascimento().toString(), cidadao.getTelefone(), cidadao.getProfissao(), cidadao.getComorbidades().toString());
+                cidadao.getEmail(), cidadao.getDataNascimento().toString(), cidadao.getTelefone(), cidadao.getProfissao()); //TODO, cidadao.getComorbidades().toString());
         cidadaoRepository.save(cidadao);
 
         return novoCidadao;

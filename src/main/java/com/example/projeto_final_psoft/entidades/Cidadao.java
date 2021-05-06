@@ -28,11 +28,11 @@ public class Cidadao {
 	private String telefone;
 	private String profissao;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name="cidadao_comorbidade",
-            joinColumns = @JoinColumn(name = "cpf"))
-    @Column(name="comorbidades")
-    private Set<String> comorbidades;
+//TODO    @ElementCollection(fetch = FetchType.EAGER)
+//    @CollectionTable(name="cidadao_comorbidade",
+//            joinColumns = @JoinColumn(name = "cpf"))
+//    @Column(name="comorbidades")
+//    private Set<String> comorbidades;
 
     @Id
     @GeneratedValue
@@ -49,12 +49,12 @@ public class Cidadao {
 	 * @param dataNascimento
 	 * @param telefone
 	 * @param profissao
-	 * @param comorbidades
+	 //TODO* @param comorbidades
 	 * 
 	 */
 	
 	public Cidadao(String nome, String endereco, String cpf, String numeroSUS, String email, String dataNascimento,
-			String telefone, String profissao, String comorbidades) {
+			String telefone, String profissao) { //, String comorbidades) { depois adiciona de novo ~sergio
 		this.nome = nome;
         this.cpf = cpf;
         this.endereco = endereco;
@@ -64,7 +64,7 @@ public class Cidadao {
         this.profissao = profissao;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.setDataNascimento(LocalDate.parse(dataNascimento, formatter));
-        setComorbidades(comorbidades);
+        //TODO setComorbidades(comorbidades);
 	}
 
     public Cidadao() {
@@ -72,14 +72,14 @@ public class Cidadao {
     }
 
 
-    /**
-	 * Metodo que adiciona comorbidade.
-	 *     
-	 * @param comorbidade
-	 */
-    public void adicionaComorbidade(String comorbidade) {
-        this.comorbidades.add(comorbidade);
-    }
+//    TODO/**
+//	 * Metodo que adiciona comorbidade.
+//	 *
+//	 * @param comorbidade
+//	 */
+//    public void adicionaComorbidade(String comorbidade) {
+//        this.comorbidades.add(comorbidade);
+//    }
     
     //gets
     public String getNome() {
@@ -110,9 +110,9 @@ public class Cidadao {
         return this.profissao;
     }    
 
-    public Set<String> getComorbidades() {
-        return this.comorbidades;
-    }
+//TODO    public Set<String> getComorbidades() {
+//        return this.comorbidades;
+//    }
     
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
@@ -148,16 +148,16 @@ public class Cidadao {
         this.nome = nome;
     }
     
-    public void setComorbidades(String comorbidades){
-      
-    	Set<String> aux = new TreeSet<String>();
-    
-    	for (String comorbidade : comorbidades.split(" ")){
-            aux.add(comorbidade);
-        }
-       
-    	this.comorbidades = aux;
-    }
+//TODO    public void setComorbidades(String comorbidades){
+//
+//    	Set<String> aux = new TreeSet<String>();
+//
+//    	for (String comorbidade : comorbidades.split(" ")){
+//            aux.add(comorbidade);
+//        }
+//
+//    	this.comorbidades = aux;
+//    }
 
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;

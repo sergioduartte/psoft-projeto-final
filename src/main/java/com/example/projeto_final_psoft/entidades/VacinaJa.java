@@ -30,7 +30,7 @@ public class VacinaJa {
 	 * @param dataNascimento
 	 * @param telefone
 	 * @param profissao
-	 * @param comorbidades
+	 //TODO* @param comorbidades
 	 */
     public void adicionaCidadao(String nome, String endereco, String cpf, String numeroSUS, String email, String dataNascimento,
 			String telefone, String profissao, String comorbidades){
@@ -38,8 +38,7 @@ public class VacinaJa {
     	if(cidadaosCadastrados.containsKey(cpf)){
             System.out.println("CPF: " + cpf + " ja cadastrado.\n\n");
         } else {            
-            Cidadao cidadao = new Cidadao(nome, endereco, cpf, numeroSUS, email, dataNascimento, telefone, profissao,
-            		comorbidades);
+            Cidadao cidadao = new Cidadao(nome, endereco, cpf, numeroSUS, email, dataNascimento, telefone, profissao);// TODO, comorbidades); depois add dnv ~sergio
             cidadaosCadastrados.put(cpf, cidadao);
         }
     	
@@ -56,10 +55,11 @@ public class VacinaJa {
     public void adicionaComorbidade(String comorbidade){
         this.comorbidades.add(comorbidade);       
     }
-	
-    public void setComorbidades(String cpf, String comorbidades){
-        this.cidadaosCadastrados.get(cpf).setComorbidades(comorbidades);
-    }
+
+// TODO
+//    public void setComorbidades(String cpf, String comorbidades){
+//        this.cidadaosCadastrados.get(cpf).setComorbidades(comorbidades);
+//    }
     
     public void setCidadaosCadastrados(Map<String, Cidadao> cidadaosCadastrados) {
         this.cidadaosCadastrados = cidadaosCadastrados;
