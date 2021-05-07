@@ -1,4 +1,4 @@
-package com.example.projeto_final_psoft.controller;
+package com.example.projeto_final_psoft.controladores;
 
 import java.util.Optional;
 
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.example.projeto_final_psoft.entidades.*;
-import com.example.projeto_final_psoft.service.*;
+import com.example.projeto_final_psoft.servicos.*;
 
 @RestController
 @RequestMapping("/api")

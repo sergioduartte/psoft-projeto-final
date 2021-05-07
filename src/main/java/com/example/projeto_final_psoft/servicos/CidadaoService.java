@@ -1,4 +1,4 @@
-package com.example.projeto_final_psoft.service;
+package com.example.projeto_final_psoft.servicos;
 
 //import java.util.Optional;
 //import java.util.Set;
