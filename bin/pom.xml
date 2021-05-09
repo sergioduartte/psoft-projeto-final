@@ -8,10 +8,10 @@
         <version>2.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>projeto_final_psoft</artifactId>
+    <groupId>com.ufcg.psoft</groupId>
+    <artifactId>projeto_final</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>projeto_final_psoft</name>
+    <name>projeto_final</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
@@ -45,6 +45,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
         </dependency>
     </dependencies>
 
