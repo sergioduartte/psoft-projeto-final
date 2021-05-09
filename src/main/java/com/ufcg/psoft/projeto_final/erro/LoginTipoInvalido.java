@@ -1,4 +1,4 @@
-package com.ufcg.psoft.projeto_final.erro_login;
+package com.ufcg.psoft.projeto_final.erro;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

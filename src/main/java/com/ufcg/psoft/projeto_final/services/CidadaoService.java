@@ -1,19 +1,21 @@
 package com.ufcg.psoft.projeto_final.services;
 
-//import java.util.Optional;
-//import java.util.Set;
+import com.ufcg.psoft.projeto_final.DTOs.InsereCidadaoDTO;
+import com.ufcg.psoft.projeto_final.entidades.*;
+import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
 
-import com.ufcg.psoft.projeto_final.entidades.Cidadao;
+import java.text.ParseException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public interface CidadaoService {
 	
-	public Cidadao adicionaCidadao(Cidadao cidadao);
+	LoginCidadao save(InsereCidadaoDTO insereCidadaoDTO) throws ParseException, LoginTipoInvalido;
+
+	//public Cidadao adicionaCidadao(Cidadao cidadao);
 	//public Set<Cidadao> getCidadaos();
-	public Optional<Cidadao> getCidadao(String cpf);
+	//public Optional<Cidadao> getCidadao(String cpf);
 	//public void adicionaUsuario(Cidadao cidadao);
 	//public void removeUsuario(Cidadao cidadao);
 	

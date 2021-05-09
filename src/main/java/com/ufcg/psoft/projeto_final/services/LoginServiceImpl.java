@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ufcg.psoft.projeto_final.DTOs.*;
 import com.ufcg.psoft.projeto_final.entidades.*;
-import com.ufcg.psoft.projeto_final.erro_login.*;
+import com.ufcg.psoft.projeto_final.erro.*;
 import com.ufcg.psoft.projeto_final.repository.*;
 import com.ufcg.psoft.projeto_final.util.LoginUtil;
 import com.ufcg.psoft.projeto_final.web_security.AuthTokenService;

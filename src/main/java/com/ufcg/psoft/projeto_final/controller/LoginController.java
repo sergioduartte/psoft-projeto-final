@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufcg.psoft.projeto_final.DTOs.LoginDTO;
-import com.ufcg.psoft.projeto_final.erro_login.LoginInvalido;
-import com.ufcg.psoft.projeto_final.erro_login.LoginTipoInvalido;
+import com.ufcg.psoft.projeto_final.erro.LoginInvalido;
+import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
 import com.ufcg.psoft.projeto_final.services.LoginService;
 
 @RestController
@@ -27,4 +27,5 @@ public class LoginController {
     	String jwt = loginService.login(loginDTO);
 	    return new ResponseEntity<>(jwt, HttpStatus.OK);
 	}	
+    
 }

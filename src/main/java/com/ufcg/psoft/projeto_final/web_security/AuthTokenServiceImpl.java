@@ -26,6 +26,7 @@ public class AuthTokenServiceImpl implements AuthTokenService {
 
     static final long EXPIRATION_TIME = 86_400_000;
     //static final String SECRET = "16bd8dfba2191761b65d5a795806e530";
+    //1e27ba40b0ea11eb85290242ac130003
     static final String SECRET = "1e27ba40b0ea11eb85290242ac130003";                              
     static final String TOKEN_PREFIX = "Bearer";
     static final String HEADER_STRING = "Authorization";
