@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 
+
+//Isso nao deveria estar em Repository?
 @Repository
 public interface VacinaRepository<T, ID extends Serializable> extends JpaRepository<Vacina, Long> {
 }
