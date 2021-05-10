@@ -1,41 +1,26 @@
 package com.ufcg.psoft.projeto_final.controller;
 
 
+import com.ufcg.psoft.projeto_final.DTOs.VacinaDTO;
 import com.ufcg.psoft.projeto_final.entidades.Vacina;
 import com.ufcg.psoft.projeto_final.services.VacinaService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class VacinaApiController {
-    private VacinaService vacinaService;
+	@Autowired
+	VacinaService vacinaService;
 
-    public VacinaApiController(VacinaService vacinaService) {
-        super();
-        this.vacinaService = vacinaService;
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("")
+    public ResponseEntity<Vacina> criarVacina(@RequestBody VacinaDTO vacinaDTO) {
+        Vacina novaVacina = vacinaService.criaTipoVacina(vacinaDTO);
+        return new ResponseEntity<Vacina>(novaVacina, HttpStatus.CREATED);
     }
 
-    @PostMapping("/api/vacina")
-    public ResponseEntity<Vacina> adicionaVacina(@RequestParam(value = "nome") String nome) {
-        Vacina vacina = new Vacina(nome);
-        return new ResponseEntity<Vacina>(vacinaService.adicionaVacina(vacina), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/api/vacina/{id}")
-    public ResponseEntity<Vacina> getVacina(@PathVariable Long id) {
-        Optional<Vacina> vacina = vacinaService.getVacina(id);
-        if (vacina.isPresent())
-            return new ResponseEntity<Vacina>(vacina.get(), HttpStatus.OK);
-        return new ResponseEntity<Vacina>(HttpStatus.NOT_FOUND);
-    }
-
-    @GetMapping("/api/vacina")
-    public ResponseEntity<List<Vacina>> getVacina() {
-        return new ResponseEntity<List<Vacina>>(vacinaService.getVacina(), HttpStatus.OK);
-    }
 }

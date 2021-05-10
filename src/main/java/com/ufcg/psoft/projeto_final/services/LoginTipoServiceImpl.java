@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ufcg.psoft.projeto_final.entidades.LoginTipo;
-import com.ufcg.psoft.projeto_final.erro_login.LoginTipoInvalido;
+import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
 import com.ufcg.psoft.projeto_final.repository.LoginTipoRepository;
 
 @Service

@@ -2,42 +2,47 @@ package com.ufcg.psoft.projeto_final.entidades;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.sun.istack.NotNull;
 
 @Entity
 public class Vacina {
-    //TODO colocar novos atributos
-    @Id
-    @GeneratedValue
-    private long id;
-    private String nome;
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
+	
+    @NotNull
+	private String fabricante;
+    @NotNull
+	private Integer dosesNecessarias;
+    @NotNull
+	private Integer intervaloDoses;
+    
+    public Vacina() {
+	}
+    
+    public Vacina(String fabricante, Integer dosesNecessarias, Integer intervaloDoses) {
+    	this.fabricante = fabricante;
+    	this.dosesNecessarias = dosesNecessarias;
+    	this.intervaloDoses = intervaloDoses;
+	}
 
-    public Vacina(){
-        super();
-    }
-    public Vacina(long id, String nome){
-        super();
-        this.id = id;
-        this.nome = nome;
-    }
-    public Vacina(String nome){
-        super();
-        this.nome = nome;
-    }
-    public long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getFabricante() {
+		return fabricante;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    @Override
-    public String toString() {
-        return "Chora, paixão! Tá adicionando vacinaaaaa. Dale!\n[id da vacina=" + id + ", nome=" + nome + "]";
-    }
+	public Integer getDosesNecessarias() {
+		return dosesNecessarias;
+	}
 
+	public Integer getIntervaloDoses() {
+		return intervaloDoses;
+	}
 }

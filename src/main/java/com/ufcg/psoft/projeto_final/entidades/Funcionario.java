@@ -1,24 +1,41 @@
 package com.ufcg.psoft.projeto_final.entidades;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Funcionario extends Cidadao {
+public class Funcionario {
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cidadao cidadao;
 
     private String cargo;
     private String localTrabalho;
 
-    //TODO Removi o 'String comorbidades' do construtor ~sergio
-    public Funcionario(String nome, String endereco, String cpf, String numeroSUS, String email, String dataNascimento,
-                       String telefone, String profissao, String cargo, String localTrabalho) {
-        //TODO removi o ', comorbidades' dos params ~sergio
-        super(nome, endereco, cpf, numeroSUS, email, dataNascimento, telefone, profissao);
-        this.cargo = cargo;
-        this.localTrabalho = localTrabalho;
-    }
-
-
     public Funcionario() {
-
     }
+
+	public String getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+	public String getLocalTrabalho() {
+		return localTrabalho;
+	}
+
+	public void setLocalTrabalho(String localTrabalho) {
+		this.localTrabalho = localTrabalho;
+	}
 }
