@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class CidadaoServiceImpl implements CidadaoService {
@@ -35,8 +36,6 @@ public class CidadaoServiceImpl implements CidadaoService {
     
     }
 
-//    @Autowired
-//   private CidadaoRepository cidadaoRepository;
 
 //    @Override
 //    public Cidadao adicionaCidadao(Cidadao cidadao) {
@@ -47,9 +46,9 @@ public class CidadaoServiceImpl implements CidadaoService {
 //        return novoCidadao;
 //    }
 
-//    @Override
-//    public Optional<Cidadao> getCidadao(String cpf) {
-//        return cidadaoRepository.findByCpf(cpf);
-//    }
+    @Override
+    public Optional<Cidadao> getCidadao(String cpf) {
+        return cidadaoRepository.findByCpf(cpf);
+    }
 	
 }
