@@ -110,4 +110,5 @@ public class Cidadao {
 	public EnumSituacoes getSituacao(){
 		return this.situacao;
 	}
+	
 }
