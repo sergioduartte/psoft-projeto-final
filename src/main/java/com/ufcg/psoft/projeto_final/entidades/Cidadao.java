@@ -4,6 +4,8 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.sun.istack.NotNull;
+import com.ufcg.psoft.projeto_final.entidades.situacoes.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -60,6 +63,8 @@ public class Cidadao {
     @JoinColumn(name = "cidadao_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<String> cormobidade;
+    @Enumerated(EnumType.STRING)
+    private EnumSituacoes situacao;
 
     public Cidadao() {
 
@@ -75,6 +80,7 @@ public class Cidadao {
         this.setTelefone(telefone);
         this.setProfissao(profissao);
         this.cormobidade = cormobidade;
+        this.situacao = EnumSituacoes.NAO_APTO;
     }
 
     public String getCpf() {
@@ -95,5 +101,13 @@ public class Cidadao {
 
 	public void setProfissao(String profissao) {
 		this.profissao = profissao;
+	}
+	
+	public void setSituacao(EnumSituacoes situacao){
+        this.situacao = situacao;
+	}
+
+	public EnumSituacoes getSituacao(){
+		return this.situacao;
 	}
 }
