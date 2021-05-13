@@ -20,7 +20,13 @@ public class Funcionario {
     private String cargo;
     private String localTrabalho;
 
-    public Funcionario() {
+	public Funcionario(Cidadao cidadao, String cargo, String localTrabalho) {
+		this.cidadao = cidadao;
+		this.cargo = cargo;
+		this.localTrabalho = localTrabalho;
+	}
+
+	public Funcionario() {
     }
 
 	public String getCargo() {
