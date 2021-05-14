@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface LoteService {
 
-    Lote cadastrarLote(LoteDTO loteDTO) throws Exception;
-    List<Lote> allLotes();
+    Lote saveLote(LoteDTO loteDTO) throws Exception;
+    List<Lote> getLote();
     Lote getLoteById(Long id) throws Exception;
 }

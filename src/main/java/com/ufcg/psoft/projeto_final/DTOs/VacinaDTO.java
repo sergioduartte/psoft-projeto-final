@@ -14,7 +14,6 @@ public class VacinaDTO {
 		this.dosesNecessarias = dosesNecessarias;
 		this.intervaloDoses = intervaloDoses;
 	}
-
 	public String getFabricante() {
 		return fabricante;
 	}
