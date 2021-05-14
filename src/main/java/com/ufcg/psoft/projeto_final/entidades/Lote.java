@@ -1,5 +1,7 @@
 package com.ufcg.psoft.projeto_final.entidades;
 
+import com.ufcg.psoft.projeto_final.exceptions.CadastroLoteException;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,54 +13,64 @@ public class Lote {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "vacina_id")
-    private Vacina vacina;
+//    @ManyToOne
+//    @JoinColumn(name = "vacina_id") //TODO comentei isso pois não entendi a importancia de ter Vacina no Lote, se só
+//    private Vacina vacina;          //TODO precisa de saber o tipo, que é o ID do tipo da vacina, esse join n casa os IDs, casa as tabelas
 
 
-    private Date data_validade;
-    private int qtd_doses;
-    private String tipo_vacina;
+    private Date dataValidade;
+    private int qtdDoses;
+    private String tipoVacina;
+    private Long idTipoVacina;
 
     public Lote() {
         super();
     }
 
-    public Lote( Date data_validade, int qtd_doses, Vacina vacina) {
+    public Lote(Date dataValidade, int qtdDoses, String tipoVacina, Long idTipoVacina) throws CadastroLoteException{
         super();
-        this.vacina = vacina;
-        this.data_validade = data_validade;
-        this.qtd_doses = qtd_doses;
-        this.tipo_vacina = tipo_vacina;
+        validaLote(dataValidade, qtdDoses);
+        this.dataValidade = dataValidade;
+        this.qtdDoses = qtdDoses;
+        this.tipoVacina = tipoVacina;
+        this.idTipoVacina = idTipoVacina; //TODO Conversar sobre esse design
 
     }
+
+    private void validaLote(Date dataValidade, int qtdDoses) throws CadastroLoteException{
+        //TODO ver como testar a data
+        if (qtdDoses <= 0) {
+            throw new CadastroLoteException("Quantidade de doses não pode ser menor que 1.");
+        }
+    }
+
     public int getQtdDoses(){
-        return qtd_doses;
+        return qtdDoses;
     }
 
     public void setQtdDoses( int qtd_doses){
-        this.qtd_doses = qtd_doses;
+        this.qtdDoses = qtd_doses;
     }
 
     public Date getDataValidade() {
-        return data_validade;
+        return dataValidade;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Vacina getTipoVacina() {
-        return vacina;
+    public String getTipoVacina() {
+        return tipoVacina;
     }
 
     @Override
     public String toString() {
         return "Lote{" +
                 "id: " + id +
-                ", numero de doses: " + qtd_doses +
-                ", data de validade: " + data_validade +
-                "tipo da vacina: " + tipo_vacina + '\'' +
+                ", número de doses: " + qtdDoses +
+                ", data de validade: " + dataValidade +
+                "tipo da vacina: " + tipoVacina + '\'' +
                 '}';
     }
 }
