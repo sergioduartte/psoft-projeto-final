@@ -35,4 +35,8 @@ public class Login {
     public String getLoginTipo() {
         return loginTipo.getLoginTipo();
     }
+
+    public Long getId() {
+        return id;
+    }
 }

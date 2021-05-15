@@ -1,5 +1,7 @@
 package com.ufcg.psoft.projeto_final.controller;
 
+import com.ufcg.psoft.projeto_final.services.LoginResponse;
+import com.ufcg.psoft.projeto_final.web_security.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +17,18 @@ import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
 import com.ufcg.psoft.projeto_final.services.LoginService;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/api")
 @CrossOrigin
 public class LoginController {
 
     @Autowired
-    LoginService loginService;
+	private JwtTokenService JWTService;
 
-    @PostMapping("")
+    @PostMapping("/auth/login")
 	public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) throws LoginInvalido, LoginTipoInvalido {
-    	String jwt = loginService.login(loginDTO);
-	    return new ResponseEntity<>(jwt, HttpStatus.OK);
+    	LoginResponse jwt = JWTService.autentica(loginDTO);
+		return new ResponseEntity<>(jwt, HttpStatus.OK);
+
 	}	
     
 }
