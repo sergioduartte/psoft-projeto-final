@@ -37,12 +37,12 @@ public class VacinaServiceImpl implements VacinaService {
 	}
 
 	@Override
-	public Vacina getVacinaById(Long id) throws VacinaNaoEncontrada {
+	public Optional<Vacina> getVacinaById(Long id) throws VacinaNaoEncontrada {
 		Optional<Vacina> vacinaEncontrada = vacinaRepository.findById(id);
 		if (!vacinaEncontrada.isPresent()){
 			throw new VacinaNaoEncontrada(id);
 		}
-		return vacinaEncontrada.get();
+		return vacinaRepository.findById(id);
 	}
 }
 
