@@ -21,6 +21,7 @@ import com.ufcg.psoft.projeto_final.entidades.situacoes.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -83,6 +84,11 @@ public class Cidadao {
         this.situacao = EnumSituacoes.NAO_APTO;
     }
 
+    public int getIdade(){
+        //TODO para habilitacao
+        return -1;
+    }
+
     public String getCpf() {
         return cpf;
     }
@@ -110,5 +116,11 @@ public class Cidadao {
 	public EnumSituacoes getSituacao(){
 		return this.situacao;
 	}
-	
+
+    public Long getId() { return this.id; }
+
+    public Collection<Object> getComorbidades() {
+        // TODO para habilitacao
+        return null;
+    }
 }

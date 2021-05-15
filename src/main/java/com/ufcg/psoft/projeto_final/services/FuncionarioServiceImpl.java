@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,12 +56,10 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
     	EnumSituacoes novaSituacao;
     	if(situacao.equals(EnumSituacoes.NAO_APTO)) {
     		novaSituacao = EnumSituacoes.APTO_PRIMEIRA_DOSE;
-    		
-    		
+
     	}else if(situacao.equals(EnumSituacoes.TOMOU_PRIMEIRA_DOSE)){
     		 novaSituacao = EnumSituacoes.APTO_SEGUNDA_DOSE;
-    		
-    		
+
     	}else if(situacao.equals(EnumSituacoes.VACINACAO_FINALIZADA)){
     		novaSituacao = situacao;
     	
@@ -74,8 +73,38 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
 	}
 
 	@Override
-	public List<Cidadao> habilitaPorIdade(Integer idade) {
-		return null;
-		
+	public List<Cidadao> habilitaPorIdade(Integer idadeMinima) {
+		List<Cidadao> cidadaos = cidadaoRepository.findAll();
+		List<Cidadao> habilitados = new ArrayList<>();
+		for (Cidadao cidadao: cidadaos) {
+			if (idadeMinima.compareTo(cidadao.getIdade()) <=0 ) {
+				habilitados.add(habilita(cidadao.getId()));
+			}
+		}
+		return habilitados;
+	}
+
+	@Override
+	public List<Cidadao> habilitaPorComorbidade(String comorbidade) {
+		List<Cidadao> cidadaos = cidadaoRepository.findAll();
+		List<Cidadao> habilitados = new ArrayList<>();
+		for (Cidadao cidadao: cidadaos) {
+			if (cidadao.getComorbidades().contains(comorbidade) ) {
+				habilitados.add(habilita(cidadao.getId()));
+			}
+		}
+		return habilitados;
+	}
+
+	@Override
+	public List<Cidadao> habilitaPorProfissao(String profissao) {
+		List<Cidadao> cidadaos = cidadaoRepository.findAll();
+		List<Cidadao> habilitados = new ArrayList<>();
+		for (Cidadao cidadao: cidadaos) {
+			if (cidadao.getProfissao().equals(profissao) ) {
+				habilitados.add(habilita(cidadao.getId()));
+			}
+		}
+		return habilitados;
 	}
 }

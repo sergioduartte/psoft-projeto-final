@@ -4,6 +4,7 @@ import com.ufcg.psoft.projeto_final.DTOs.FuncionarioDTO;
 import com.ufcg.psoft.projeto_final.entidades.Cidadao;
 import com.ufcg.psoft.projeto_final.entidades.LoginCidadao;
 import com.ufcg.psoft.projeto_final.entidades.LoginFuncionario;
+import com.ufcg.psoft.projeto_final.entidades.Vacina;
 import com.ufcg.psoft.projeto_final.entidades.situacoes.EnumSituacoes;
 import com.ufcg.psoft.projeto_final.erro.ErroCidadao;
 import com.ufcg.psoft.projeto_final.services.FuncionarioService;
@@ -35,12 +36,27 @@ public class FuncionarioApiController {
     }
     
     @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
-    @PostMapping("/funcionario/habilita_idade/{idade}")
-    public ResponseEntity<List<Cidadao> > tornaCidadaoAptoPorIdade(@RequestParam Integer idade){
-    	
-    	List<Cidadao> resposta = funcionarioService.habilitaPorIdade(idade);
+    @PostMapping("/funcionario/habilita_por_idade/{idade}")
+    public ResponseEntity<List<Cidadao>> tornaCidadaoAptoPorIdade(@RequestParam Integer idade){
+    	List<Cidadao> habilitados = funcionarioService.habilitaPorIdade(idade);
 
-		return null;
+		return new ResponseEntity<List<Cidadao>>(habilitados, HttpStatus.OK);
     	
+    }
+
+    @PostMapping("/funcionario/habilita_por_comorbidade/{comorbidade}")
+    public ResponseEntity<List<Cidadao> > tornaCidadaoAptoPorComorbidade(@RequestParam String comorbidade){
+        List<Cidadao> habilitados = funcionarioService.habilitaPorComorbidade(comorbidade);
+
+        return new ResponseEntity<List<Cidadao>>(habilitados, HttpStatus.OK);
+
+    }
+
+    @PostMapping("/funcionario/habilita_por_profissao/{profissao}")
+    public ResponseEntity<List<Cidadao> > tornaCidadaoAptoPorProfissao(@RequestParam String profissao){
+        List<Cidadao> habilitados = funcionarioService.habilitaPorComorbidade(profissao);
+
+        return new ResponseEntity<List<Cidadao>>(habilitados, HttpStatus.OK);
+
     }
 }
