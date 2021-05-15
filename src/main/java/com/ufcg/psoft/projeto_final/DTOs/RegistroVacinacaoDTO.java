@@ -4,11 +4,11 @@ import java.sql.Date;
 
 public class RegistroVacinacaoDTO {
 	
-	public String cpfCidadao;
+	private String cpfCidadao;
 
-    public Long idVacina;
+    private Long idVacina;
 
-    public Date dataAplicacao;
+    private Date dataAplicacao;
 
     public RegistroVacinacaoDTO(String cpfCidadao, Long idVacina, Date dataAplicacao){
         this.cpfCidadao = cpfCidadao;
@@ -24,7 +24,7 @@ public class RegistroVacinacaoDTO {
         this.cpfCidadao = cpfCidadao;
     }
 
-    public long getIdVacina() {
+    public Long getIdVacina() {
         return this.idVacina;
     }
 
