@@ -9,6 +9,7 @@ import com.ufcg.psoft.projeto_final.erro.ErroCidadao;
 import com.ufcg.psoft.projeto_final.services.FuncionarioService;
 import com.ufcg.psoft.projeto_final.services.CidadaoService;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,27 +35,12 @@ public class FuncionarioApiController {
     }
     
     @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
-    @PostMapping()
-    public ResponseEntity<?> tornaCidadaoApto(@RequestParam String cpf){
-    	Optional<Cidadao> optionalCidadao = cidadaoService.getCidadao(cpf);
-    	if(!optionalCidadao.isPresent()) {
-    		return ErroCidadao.cidadaoInexistente(cpf);
-    	}
+    @PostMapping("/funcionario/habilita_idade/{idade}")
+    public ResponseEntity<List<Cidadao> > tornaCidadaoAptoPorIdade(@RequestParam Integer idade){
     	
-    	Cidadao cidadao = optionalCidadao.get();
-    	EnumSituacoes situacao = cidadao.getSituacao();
-    	//depois, adicionar criterios de prioridade, por ex numero de doses, comorbidade, idade....
-    	if(situacao.equals(EnumSituacoes.NAO_APTO)) {
-    		EnumSituacoes novaSituacao = EnumSituacoes.APTO_PRIMEIRA_DOSE;
-    		cidadao.setSituacao(novaSituacao);
-    		return new ResponseEntity<>(novaSituacao, HttpStatus.OK);
-    	}else if(situacao.equals(EnumSituacoes.TOMOU_PRIMEIRA_DOSE)){
-    		EnumSituacoes novaSituacao = EnumSituacoes.APTO_SEGUNDA_DOSE;
-    		cidadao.setSituacao(novaSituacao);
-    		return new ResponseEntity<>(novaSituacao, HttpStatus.OK);
-    	}
-    	
-    	return new ResponseEntity<>("infelizmente, não foi possível tornar o cidadão apto", HttpStatus.OK);
+    	List<Cidadao> resposta = funcionarioService.habilitaPorIdade(idade);
+
+		return null;
     	
     }
 }
