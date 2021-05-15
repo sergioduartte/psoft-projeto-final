@@ -16,4 +16,9 @@ public interface FuncionarioService {
     public Cidadao habilita(Long id);
     
 	public List<Cidadao> habilitaPorIdade(Integer idade);
+
+    public List<Cidadao> habilitaPorComorbidade(String comorbidade);
+
+    public List<Cidadao> habilitaPorProfissao(String profissao);
+
 }
