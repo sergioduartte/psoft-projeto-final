@@ -12,41 +12,28 @@ import javax.persistence.OneToOne;
 public class RegistroVacinacao {
 	
 	@Id
-    String cpfCidadao;
-    
-    @OneToOne( cascade = CascadeType.ALL)   
-    @MapsId
-    private Cidadao cidadao;
+    Long Id;
 
-    @OneToOne( cascade = CascadeType.ALL)  
-    private Vacina vacina;
+    private Long idVacina;
 
     private Date dataAplicacao;
+    
+    private String cpfCidadao;
 
-    private int dose;
 
     RegistroVacinacao(){}
 
-    public RegistroVacinacao(Cidadao cidadao, Vacina vacina, Date dataAplicacao){
-        this.cidadao = cidadao;
-        this.vacina = vacina;
+    public RegistroVacinacao(String cpfCidadao, Long idVacina, Date dataAplicacao){
+        this.cpfCidadao = cpfCidadao;
+        this.idVacina = idVacina;
         this.dataAplicacao = dataAplicacao;
-        this.dose = 1;
     }
 
-    public Cidadao getCidadao(){
-        return this.cidadao;
+    public String getCofCidadao(){
+        return this.cpfCidadao;
     }
-    public Vacina getVacina(){
-        return this.vacina;
-    }
-    
-    public int getDose(){
-        return this.dose;
-    }
-
-    public void tomouSegundaDose(){
-        this.dose = 2;
+    public Long getIdVacina(){
+        return this.idVacina;
     }
 
     public Date getDataAplicacao(){

@@ -4,10 +4,11 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.ufcg.psoft.projeto_final.DTOs.RegistroVacinacaoDTO;
 import com.ufcg.psoft.projeto_final.entidades.RegistroVacinacao;
 
 @Service
 public interface RegistroVacinacaoService {
-	void salvar(RegistroVacinacao registroVacinacao);
-	public Optional<RegistroVacinacao> getById(String cpf);
+	RegistroVacinacao salvar(RegistroVacinacaoDTO registroVacinacaoDTO);
+	
 }
