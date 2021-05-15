@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -31,7 +32,8 @@ public class VacinaApiController {
     @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_FUNCIONARIO')")
     @GetMapping("/vacina/{id}")
     public ResponseEntity<Vacina> getVacinaById(@RequestParam Long id) throws VacinaNaoEncontrada {
-        Vacina vacina = vacinaService.getVacinaById(id);
+        Optional<Vacina> optionalVacina = vacinaService.getVacinaById(id);
+        Vacina vacina = optionalVacina.get();
         return new ResponseEntity<Vacina>(vacina, HttpStatus.OK);
     }
 

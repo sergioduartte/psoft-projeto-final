@@ -7,11 +7,12 @@ import com.ufcg.psoft.projeto_final.erro.VacinaNaoEncontrada;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public interface VacinaService {
 	Vacina saveVacina(VacinaDTO vacinaDto) throws VacinaCadastroInvalido;
 	List<Vacina> getVacina();
-	Vacina getVacinaById(Long id) throws VacinaNaoEncontrada;
+	Optional<Vacina> getVacinaById(Long id) throws VacinaNaoEncontrada;
 }
