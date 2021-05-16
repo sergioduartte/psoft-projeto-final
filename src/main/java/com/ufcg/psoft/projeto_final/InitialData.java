@@ -31,7 +31,7 @@ public class InitialData {
                 loginTipoRepository.save(new LoginTipo(3L, "FUNCIONARIO"));
             }
             if (!loginRepository.findByLoginAndPassword("admin", "admin").isPresent()){
-                loginRepository.save(new Login(1L, "admin", "admin", loginTipoRepository.findByLoginTipo("ADMIN").get()));
+                loginRepository.save(new Login("admin", "admin", loginTipoRepository.findByLoginTipo("ADMIN").get()));
             }
 
         };

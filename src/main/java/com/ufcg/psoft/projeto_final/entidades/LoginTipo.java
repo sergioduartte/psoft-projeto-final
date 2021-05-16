@@ -20,6 +20,10 @@ public class LoginTipo {
         this.loginTipo = loginTipo;
     }
 
+    public LoginTipo(String loginTipo) {
+        this.loginTipo = loginTipo;
+    }
+
     public String getLoginTipo() {
         return loginTipo;
     }
