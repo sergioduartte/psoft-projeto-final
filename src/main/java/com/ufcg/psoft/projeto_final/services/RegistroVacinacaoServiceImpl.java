@@ -52,8 +52,8 @@ public class RegistroVacinacaoServiceImpl implements RegistroVacinacaoService{
 			throw new RegistroInvalido("Lote nao encontrado.");
 		}
 		Lote lote = optionalLote.get();
-		
-		//TODO alterar os estados do cidadao
+
+		//TODO alterar os estados do cidadao, provavelmente depois disso a gente conclui as US 18/19
 		RegistroVacinacao novoRegistro = new RegistroVacinacao(registroVacinacaoDTO.getIdCidadao(),
 				registroVacinacaoDTO.getIdLote(),registroVacinacaoDTO.getDataAplicacao());
 		registroVacinacaoRepository.save(novoRegistro);
