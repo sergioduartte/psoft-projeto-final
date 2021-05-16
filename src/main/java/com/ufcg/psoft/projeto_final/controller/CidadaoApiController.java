@@ -1,10 +1,14 @@
 package com.ufcg.psoft.projeto_final.controller;
 
+import com.ufcg.psoft.projeto_final.DTOs.AgendaDTO;
 import com.ufcg.psoft.projeto_final.DTOs.CidadaoDTO;
 import com.ufcg.psoft.projeto_final.entidades.*;
 import com.ufcg.psoft.projeto_final.entidades.situacoes.EnumSituacoes;
+import com.ufcg.psoft.projeto_final.erro.AgendamentoCadastroInvalido;
 import com.ufcg.psoft.projeto_final.erro.ErroCidadao;
 import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
+import com.ufcg.psoft.projeto_final.services.AgendaService;
+import com.ufcg.psoft.projeto_final.services.AgendaServiceImpl;
 import com.ufcg.psoft.projeto_final.services.CidadaoService;
 
 
@@ -22,7 +26,8 @@ import java.util.Optional;
 public class CidadaoApiController {
 
     @Autowired
-    CidadaoService cidadaoService;
+    private CidadaoService cidadaoService;
+    private AgendaService agendaService;
 
     @PostMapping("/cidadao")
     public ResponseEntity<LoginCidadao> save(@RequestBody CidadaoDTO cidadaoDTO) throws ParseException, LoginTipoInvalido {
@@ -39,6 +44,12 @@ public class CidadaoApiController {
     	}
     	EnumSituacoes situacao = cidadao.getSituacao();
     	return new ResponseEntity<>(situacao, HttpStatus.OK);
+    }
+
+    @PostMapping("/agenda")
+    public ResponseEntity<Agenda> agenda(@RequestBody AgendaDTO agendaDTO) throws AgendamentoCadastroInvalido {
+        Agenda agendamento = agendaService.alocaHorario(agendaDTO);
+        return new ResponseEntity<Agenda>(agendamento, HttpStatus.OK);
     }
 
 }

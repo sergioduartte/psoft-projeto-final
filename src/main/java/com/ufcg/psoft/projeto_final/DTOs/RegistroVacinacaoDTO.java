@@ -4,40 +4,28 @@ import java.sql.Date;
 
 public class RegistroVacinacaoDTO {
 	
-	private String cpfCidadao;
+	private Long idCidadao;
 
-    private Long idVacina;
+    private Long idLote;
 
     private Date dataAplicacao;
 
-    public RegistroVacinacaoDTO(String cpfCidadao, Long idVacina, Date dataAplicacao){
-        this.cpfCidadao = cpfCidadao;
-        this.idVacina = idVacina;
+    public RegistroVacinacaoDTO(Long cpfCidadao, Long idVacina, Date dataAplicacao){
+        this.idCidadao = cpfCidadao;
+        this.idLote = idVacina;
         this.dataAplicacao = dataAplicacao;
     }
 
-    public String getCpfCidadao() {
-        return this.cpfCidadao;
+    public Long getIdCidadao() {
+        return this.idCidadao;
     }
 
-    public void setCpfCidadao(String cpfCidadao) {
-        this.cpfCidadao = cpfCidadao;
-    }
-
-    public Long getIdVacina() {
-        return this.idVacina;
-    }
-
-    public void setIdVacina(Long idVacina) {
-        this.idVacina = idVacina;
+    public Long getIdLote() {
+        return this.idLote;
     }
 
     public Date getDataAplicacao() {
         return this.dataAplicacao;
-    }
-
-    public void setDataAplicacao(Date dataAplicacao) {
-        this.dataAplicacao = dataAplicacao;
     }
 
 }

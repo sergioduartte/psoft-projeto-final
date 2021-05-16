@@ -21,11 +21,11 @@ public class Agenda {
     private Date data;
     private Integer dosagem;
 
-    public Agenda() {} // TODO throws CadastroAgendaException
+    public Agenda() {}
 
     public Agenda(Date data) {
         this.data = data;
-    }
+    } // TODO throws CadastroAgendaException
 
     public Agenda(Long idCidadao, Date data, Integer dosagem) throws CadastroAgendamentoException{
         validaAgendamento(data);
@@ -40,6 +40,8 @@ public class Agenda {
             throw new CadastroAgendamentoException("Data da vacinacao tem de ser posterior ao dia do agendamento.");
         }
     }
+
+    public Long getId() { return this.id; }
 
     public Date getHorario(){
         return data;

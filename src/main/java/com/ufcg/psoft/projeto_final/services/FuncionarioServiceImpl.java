@@ -72,6 +72,7 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
 
 	@Override
 	public List<Cidadao> habilitaPorIdade(Integer idadeMinima) {
+    	// TODO checar se a idade minima eh maior que 0
 		List<Cidadao> cidadaos = cidadaoRepository.findAll();
 		List<Cidadao> habilitados = new ArrayList<>();
 		for (Cidadao cidadao: cidadaos) {

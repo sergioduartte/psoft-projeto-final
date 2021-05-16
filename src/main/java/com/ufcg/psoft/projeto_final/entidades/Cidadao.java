@@ -61,10 +61,10 @@ public class Cidadao {
     private List<String> cormobidade;
     @Enumerated(EnumType.STRING)
     private EnumSituacoes situacao;
+    private Long idVacina;
+    private Long idUltimoAgendamento;
 
-    public Cidadao() {
-
-    }
+    public Cidadao() {}
 
     public Cidadao(String nome, String endereco, Long cpf, String cartaoSus, String email, Date dataNascimento, String telefone, String profissao, List<String> cormobidade) {
         this.nome = nome;
@@ -114,4 +114,10 @@ public class Cidadao {
         // TODO para habilitacao
         return null;
     }
+
+    public Long getIdVacina() { return idVacina; }
+
+    public Long getIdUltimoAgendamento() { return this.idUltimoAgendamento; }
+
+    public void setUltimoAgendamento(Long idUltimoAgendamento) { this.idUltimoAgendamento = idUltimoAgendamento; }
 }
