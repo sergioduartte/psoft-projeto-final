@@ -1,12 +1,17 @@
 package com.ufcg.psoft.projeto_final.controller;
 
+import com.ufcg.psoft.projeto_final.DTOs.AgendaDTO;
+import com.ufcg.psoft.projeto_final.DTOs.CidadaoDTO;
 import com.ufcg.psoft.projeto_final.entidades.Agenda;
 import com.ufcg.psoft.projeto_final.entidades.Vacina;
+import com.ufcg.psoft.projeto_final.erro.AgendamentoCadastroInvalido;
 import com.ufcg.psoft.projeto_final.services.AgendaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -20,21 +25,13 @@ public class AgendaController {
         List<Agenda> horarios = agendaService.getHorarios();
         return new ResponseEntity<List<Agenda>>(horarios, HttpStatus.OK);
     }
-//
-//    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_FUNCIONARIO')")
-//    @GetMapping("/vacina/{id}")
-//    public ResponseEntity<Vacina> getVacinaById(@RequestParam Long id) throws VacinaNaoEncontrada {
-//        Optional<Vacina> optionalVacina = vacinaService.getVacinaById(id);
-//        Vacina vacina = optionalVacina.get();
-//        return new ResponseEntity<Vacina>(vacina, HttpStatus.OK);
-//    }
-//
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @PostMapping("/vacina")
-//    public ResponseEntity<Vacina> vacina(@RequestBody VacinaDTO vacinaDTO) throws VacinaCadastroInvalido {
-//        Vacina novaVacina = vacinaService.saveVacina(vacinaDTO);
-//        return new ResponseEntity<Vacina>(novaVacina, HttpStatus.CREATED);
-//    }
+
+
+    @PostMapping("/agenda")
+    public ResponseEntity<Agenda> agenda(@RequestBody AgendaDTO agendaDTO) throws AgendamentoCadastroInvalido { //TODO validacao throws VacinaCadastroInvalido {
+        Agenda agendamento = agendaService.alocaHorario(agendaDTO);
+        return new ResponseEntity<Agenda>(agendamento, HttpStatus.OK);
+    }
 
 
 }

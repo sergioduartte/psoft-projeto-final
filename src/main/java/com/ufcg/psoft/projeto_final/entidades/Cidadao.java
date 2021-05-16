@@ -35,16 +35,11 @@ import java.util.List;
 
 @Entity
 public class Cidadao {
-	
-	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Long id;
+
     private String nome;
     private String endereco;
-
-    @NotNull
-    @Column(unique = true)
-    private String cpf;
+    @Id
+    private Long cpf;
 
     @NotNull
     @Column(unique = true)
@@ -71,7 +66,7 @@ public class Cidadao {
 
     }
 
-    public Cidadao(String nome, String endereco, String cpf, String cartaoSus, String email, Date dataNascimento, String telefone, String profissao, List<String> cormobidade) {
+    public Cidadao(String nome, String endereco, Long cpf, String cartaoSus, String email, Date dataNascimento, String telefone, String profissao, List<String> cormobidade) {
         this.nome = nome;
         this.endereco = endereco;
         this.cpf = cpf;
@@ -89,11 +84,7 @@ public class Cidadao {
         return -1;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-	public String getTelefone() {
+    public String getTelefone() {
 		return telefone;
 	}
 
@@ -117,7 +108,7 @@ public class Cidadao {
 		return this.situacao;
 	}
 
-    public Long getId() { return this.id; }
+    public Long getId() { return this.cpf; }
 
     public Collection<Object> getComorbidades() {
         // TODO para habilitacao

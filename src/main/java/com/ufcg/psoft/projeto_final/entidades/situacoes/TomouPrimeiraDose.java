@@ -9,12 +9,12 @@ public class TomouPrimeiraDose extends Situacao {
 	public String atualizaSituacao(Cidadao cidadao) {
 		EnumSituacoes situacao = EnumSituacoes.TOMOU_PRIMEIRA_DOSE;
 		cidadao.setSituacao(situacao);
-		return "O cidadão de cpf "+ cidadao.getCpf() + " agora se encontra apto para tomar a segunda dose da vacina";
+		return ""; // TODO "O cidadão de cpf "+ cidadao.getCpf() + " agora se encontra apto para tomar a segunda dose da vacina";
 	}
 
 	@Override
 	public String tomaVacina(Cidadao cidadao, Vacina vacina) {
-		 return "O cidadão de cpf " + cidadao.getCpf() + " ainda não está apto para tomar a segunda dose da vacina ";
+		 return ""; // TODO "O cidadão de cpf " + cidadao.getCpf() + " ainda não está apto para tomar a segunda dose da vacina ";
 	}
 	
 	@Override

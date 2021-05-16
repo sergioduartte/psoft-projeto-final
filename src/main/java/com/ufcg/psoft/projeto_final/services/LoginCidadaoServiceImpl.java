@@ -18,7 +18,7 @@ public class LoginCidadaoServiceImpl implements LoginCidadaoService {
 
     @Override
     public LoginCidadao criaLoginCidadao(Cidadao cidadao) throws LoginTipoInvalido {
-        Login novoLogin = loginService.criaLogin(cidadao.getCpf(), "CIDADAO");
+        Login novoLogin = loginService.criaLogin(cidadao.getId(), "CIDADAO");
         LoginCidadao novoLoginCidadao = new LoginCidadao(novoLogin, cidadao);
         loginCidadaoRepository.save(novoLoginCidadao);
         return novoLoginCidadao;

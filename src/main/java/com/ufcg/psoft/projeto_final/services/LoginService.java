@@ -7,7 +7,7 @@ import com.ufcg.psoft.projeto_final.DTOs.*;
 
 public interface LoginService {
 	
-    Login criaLogin(String login, String loginTipo) throws LoginTipoInvalido;
+    Login criaLogin(Long login, String loginTipo) throws LoginTipoInvalido;
     LoginResponse login(LoginDTO loginDTO) throws LoginInvalido;
     Login findByUserLogin(String login);
     

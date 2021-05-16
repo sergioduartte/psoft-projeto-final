@@ -34,10 +34,10 @@ public class LoginServiceImpl implements LoginService {
 //    AuthTokenService authTokenService;
 
     @Override
-    public Login criaLogin(String login, String loginTipo) throws LoginTipoInvalido {
+    public Login criaLogin(Long login, String loginTipo) throws LoginTipoInvalido {
         
     	LoginTipo loginTipoEncontrado = loginTipoService.findByLoginTipo(loginTipo);
-        Login novoLogin = new Login(login, LoginUtil.geraSenha(), loginTipoEncontrado);
+        Login novoLogin = new Login(login.toString(), LoginUtil.geraSenha(), loginTipoEncontrado);
         loginRepository.save(novoLogin);
         
         return novoLogin;

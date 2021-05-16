@@ -26,7 +26,7 @@ public class Vacina {
 	}
 
 	public Vacina(String fabricante, Integer dosesNecessarias, Integer intervaloDoses) throws CadastroVacinaException {
-		validavacina(fabricante, dosesNecessarias, intervaloDoses);
+		validaVacina(fabricante, dosesNecessarias, intervaloDoses);
 		this.fabricante = fabricante;
 		this.dosesNecessarias = dosesNecessarias;
 		this.intervaloDoses = intervaloDoses;
@@ -48,7 +48,7 @@ public class Vacina {
 		return intervaloDoses;
 	}
 
-	private void validavacina(String fabricante, Integer dosesNecessarias, Integer intervaloDoses) throws CadastroVacinaException {
+	private void validaVacina(String fabricante, Integer dosesNecessarias, Integer intervaloDoses) throws CadastroVacinaException {
 		if (fabricante.trim() == "") {
 			throw new CadastroVacinaException("Nome do fabricante nao pode ser vazio");
 		}

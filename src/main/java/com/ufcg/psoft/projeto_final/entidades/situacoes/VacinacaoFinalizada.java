@@ -7,12 +7,12 @@ public class VacinacaoFinalizada extends Situacao {
 
 	@Override
 	public String atualizaSituacao(Cidadao cidadao) {
-		return "O cidadão de cpf " + cidadao.getCpf() + " já finalizou o seu processo de vacinação, VIVA O SUS!";
+		return ""; // TODO "O cidadão de cpf " + cidadao.getCpf() + " já finalizou o seu processo de vacinação, VIVA O SUS!";
 	}
 
 	@Override
 	public String tomaVacina(Cidadao cidadao, Vacina vacina) {
-		return "O cidadão de cpf " + cidadao.getCpf() + " já finalizou o seu processo de vacinação, VIVA O SUS!";
+		return ""; // TODO "O cidadão de cpf " + cidadao.getCpf() + " já finalizou o seu processo de vacinação, VIVA O SUS!";
 	}
 
 	@Override

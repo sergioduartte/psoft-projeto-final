@@ -32,13 +32,11 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
 
     @Override
     public ResponseEntity<?> save(FuncionarioDTO funcionario) {
-        Optional<Cidadao> optionalCidadao = cidadaoService.getCidadao(funcionario.getCpf());
+        Cidadao cidadao = cidadaoService.getCidadao(funcionario.getCpf());
 
-        if (!optionalCidadao.isPresent()) {
+        if (cidadao !=null) {
              return ErroCidadao.cidadaoInexistente(funcionario.getCpf());
         }
-
-        Cidadao cidadao = optionalCidadao.get();
 
         Funcionario novoFuncionario = new Funcionario(cidadao, funcionario.getCargo(),
                 funcionario.getLocalTrabalho());
