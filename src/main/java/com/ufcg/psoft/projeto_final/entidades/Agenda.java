@@ -35,8 +35,9 @@ public class Agenda {
     }
 
     private void validaAgendamento(Date data) throws CadastroAgendamentoException {
+    	Date hoje = java.util.Calendar.getInstance().getTime();
 
-        if (data != null) { //TODO CHECAR A DATA EH VALIDA > QUE O DIA CORRENTE
+        if (!data.after(hoje)) {
             throw new CadastroAgendamentoException("Data da vacinacao tem de ser posterior ao dia do agendamento.");
         }
     }
