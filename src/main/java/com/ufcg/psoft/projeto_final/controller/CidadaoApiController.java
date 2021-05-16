@@ -10,8 +10,9 @@ import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
 import com.ufcg.psoft.projeto_final.services.AgendaService;
 import com.ufcg.psoft.projeto_final.services.AgendaServiceImpl;
 import com.ufcg.psoft.projeto_final.services.CidadaoService;
-
-
+import com.ufcg.psoft.projeto_final.DTOs.AtualizaCidadaoDTO;
+import com.ufcg.psoft.projeto_final.DTOs.CidadaoDTO;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +30,25 @@ public class CidadaoApiController {
     private CidadaoService cidadaoService;
     private AgendaService agendaService;
 
+    @ApiOperation(value = "Cadastra um Cidadao")
     @PostMapping("/cidadao")
     public ResponseEntity<LoginCidadao> save(@RequestBody CidadaoDTO cidadaoDTO) throws ParseException, LoginTipoInvalido {
         LoginCidadao loginCidadao = cidadaoService.save(cidadaoDTO);
-
         return new ResponseEntity<>(loginCidadao, HttpStatus.OK);
     }
-    
+
+    @ApiOperation(value = "Altera o cadastro de um Cidadao a partir de seu CPF")
+    @PostMapping("/cidadao/cadastro")
+    public ResponseEntity<?> editaCadastro(@RequestParam Long cpf, @RequestBody AtualizaCidadaoDTO atualizaCidadaoDTO){
+        Cidadao cidadao = cidadaoService.getCidadao(cpf);
+        if(cidadao != null) {
+            return ErroCidadao.cidadaoInexistente(cpf);
+        }
+
+        return new ResponseEntity<>(cidadaoService.atualizaCadastro(cpf, atualizaCidadaoDTO), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Retorna a situacao de um Cidadao a partir de seu CPF")
     @GetMapping("/cidadao/consulta_situacao")
     public ResponseEntity<?> getSituacao(@RequestParam Long cpf){
     	Cidadao cidadao = cidadaoService.getCidadao(cpf);

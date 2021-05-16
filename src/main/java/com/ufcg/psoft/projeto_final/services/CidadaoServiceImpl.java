@@ -24,12 +24,13 @@ public class CidadaoServiceImpl implements CidadaoService {
 
     @Override
     public LoginCidadao save (CidadaoDTO cidadaoDTO) throws ParseException, LoginTipoInvalido {
-    	
-        Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(cidadaoDTO.getDataNascimento());
-        
+
+        Date dataNascimento = new SimpleDateFormat("dd/MM/yyyy").parse(cidadaoDTO.getDataNascimento());
+
         Cidadao novoCidadao = new Cidadao(cidadaoDTO.getNomeCompleto(), cidadaoDTO.getEndereco(),
-        		cidadaoDTO.getCpf(), cidadaoDTO.getCartaoSus(), cidadaoDTO.getEmail(), dataNascimento,
-        		cidadaoDTO.getTelefone(), cidadaoDTO.getProfissao(), cidadaoDTO.getCormobidades());
+                cidadaoDTO.getCpf(), cidadaoDTO.getCartaoSus(), cidadaoDTO.getEmail(), dataNascimento,
+                cidadaoDTO.getTelefone(), cidadaoDTO.getProfissao(), cidadaoDTO.getComorbidades());
+
 
         cidadaoRepository.save(novoCidadao);
         return loginCidadaoService.criaLoginCidadao(novoCidadao);
@@ -37,18 +38,31 @@ public class CidadaoServiceImpl implements CidadaoService {
     }
 
 
-//    @Override
-//    public Cidadao adicionaCidadao(Cidadao cidadao) {
-//        Cidadao novoCidadao = new Cidadao(cidadao.getNome(), cidadao.getEndereco(), cidadao.getCpf(), cidadao.getNumeroSUS(),
-//                cidadao.getEmail(), cidadao.getDataNascimento().toString(), cidadao.getTelefone(), cidadao.getProfissao()); //TODO, cidadao.getComorbidades().toString());
-//        cidadaoRepository.save(cidadao);
-
-//        return novoCidadao;
-//    }
-
     @Override
     public Cidadao getCidadao(Long cpf) {
         return cidadaoRepository.findById(cpf).get(); //TODO REFATORAR!!
     }
-	
+
+//    @Override
+//    public EnumSituacoes getSituacao(Long cpf) {
+//        Cidadao cidadao = this.getCidadao(cpf);
+//        EnumSituacoes situacao = cidadao.getSituacao();
+//        return situacao;
+//    }
+
+    @Override
+    public Cidadao atualizaCadastro(Long cpf, AtualizaCidadaoDTO atualizaCidadaoDTO) {
+
+        Cidadao cidadao = this.getCidadao(cpf);
+
+        cidadao.setProfissao(atualizaCidadaoDTO.getProfissao());
+        cidadao.setNome(atualizaCidadaoDTO.getNomeCompleto());
+        cidadao.setEndereco(atualizaCidadaoDTO.getEndereco());
+        cidadao.setTelefone(atualizaCidadaoDTO.getTelefone());
+        cidadao.setComorbidades(atualizaCidadaoDTO.getComorbidades());
+
+        cidadaoRepository.save(cidadao);
+
+        return cidadao;
+    }
 }

@@ -40,6 +40,13 @@ public class FuncionarioApiController {
         return funcionarioService.save(funcionario);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/funcionario/{cpf}/aprova_cadastro/")
+    public ResponseEntity<?> aprovaFuncionario(@RequestParam String cpf){
+        return funcionarioService.habilitaFuncionario(cpf);
+
+    }
+
     @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
     @PostMapping("/funcionario/habilita_por_idade/{idade}")
     public ResponseEntity<List<Cidadao>> habilitaCidadaoPorIdade(@RequestParam Integer idade){

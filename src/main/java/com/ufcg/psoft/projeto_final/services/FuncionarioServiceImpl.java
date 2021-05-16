@@ -106,4 +106,11 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
 		}
 		return habilitados;
 	}
+
+	@Override
+	public ResponseEntity<?> habilitaFuncionario(String cpf) {
+		Funcionario funcionario = funcionarioAnaliseRepository.findByCpf(cpf).get();
+		System.out.println(funcionario);
+		return null;
+	}
 }

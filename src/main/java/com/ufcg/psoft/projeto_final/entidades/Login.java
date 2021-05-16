@@ -18,6 +18,13 @@ public class Login {
 
     public Login() { }
 
+    public Login(Long id, String login, String password, LoginTipo loginTipo) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.loginTipo = loginTipo;
+    }
+
     public Login(String login, String senha, LoginTipo loginTipo) {
         this.login = login;
         this.password = senha;
