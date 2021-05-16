@@ -19,21 +19,23 @@ public class Lote {
 
 
     private Date dataValidade;
-    private int qtdDoses;
-    private String tipoVacina;
+    private int qtdDosesTotal;
+    private String fabricante;
     private Long idTipoVacina;
+    private int qtdDosesReservadas;
 
     public Lote() {
         super();
     }
 
-    public Lote(Date dataValidade, int qtdDoses, String tipoVacina, Long idTipoVacina) throws CadastroLoteException{
+    public Lote(Date dataValidade, int qtdDosesTotal, String fabricante, Long idTipoVacina) throws CadastroLoteException{
         super();
-        validaLote(dataValidade, qtdDoses);
+        validaLote(dataValidade, qtdDosesTotal);
         this.dataValidade = dataValidade;
-        this.qtdDoses = qtdDoses;
-        this.tipoVacina = tipoVacina;
+        this.qtdDosesTotal = qtdDosesTotal;
+        this.fabricante = fabricante;
         this.idTipoVacina = idTipoVacina; //TODO Conversar sobre esse design
+        this.qtdDosesReservadas = 0;
 
     }
 
@@ -44,12 +46,12 @@ public class Lote {
         }
     }
 
-    public int getQtdDoses(){
-        return qtdDoses;
+    public int getQtdDosesTotal(){
+        return qtdDosesTotal;
     }
 
-    public void setQtdDoses( int qtd_doses){
-        this.qtdDoses = qtd_doses;
+    public int getQtdDosesDisponiveis(){
+        return getQtdDosesDisponiveis();
     }
 
     public Date getDataValidade() {
@@ -60,18 +62,28 @@ public class Lote {
         return id;
     }
 
-    public String getTipoVacina() {
-        return tipoVacina;
+    public String getFabricante() {
+        return fabricante;
+    }
+
+    public Long getIdTipoVacina() {
+        return idTipoVacina;
     }
 
     @Override
     public String toString() {
         return "Lote{" +
                 "id: " + id +
-                ", número de doses: " + qtdDoses +
+                ", número de doses: " + qtdDosesTotal +
                 ", data de validade: " + dataValidade +
-                "tipo da vacina: " + tipoVacina + '\'' +
+                "tipo da vacina: " + fabricante + '\'' +
                 '}';
+    }
+
+    public void reservaVacina() {
+        if (qtdDosesReservadas < qtdDosesTotal) {
+            qtdDosesReservadas++;
+        }
     }
 }
 

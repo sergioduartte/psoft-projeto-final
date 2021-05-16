@@ -2,6 +2,12 @@ package com.ufcg.psoft.projeto_final.services;
 
 import java.util.Optional;
 
+import com.ufcg.psoft.projeto_final.entidades.Agenda;
+import com.ufcg.psoft.projeto_final.entidades.Cidadao;
+import com.ufcg.psoft.projeto_final.entidades.Lote;
+import com.ufcg.psoft.projeto_final.erro.RegistroInvalido;
+import com.ufcg.psoft.projeto_final.repository.AgendaRepository;
+import com.ufcg.psoft.projeto_final.repository.LoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,16 +23,39 @@ public class RegistroVacinacaoServiceImpl implements RegistroVacinacaoService{
 	RegistroVacinacaoRepository registroVacinacaoRepository;
 	@Autowired
 	CidadaoRepository cidadaoRepository;
-	
+	@Autowired
+	LoteRepository loteRepository;
+	@Autowired
+	AgendaRepository agendaRepository;
 
 	@Override
-    public RegistroVacinacao salvar(RegistroVacinacaoDTO registroVacinacaoDTO) {
-		
-		RegistroVacinacao novoRegistro = new RegistroVacinacao(registroVacinacaoDTO.getCpfCidadao(),registroVacinacaoDTO.getIdVacina(),registroVacinacaoDTO.getDataAplicacao());
-        //TODO checar se o registro eh valido
-		//TODO checar se ele estava agendado p o dia 
-		//TODO alterar os estados do cidadao
-		//TODO isvacinaDisponivel??
+    public RegistroVacinacao saveRegistro(RegistroVacinacaoDTO registroVacinacaoDTO) throws RegistroInvalido {
+
+		Optional<Cidadao> optionalCidadao = cidadaoRepository.findById(registroVacinacaoDTO.getIdCidadao());
+		if (!optionalCidadao.isPresent()) {
+			throw new RegistroInvalido("Usuario nao encontrado.");
+		}
+		Cidadao cidadao = optionalCidadao.get();
+
+		Optional<Agenda> optionalAgenda = agendaRepository.findById(cidadao.getIdUltimoAgendamento());
+		if (!optionalAgenda.isPresent()) {
+			throw new RegistroInvalido("Agendamento para o CPF " + cidadao.getId() + " nao encontrado.");
+		}
+		Agenda agenda = optionalAgenda.get();
+
+		if (registroVacinacaoDTO.getDataAplicacao().compareTo(agenda.getHorario()) > 0) {
+			throw new RegistroInvalido("Fora do agendamento. Aguarde a sua vez!");
+		}
+
+		Optional<Lote> optionalLote = loteRepository.findById(registroVacinacaoDTO.getIdLote());
+		if (!optionalLote.isPresent()) {
+			throw new RegistroInvalido("Lote nao encontrado.");
+		}
+		Lote lote = optionalLote.get();
+
+		//TODO alterar os estados do cidadao, provavelmente depois disso a gente conclui as US 18/19
+		RegistroVacinacao novoRegistro = new RegistroVacinacao(registroVacinacaoDTO.getIdCidadao(),
+				registroVacinacaoDTO.getIdLote(),registroVacinacaoDTO.getDataAplicacao());
 		registroVacinacaoRepository.save(novoRegistro);
 		return novoRegistro;
         

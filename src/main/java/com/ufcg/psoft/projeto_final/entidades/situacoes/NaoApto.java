@@ -10,12 +10,12 @@ public class NaoApto extends Situacao{
 		EnumSituacoes situacao = EnumSituacoes.APTO_PRIMEIRA_DOSE;
 		cidadao.setSituacao(situacao);
 		
-		return "O cidadão de cpf " + cidadao.getCpf() + " agora está apto para a primeira dose da vacina."; 
+		return ""; // TODO "O cidadão de cpf " + cidadao.getCpf() + " agora está apto para a primeira dose da vacina.";
 	}
 
 	@Override
 	public String tomaVacina(Cidadao cidadao, Vacina vacina) {
-		 return "O cidadão de cpf " + cidadao.getCpf() + "não está apto para a vacinação";
+		 return ""; // TODO "O cidadão de cpf " + cidadao.getCpf() + "não está apto para a vacinação";
 	}
 
 	@Override

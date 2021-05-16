@@ -23,13 +23,13 @@ public class CidadaoServiceImpl implements CidadaoService {
     LoginCidadaoService loginCidadaoService;
 
     @Override
-    public LoginCidadao save (InsereCidadaoDTO insereCidadaoDTO) throws ParseException, LoginTipoInvalido {
+    public LoginCidadao save (CidadaoDTO cidadaoDTO) throws ParseException, LoginTipoInvalido {
     	
-        Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(insereCidadaoDTO.getDataNascimento());
+        Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(cidadaoDTO.getDataNascimento());
         
-        Cidadao novoCidadao = new Cidadao(insereCidadaoDTO.getNomeCompleto(), insereCidadaoDTO.getEndereco(),
-        		insereCidadaoDTO.getCpf(), insereCidadaoDTO.getCartaoSus(), insereCidadaoDTO.getEmail(), dataNascimento,
-        		insereCidadaoDTO.getTelefone(), insereCidadaoDTO.getProfissao(), insereCidadaoDTO.getCormobidades());
+        Cidadao novoCidadao = new Cidadao(cidadaoDTO.getNomeCompleto(), cidadaoDTO.getEndereco(),
+        		cidadaoDTO.getCpf(), cidadaoDTO.getCartaoSus(), cidadaoDTO.getEmail(), dataNascimento,
+        		cidadaoDTO.getTelefone(), cidadaoDTO.getProfissao(), cidadaoDTO.getCormobidades());
 
         cidadaoRepository.save(novoCidadao);
         return loginCidadaoService.criaLoginCidadao(novoCidadao);
@@ -47,8 +47,8 @@ public class CidadaoServiceImpl implements CidadaoService {
 //    }
 
     @Override
-    public Optional<Cidadao> getCidadao(String cpf) {
-        return cidadaoRepository.findByCpf(cpf);
+    public Cidadao getCidadao(Long cpf) {
+        return cidadaoRepository.findById(cpf).get(); //TODO REFATORAR!!
     }
 	
 }

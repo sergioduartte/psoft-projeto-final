@@ -2,11 +2,8 @@ package com.ufcg.psoft.projeto_final.entidades;
 
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 
 @Entity
 public class RegistroVacinacao {
@@ -14,26 +11,27 @@ public class RegistroVacinacao {
 	@Id
     Long Id;
 
-    private Long idVacina;
+    private Long idLote;
 
     private Date dataAplicacao;
     
-    private String cpfCidadao;
+    private Long cpfCidadao;
 
 
     RegistroVacinacao(){}
 
-    public RegistroVacinacao(String cpfCidadao, Long idVacina, Date dataAplicacao){
+    public RegistroVacinacao(Long cpfCidadao, Long idLote, Date dataAplicacao){
         this.cpfCidadao = cpfCidadao;
-        this.idVacina = idVacina;
+        this.idLote = idLote;
         this.dataAplicacao = dataAplicacao;
     }
 
-    public String getCofCidadao(){
+    public Long getCpfCidadao(){
         return this.cpfCidadao;
     }
-    public Long getIdVacina(){
-        return this.idVacina;
+
+    public Long getIdLote(){
+        return this.idLote;
     }
 
     public Date getDataAplicacao(){

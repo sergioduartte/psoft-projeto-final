@@ -8,7 +8,7 @@ public class AptoPrimeiraDose  extends Situacao{
 
 	@Override
 	public String atualizaSituacao(Cidadao cidadao) {
-		 return "O cidadão de CPF "+ cidadao.getCpf() +" não pode passar para a próxima fase  da vacinação sem ter tomado a primeira dose da vacina.";
+		 return ""; // TODO ""O cidadão de CPF "+ cidadao.getCpf() +" não pode passar para a próxima fase  da vacinação sem ter tomado a primeira dose da vacina.";
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class AptoPrimeiraDose  extends Situacao{
 	            cidadao.setSituacao(situacao);
 	        }
 	        
-	        return "O cidadão de cpf "+ cidadao.getCpf() + " tomou a primeira dose da vacina.";
+	        return ""; // TODO "O cidadão de cpf "+ cidadao.getCpf() + " tomou a primeira dose da vacina.";
 	    }
 
 	@Override

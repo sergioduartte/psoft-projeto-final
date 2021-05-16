@@ -42,7 +42,7 @@ public class LoteServiceImpl implements  LoteService{
         }
         Lote novoLote;
         try {
-            novoLote = new Lote(data_validade, loteDTO.getQtdDoses(), loteDTO.getTipoVacina(), loteDTO.getIdTipoVacina());
+            novoLote = new Lote(data_validade, loteDTO.getQtdDoses(), loteDTO.getFabricanteVacina(), loteDTO.getIdTipoVacina());
         } catch (CadastroLoteException e) {
             throw new LoteCadastroInvalido(e.getMessage());
         }

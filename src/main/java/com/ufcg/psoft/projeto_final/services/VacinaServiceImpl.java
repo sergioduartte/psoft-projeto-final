@@ -21,6 +21,7 @@ public class VacinaServiceImpl implements VacinaService {
 
 	@Override
 	public Vacina saveVacina(VacinaDTO vacinaDTO) throws VacinaCadastroInvalido {
+		//TODO Checar se a vacina ja existe
 		Vacina novaVacina;
 		try {
 			novaVacina = new Vacina(vacinaDTO.getFabricante(), vacinaDTO.getDosesNecessarias(), vacinaDTO.getIntervaloDoses());

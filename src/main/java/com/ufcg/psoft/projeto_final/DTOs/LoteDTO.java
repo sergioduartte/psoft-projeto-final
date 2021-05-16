@@ -3,20 +3,20 @@ package com.ufcg.psoft.projeto_final.DTOs;
 public class LoteDTO {
 
 
-    private String tipoVacina;
+    private String fabricanteVacina;
     private String dataValidade;
     private Integer qtdDoses;
     private Long idTipoVacina;
 
-    public LoteDTO(String dataValidade, Integer qtdDoses, String tipoVacina, Long idTipoVacina){
+    public LoteDTO(String dataValidade, Integer qtdDoses, String fabricanteVacina, Long idTipoVacina){
         super();
         this.dataValidade = dataValidade;
         this.qtdDoses = qtdDoses;
-        this.tipoVacina = tipoVacina;
+        this.fabricanteVacina = fabricanteVacina;
         this.idTipoVacina = idTipoVacina;
     }
 
-    public String getTipoVacina(){ return tipoVacina;}
+    public String getFabricanteVacina(){ return fabricanteVacina;}
 
     public Integer getQtdDoses() {
         return qtdDoses;

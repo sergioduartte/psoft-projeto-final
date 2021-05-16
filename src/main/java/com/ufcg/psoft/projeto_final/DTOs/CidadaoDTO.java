@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class InsereCidadaoDTO {
+public class CidadaoDTO {
 
     private String nomeCompleto;
     private String endereco;
-    private String cpf;
+    private Long cpf;
     private String cartaoSus;
     private String email;
 
@@ -28,7 +28,7 @@ public class InsereCidadaoDTO {
         return endereco;
     }
 
-    public String getCpf() {
+    public Long getCpf() {
         return cpf;
     }
 
