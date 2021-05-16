@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Optional;
 
 @Service
 public class CidadaoServiceImpl implements CidadaoService {
@@ -23,7 +22,7 @@ public class CidadaoServiceImpl implements CidadaoService {
     LoginCidadaoService loginCidadaoService;
 
     @Override
-    public LoginCidadao save (CidadaoDTO cidadaoDTO) throws ParseException, LoginTipoInvalido {
+    public Login save (CidadaoDTO cidadaoDTO) throws ParseException, LoginTipoInvalido {
 
         Date dataNascimento = new SimpleDateFormat("dd/MM/yyyy").parse(cidadaoDTO.getDataNascimento());
 

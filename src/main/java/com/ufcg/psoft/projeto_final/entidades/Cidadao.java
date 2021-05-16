@@ -131,4 +131,8 @@ public class Cidadao {
     public Long getIdUltimoAgendamento() { return this.idUltimoAgendamento; }
 
     public void setUltimoAgendamento(Long idUltimoAgendamento) { this.idUltimoAgendamento = idUltimoAgendamento; }
+
+    public Long getCpf() {
+        return cpf;
+    }
 }

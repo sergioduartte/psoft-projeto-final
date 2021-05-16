@@ -6,30 +6,30 @@ import javax.persistence.*;
 public class Login {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
     private String login;
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private LoginTipo loginTipo;
 
     public Login() { }
-
-    public Login(Long id, String login, String password, LoginTipo loginTipo) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.loginTipo = loginTipo;
-    }
 
     public Login(String login, String senha, LoginTipo loginTipo) {
         this.login = login;
         this.password = senha;
         this.loginTipo = loginTipo;
     }
+
+//    public Login(Long id, String login, String password, LoginTipo loginTipo) {
+//        this.id = id;
+//        this.login = login;
+//        this.password = password;
+//        this.loginTipo = loginTipo;
+//    }
 
     public String getLogin() {
         return login;

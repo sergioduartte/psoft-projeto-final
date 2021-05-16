@@ -32,8 +32,8 @@ public class CidadaoApiController {
 
     @ApiOperation(value = "Cadastra um Cidadao")
     @PostMapping("/cidadao")
-    public ResponseEntity<LoginCidadao> save(@RequestBody CidadaoDTO cidadaoDTO) throws ParseException, LoginTipoInvalido {
-        LoginCidadao loginCidadao = cidadaoService.save(cidadaoDTO);
+    public ResponseEntity<Login> save(@RequestBody CidadaoDTO cidadaoDTO) throws ParseException, LoginTipoInvalido {
+        Login loginCidadao = cidadaoService.save(cidadaoDTO);
         return new ResponseEntity<>(loginCidadao, HttpStatus.OK);
     }
 
@@ -41,7 +41,7 @@ public class CidadaoApiController {
     @PostMapping("/cidadao/cadastro")
     public ResponseEntity<?> editaCadastro(@RequestParam Long cpf, @RequestBody AtualizaCidadaoDTO atualizaCidadaoDTO){
         Cidadao cidadao = cidadaoService.getCidadao(cpf);
-        if(cidadao != null) {
+        if(cidadao == null) {
             return ErroCidadao.cidadaoInexistente(cpf);
         }
 

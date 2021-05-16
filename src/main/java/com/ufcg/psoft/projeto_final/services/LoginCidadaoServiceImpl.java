@@ -17,10 +17,10 @@ public class LoginCidadaoServiceImpl implements LoginCidadaoService {
     LoginCidadaoRepository loginCidadaoRepository;
 
     @Override
-    public LoginCidadao criaLoginCidadao(Cidadao cidadao) throws LoginTipoInvalido {
-        Login novoLogin = loginService.criaLogin(cidadao.getId(), "CIDADAO");
-        LoginCidadao novoLoginCidadao = new LoginCidadao(novoLogin, cidadao);
-        loginCidadaoRepository.save(novoLoginCidadao);
-        return novoLoginCidadao;
+    public Login criaLoginCidadao(Cidadao cidadao) throws LoginTipoInvalido {
+        Login novoLogin = loginService.criaLogin(cidadao.getCpf(), "CIDADAO");
+//        LoginCidadao novoLoginCidadao = new LoginCidadao(novoLogin, cidadao);
+//        loginCidadaoRepository.save(novoLoginCidadao);
+        return novoLogin;
     }
 }
