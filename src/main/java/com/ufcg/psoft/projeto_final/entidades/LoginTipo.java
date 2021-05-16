@@ -15,6 +15,11 @@ public class LoginTipo {
 
     public LoginTipo() {}
 
+    public LoginTipo(Long id, String loginTipo) {
+        this.id = id;
+        this.loginTipo = loginTipo;
+    }
+
     public String getLoginTipo() {
         return loginTipo;
     }

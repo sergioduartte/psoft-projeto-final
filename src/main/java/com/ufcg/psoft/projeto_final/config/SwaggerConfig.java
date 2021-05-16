@@ -34,8 +34,7 @@ public class SwaggerConfig {
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
                 .title("Sistema de Controle de Vacinas!")
-                .description("\"Spring Boot REST API for greeting people\"")
-                .version("1.0.0")
+                .description("\"Spring Boot REST API para vacinacao da COVID-19 no Brasil\"")                .version("1.0.0")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
                 .build();

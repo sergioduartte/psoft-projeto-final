@@ -6,8 +6,6 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
@@ -19,9 +17,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import com.sun.istack.NotNull;
 import com.ufcg.psoft.projeto_final.entidades.situacoes.*;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +33,7 @@ public class Cidadao {
 
     private String nome;
     private String endereco;
+
     @Id
     private Long cpf;
 
@@ -58,7 +54,7 @@ public class Cidadao {
     @CollectionTable(name = "cidadao_cormobidade", joinColumns = @JoinColumn(name = "cidadao_id"))
     @JoinColumn(name = "cidadao_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<String> cormobidade;
+    private List<String> comorbidades;
     @Enumerated(EnumType.STRING)
     private EnumSituacoes situacao;
     private Long idVacina;
@@ -66,16 +62,16 @@ public class Cidadao {
 
     public Cidadao() {}
 
-    public Cidadao(String nome, String endereco, Long cpf, String cartaoSus, String email, Date dataNascimento, String telefone, String profissao, List<String> cormobidade) {
+    public Cidadao(String nome, String endereco, Long cpf, String cartaoSus, String email, Date dataNascimento, String telefone, String profissao, List<String> comorbidades) {
         this.nome = nome;
         this.endereco = endereco;
         this.cpf = cpf;
         this.cartaoSus = cartaoSus;
         this.email = email;
         this.dataNascimento = dataNascimento;
-        this.setTelefone(telefone);
-        this.setProfissao(profissao);
-        this.cormobidade = cormobidade;
+        this.telefone = telefone;
+        this.profissao = profissao;
+        this.comorbidades = comorbidades;
         this.situacao = EnumSituacoes.NAO_APTO;
     }
 
@@ -110,9 +106,24 @@ public class Cidadao {
 
     public Long getId() { return this.cpf; }
 
-    public Collection<Object> getComorbidades() {
-        // TODO para habilitacao
-        return null;
+    public List<String> getComorbidades() {
+        return comorbidades;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public void setComorbidades(List<String> cormobidade) {
+        this.comorbidades = cormobidade;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Long getIdVacina() { return idVacina; }

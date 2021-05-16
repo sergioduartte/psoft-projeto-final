@@ -21,4 +21,5 @@ public interface FuncionarioService {
 
     public List<Cidadao> habilitaPorProfissao(String profissao);
 
+    ResponseEntity<?> habilitaFuncionario(String cpf);
 }
