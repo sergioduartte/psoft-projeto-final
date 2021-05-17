@@ -8,6 +8,7 @@ import com.ufcg.psoft.projeto_final.errors.CidadaoCadastroInvalido;
 import com.ufcg.psoft.projeto_final.errors.LoginTipoInvalido;
 
 import com.ufcg.psoft.projeto_final.exceptions.CidadaoNaoEncontradoException;
+import com.ufcg.psoft.projeto_final.models.situacoes.EnumSituacoes;
 import org.springframework.stereotype.Service;
 
 
@@ -18,4 +19,5 @@ public interface CidadaoService {
 	Cidadao getCidadao(Long cpf) throws CidadaoNaoEncontradoException;
 	Cidadao atualizaCadastro(AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException, CadastroCidadaoException;
 
+	EnumSituacoes getSituacao(Long cpf) throws CidadaoNaoEncontradoException;
 }

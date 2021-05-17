@@ -5,6 +5,7 @@ import com.ufcg.psoft.projeto_final.models.*;
 import com.ufcg.psoft.projeto_final.errors.*;
 import com.ufcg.psoft.projeto_final.exceptions.CadastroCidadaoException;
 import com.ufcg.psoft.projeto_final.exceptions.CidadaoNaoEncontradoException;
+import com.ufcg.psoft.projeto_final.models.situacoes.EnumSituacoes;
 import com.ufcg.psoft.projeto_final.repositories.*;
 
 import com.ufcg.psoft.projeto_final.services.login.LoginService;
@@ -80,6 +81,12 @@ public class CidadaoServiceImpl implements CidadaoService {
         cidadaoRepository.save(cidadaoAtualizado);
 
         return cidadaoAtualizado;
+    }
+
+    @Override
+    public EnumSituacoes getSituacao(Long cpf) throws CidadaoNaoEncontradoException {
+        Cidadao cidadao = getCidadao(cpf);
+        return cidadao.getSituacao();
     }
 
     private void validaAtualizacao(AtualizaCidadaoDTO atualizaCidadaoDTO) throws CadastroCidadaoException {

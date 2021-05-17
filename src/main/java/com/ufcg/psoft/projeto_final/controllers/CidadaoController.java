@@ -3,16 +3,16 @@ package com.ufcg.psoft.projeto_final.controllers;
 import com.ufcg.psoft.projeto_final.DTOs.AgendaDTO;
 import com.ufcg.psoft.projeto_final.DTOs.CidadaoDTO;
 import com.ufcg.psoft.projeto_final.exceptions.CadastroCidadaoException;
-import com.ufcg.psoft.projeto_final.models.*;
-import com.ufcg.psoft.projeto_final.models.situacoes.EnumSituacoes;
 import com.ufcg.psoft.projeto_final.errors.AgendamentoCadastroInvalido;
 import com.ufcg.psoft.projeto_final.errors.CidadaoCadastroInvalido;
 import com.ufcg.psoft.projeto_final.errors.LoginTipoInvalido;
 import com.ufcg.psoft.projeto_final.exceptions.CidadaoNaoEncontradoException;
+import com.ufcg.psoft.projeto_final.models.Agenda;
+import com.ufcg.psoft.projeto_final.models.Cidadao;
+import com.ufcg.psoft.projeto_final.models.situacoes.EnumSituacoes;
 import com.ufcg.psoft.projeto_final.services.agenda.AgendaService;
 import com.ufcg.psoft.projeto_final.services.cidadao.CidadaoService;
 import com.ufcg.psoft.projeto_final.DTOs.AtualizaCidadaoDTO;
-import com.ufcg.psoft.projeto_final.DTOs.CidadaoDTO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,9 +45,8 @@ public class CidadaoController {
 
     @ApiOperation(value = "Retorna a situacao de um Cidadao a partir de seu CPF")
     @GetMapping("/cidadao/consulta_situacao")
-    public ResponseEntity<?> getSituacao(@RequestParam Long cpf) throws CidadaoNaoEncontradoException {
-    	Cidadao cidadao = cidadaoService.getCidadao(cpf);
-    	EnumSituacoes situacao = cidadao.getSituacao();
+    public ResponseEntity<EnumSituacoes> getSituacao(@RequestParam Long cpf) throws CidadaoNaoEncontradoException {
+    	EnumSituacoes situacao = cidadaoService.getSituacao(cpf);
     	return new ResponseEntity<>(situacao, HttpStatus.OK);
     }
 
