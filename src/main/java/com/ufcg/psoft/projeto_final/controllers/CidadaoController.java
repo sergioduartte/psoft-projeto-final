@@ -29,7 +29,7 @@ public class CidadaoController {
     private CidadaoService cidadaoService;
     private AgendaService agendaService;
 
-    @ApiOperation(value = "Cadastra um Cidadao")
+    @ApiOperation(value = "Cadastra um Cidadao no sistema")
     @PostMapping("/cidadao")
     public ResponseEntity<Cidadao> cidadao(@RequestBody CidadaoDTO cidadaoDTO) throws CidadaoCadastroInvalido, LoginTipoInvalido {
         Cidadao cidadao = cidadaoService.saveCidadao(cidadaoDTO);
@@ -43,14 +43,14 @@ public class CidadaoController {
         return new ResponseEntity<Cidadao>(cidadao, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Retorna a situacao de um Cidadao a partir de seu CPF")
+    @ApiOperation(value = "Retorna a situação de um Cidadao a partir de seu CPF")
     @GetMapping("/cidadao/situacao")
     public ResponseEntity<EnumSituacoes> getSituacao(@RequestBody Long cpf) throws CidadaoNaoEncontradoException {
         EnumSituacoes situacao = cidadaoService.getSituacao(cpf);
         return new ResponseEntity<>(situacao, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Agenda a vacinacao de um cidadao de acordo com os parametros")
+    @ApiOperation(value = "Agenda a vacinação de um cidadao de acordo com os parametros")
     @PostMapping("/agenda")
     public ResponseEntity<Agenda> agenda(@RequestBody AgendaDTO agendaDTO) throws AgendamentoCadastroInvalido {
         Agenda agendamento = agendaService.alocaHorario(agendaDTO);
