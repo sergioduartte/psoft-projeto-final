@@ -21,14 +21,14 @@ import com.ufcg.psoft.projeto_final.services.LoginService;
 @CrossOrigin
 public class LoginController {
 
-    @Autowired
+	@Autowired
 	private JwtTokenService JWTService;
 
-    @PostMapping("/auth/login")
+	@PostMapping("/auth/login") //TODO CRIAR EXCEPTIONS E TRATAR
 	public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) throws LoginInvalido, LoginTipoInvalido {
-    	LoginResponse jwt = JWTService.autentica(loginDTO);
+		LoginResponse jwt = JWTService.autentica(loginDTO);
 		return new ResponseEntity<>(jwt, HttpStatus.OK);
 
-	}	
-    
+	}
+
 }

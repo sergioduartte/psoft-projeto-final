@@ -14,17 +14,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface FuncionarioService {
-    public Funcionario saveFuncionario(FuncionarioDTO funcionarioDTO) throws FuncionarioNaoEncontrado, FuncionarioCadastroInvalido;
 
-    public Cidadao habilita(Long id);
-    
-	public List<Cidadao> habilitaPorIdade(Integer idade);
+    Funcionario saveFuncionario(FuncionarioDTO funcionarioDTO) throws FuncionarioNaoEncontrado, FuncionarioCadastroInvalido;
 
-    public List<Cidadao> habilitaPorComorbidade(String comorbidade);
+    Cidadao habilita(Long id);
 
-    public List<Cidadao> habilitaPorProfissao(String profissao);
+    List<Cidadao> habilitaPorIdade(Integer idade);
 
-    Funcionario aprovaCadastro(Long cpf) throws LoginTipoInvalido;
+    List<Cidadao> habilitaPorComorbidade(String comorbidade);
+
+    List<Cidadao> habilitaPorProfissao(String profissao);
+
+    Funcionario aprovaCadastro(Long cpf) throws FuncionarioNaoEncontrado;
 
     void reprovaCadastro(Long cpf);
 }

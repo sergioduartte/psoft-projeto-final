@@ -15,8 +15,6 @@ import com.ufcg.psoft.projeto_final.repository.FuncionarioAnaliseRepository;
 
 import com.ufcg.psoft.projeto_final.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,8 +23,8 @@ import java.util.List;
 @Service
 public class FuncionarioServiceImpl implements  FuncionarioService {
 
-    @Autowired
-    CidadaoService cidadaoService;
+	@Autowired
+	CidadaoService cidadaoService;
 
 	@Autowired
 	FuncionarioAnaliseRepository funcionarioAnaliseRepository;
@@ -34,22 +32,21 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
 	@Autowired
 	FuncionarioRepository funcionarioRepository;
 
-    @Autowired
-    CidadaoRepository cidadaoRepository;
+	@Autowired
+	CidadaoRepository cidadaoRepository;
 
-    @Autowired
+	@Autowired
 	LoginService loginService;
-   
 
-    @Override
-    public Funcionario saveFuncionario(FuncionarioDTO funcionarioDTO) throws FuncionarioNaoEncontrado, FuncionarioCadastroInvalido {
+
+	@Override
+	public Funcionario saveFuncionario(FuncionarioDTO funcionarioDTO) throws FuncionarioNaoEncontrado, FuncionarioCadastroInvalido {
 		Cidadao cidadao;
-    	try {
+		try {
 			cidadao = cidadaoService.getCidadao(funcionarioDTO.getCpf());
 		} catch (CidadaoNaoEncontradoException e){
-    		throw new FuncionarioNaoEncontrado(funcionarioDTO.getCpf());
+			throw new FuncionarioNaoEncontrado(funcionarioDTO.getCpf());
 		}
-
 		Funcionario novoFuncionario;
 
 		try {
@@ -59,25 +56,25 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
 			throw new FuncionarioCadastroInvalido(e.getMessage());
 		}
 
-        funcionarioAnaliseRepository.save(novoFuncionario);
+		funcionarioAnaliseRepository.save(novoFuncionario);
 
-        return novoFuncionario;
-    }
+		return novoFuncionario;
+	}
 
 	@Override
 	public Cidadao habilita(Long id) {
 		Cidadao cidadao = cidadaoRepository.getOne(id);
-		
+
 		EnumSituacoes enumSituacao = cidadao.getSituacao();
 		Situacao situacao = enumSituacao.getSituacao();
-		
+
 		situacao.habilitaCidadao(cidadao);
 		return cidadao;
 	}
 
 	@Override
 	public List<Cidadao> habilitaPorIdade(Integer idadeMinima) {
-    	// TODO checar se a idade minima eh maior que 0
+		// TODO checar se a idade minima eh maior que 0
 		List<Cidadao> cidadaos = cidadaoRepository.findAll();
 		List<Cidadao> habilitados = new ArrayList<>();
 		for (Cidadao cidadao: cidadaos) {
@@ -113,10 +110,18 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
 	}
 
 	@Override
-	public Funcionario aprovaCadastro(Long cpf) throws LoginTipoInvalido {
-		Funcionario funcionario = funcionarioAnaliseRepository.findByCpf(cpf).get();
+	public Funcionario aprovaCadastro(Long cpf) throws FuncionarioNaoEncontrado {
 
-		loginService.habilitaFuncionario(funcionario.getCpf().toString());
+
+		Funcionario funcionario = funcionarioAnaliseRepository.findByCpf(cpf).get();
+		if (funcionario == null) {
+			throw new FuncionarioNaoEncontrado(cpf);
+		}
+		try {
+			loginService.habilitaFuncionario(funcionario.getCpf().toString());
+		} catch (LoginTipoInvalido loginTipoInvalido) {
+			loginTipoInvalido.printStackTrace();
+		}
 
 		funcionarioAnaliseRepository.delete(funcionario);
 

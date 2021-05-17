@@ -27,26 +27,26 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public Login criaLogin(Long login, String senha, String loginTipo) throws LoginTipoInvalido {
-        
-    	LoginTipo loginTipoEncontrado = loginTipoService.findByLoginTipo(loginTipo);
+
+        LoginTipo loginTipoEncontrado = loginTipoService.findByLoginTipo(loginTipo);
         Login novoLogin = new Login(login.toString(), senha, loginTipoEncontrado);
         loginRepository.save(novoLogin);
-        
+
         return novoLogin;
     }
-    
+
 
     @Override
     public LoginResponse login(LoginDTO loginDTO) throws LoginInvalido {
-        
-    	Optional<Login> loginEncontrado = loginRepository.findByLoginAndPassword(loginDTO.getLogin(), loginDTO.getSenha());
+
+        Optional<Login> loginEncontrado = loginRepository.findByLoginAndPassword(loginDTO.getLogin(), loginDTO.getSenha());
 
         if (!loginEncontrado.isPresent()) {
             throw new LoginInvalido();
         }
 
         return authTokenService.autentica(loginDTO);
-        
+
     }
 
     @Override
@@ -56,10 +56,9 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public void habilitaFuncionario(String login) throws LoginTipoInvalido{
+    public void habilitaFuncionario(String login) throws LoginTipoInvalido {
 
         LoginTipo loginTipoEncontrado = loginTipoService.findByLoginTipo("FUNCIONARIO");
-
 
         Optional<Login> loginEncontrado = loginRepository.findByLogin(login);
 
