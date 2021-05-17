@@ -5,11 +5,15 @@ import com.ufcg.psoft.projeto_final.DTOs.CidadaoDTO;
 import com.ufcg.psoft.projeto_final.errors.CidadaoCadastroInvalido;
 import com.ufcg.psoft.projeto_final.exceptions.CadastroCidadaoException;
 import com.ufcg.psoft.projeto_final.exceptions.CidadaoNaoEncontradoException;
+import com.ufcg.psoft.projeto_final.exceptions.NaoAutorizadoException;
 import com.ufcg.psoft.projeto_final.models.Cidadao;
 import com.ufcg.psoft.projeto_final.models.situacoes.EnumSituacoes;
 import com.ufcg.psoft.projeto_final.repositories.CidadaoRepository;
 import com.ufcg.psoft.projeto_final.services.login.LoginService;
+import com.ufcg.psoft.projeto_final.web_security.JwtTokenService;
+import com.ufcg.psoft.projeto_final.web_security.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -26,6 +30,9 @@ public class CidadaoServiceImpl implements CidadaoService {
 
     @Autowired
     LoginService loginService;
+
+    @Autowired
+    JwtTokenService jwtTokenService;
 
     @Override
     public Cidadao saveCidadao(CidadaoDTO cidadaoDTO) throws CidadaoCadastroInvalido {
@@ -67,9 +74,12 @@ public class CidadaoServiceImpl implements CidadaoService {
     }
 
     @Override
-    public Cidadao atualizaCadastro(AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException, CadastroCidadaoException {
-
+    public Cidadao atualizaCadastro(AtualizaCidadaoDTO atualizaCidadaoDTO, HttpHeaders headers) throws CidadaoNaoEncontradoException, CadastroCidadaoException, NaoAutorizadoException, CidadaoCadastroInvalido {
         Cidadao cidadaoAtualizado = this.getCidadao(atualizaCidadaoDTO.getCPF());
+
+        if (usuarioTemPermissao(headers, atualizaCidadaoDTO.getCPF())) {
+
+        cidadaoAtualizado = this.getCidadao(atualizaCidadaoDTO.getCPF());
         validaAtualizacao(atualizaCidadaoDTO);
         cidadaoAtualizado.setProfissao(atualizaCidadaoDTO.getProfissao());
         cidadaoAtualizado.setNome(atualizaCidadaoDTO.getNomeCompleto());
@@ -78,13 +88,20 @@ public class CidadaoServiceImpl implements CidadaoService {
         cidadaoAtualizado.setComorbidades(atualizaCidadaoDTO.getComorbidades());
 
         cidadaoRepository.save(cidadaoAtualizado);
+        } else {
+            throw new NaoAutorizadoException();
+        }
 
         return cidadaoAtualizado;
     }
 
     @Override
-    public EnumSituacoes getSituacao(Long cpf) throws CidadaoNaoEncontradoException {
-        Cidadao cidadao = getCidadao(cpf);
+    public EnumSituacoes getSituacao(Long cpf, HttpHeaders headers) throws CidadaoNaoEncontradoException, NaoAutorizadoException, CidadaoCadastroInvalido {
+        if (!usuarioTemPermissao(headers, cpf)) {
+            throw new NaoAutorizadoException();
+        }
+
+            Cidadao cidadao = getCidadao(cpf);
         return cidadao.getSituacao();
     }
 
@@ -126,5 +143,16 @@ public class CidadaoServiceImpl implements CidadaoService {
         if (atualizaCidadaoDTO.getComorbidades() == null) {
             throw new CadastroCidadaoException("Adicao de comorbidades nao pode ser nula.");
         }
+    }
+
+    public boolean usuarioTemPermissao(HttpHeaders header, Long cpf) throws CidadaoCadastroInvalido, CidadaoNaoEncontradoException {
+        String subject;
+        try {
+            subject = jwtTokenService.getSujeitoDoToken(header.getFirst(SecurityConstants.TOKEN_HEADER));
+        } catch (Exception e){
+            throw new CidadaoCadastroInvalido(e.getMessage());
+        }
+        Cidadao optUsuario = this.getCidadao(Long.parseLong(subject));
+        return optUsuario != null && optUsuario.getCpf().equals(cpf);
     }
 }
