@@ -38,29 +38,26 @@ public class FuncionarioController {
     @PostMapping("/funcionario")
     public ResponseEntity<Funcionario> funcionario(@RequestBody FuncionarioDTO funcionarioDTO) throws FuncionarioNaoEncontrado, FuncionarioCadastroInvalido {
         Funcionario funcionario = funcionarioService.saveFuncionario(funcionarioDTO);
+        return new ResponseEntity<Funcionario>(funcionario, HttpStatus.OK);
+    }
+
+    @PostMapping("/funcionario/aprova_cadastro/{cpf}/")
+    public ResponseEntity<Funcionario> aprovaFuncionario(@RequestParam Long cpf) throws FuncionarioNaoEncontrado {
+        Funcionario funcionario = funcionarioService.aprovaCadastro(cpf);
         return new ResponseEntity<Funcionario>(funcionario, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/funcionario/{cpf}/aprova_cadastro/")
-    public ResponseEntity<?> aprovaFuncionario(@RequestParam Long cpf) throws LoginTipoInvalido {
-        Funcionario funcionario = funcionarioService.aprovaCadastro(cpf);
-        return new ResponseEntity<>(funcionario, HttpStatus.CREATED);
-    }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/funcionario/{cpf}/reprova_cadastro/")
+    @PostMapping("/funcionario/reprova_cadastro/{cpf}/")
     public ResponseEntity<?> reprovaCadastroFuncionario(@PathVariable Long cpf){
         funcionarioService.reprovaCadastro(cpf);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
     @PostMapping("/funcionario/habilita_por_idade/{idade}")
     public ResponseEntity<List<Cidadao>> habilitaCidadaoPorIdade(@RequestParam Integer idade){
-    	List<Cidadao> habilitados = funcionarioService.habilitaPorIdade(idade);
+        List<Cidadao> habilitados = funcionarioService.habilitaPorIdade(idade);
 
-		return new ResponseEntity<List<Cidadao>>(habilitados, HttpStatus.OK);
+        return new ResponseEntity<List<Cidadao>>(habilitados, HttpStatus.OK);
 
     }
 

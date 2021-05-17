@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public interface AgendaService {
 
-    public List<Agenda> getHorarios();
+    List<Agenda> getHorarios();
+    Agenda alocaHorario(AgendaDTO agendaDTO) throws AgendamentoCadastroInvalido;
 
-    public Agenda alocaHorario(AgendaDTO agendaDTO) throws AgendamentoCadastroInvalido;
 }

@@ -14,10 +14,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface CidadaoService {
-	
-	public Cidadao saveCidadao(CidadaoDTO cidadaoDTO) throws LoginTipoInvalido, CidadaoCadastroInvalido;
 
-	public Cidadao getCidadao(Long cpf) throws CidadaoNaoEncontradoException;
+	Cidadao saveCidadao(CidadaoDTO cidadaoDTO) throws LoginTipoInvalido, CidadaoCadastroInvalido;
+	Cidadao getCidadao(Long cpf) throws CidadaoNaoEncontradoException;
+	Cidadao atualizaCadastro(Long cpf, AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException;
 
-	public Cidadao atualizaCadastro(Long cpf, AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException;
 }
