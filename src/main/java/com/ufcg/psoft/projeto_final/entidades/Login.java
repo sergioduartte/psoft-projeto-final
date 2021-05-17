@@ -24,13 +24,6 @@ public class Login {
         this.loginTipo = loginTipo;
     }
 
-//    public Login(Long id, String login, String password, LoginTipo loginTipo) {
-//        this.id = id;
-//        this.login = login;
-//        this.password = password;
-//        this.loginTipo = loginTipo;
-//    }
-
     public String getLogin() {
         return login;
     }
@@ -45,5 +38,9 @@ public class Login {
 
     public Long getId() {
         return id;
+    }
+
+    public void setLoginTipo(LoginTipo loginTipo) {
+        this.loginTipo = loginTipo;
     }
 }

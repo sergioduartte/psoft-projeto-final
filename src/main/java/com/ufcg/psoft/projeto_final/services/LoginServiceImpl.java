@@ -24,9 +24,6 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     JwtTokenService authTokenService;
-    
-//    @Autowired
-//    AuthTokenService authTokenService;
 
     @Override
     public Login criaLogin(Long login, String senha, String loginTipo) throws LoginTipoInvalido {
@@ -57,5 +54,20 @@ public class LoginServiceImpl implements LoginService {
         Optional<Login> loginEncontrado = loginRepository.findByLogin(login);
         return loginEncontrado.orElse(null);
     }
-    
+
+    @Override
+    public void habilitaFuncionario(String login) throws LoginTipoInvalido{
+
+        LoginTipo loginTipoEncontrado = loginTipoService.findByLoginTipo("FUNCIONARIO");
+
+
+        Optional<Login> loginEncontrado = loginRepository.findByLogin(login);
+
+        if (loginEncontrado.isPresent()){
+            loginEncontrado.get().setLoginTipo(loginTipoEncontrado);
+        }
+
+    }
+
+
 }

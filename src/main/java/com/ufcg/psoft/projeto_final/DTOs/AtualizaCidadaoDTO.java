@@ -3,7 +3,6 @@ package com.ufcg.psoft.projeto_final.DTOs;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.Column;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 public class AtualizaCidadaoDTO {
@@ -18,8 +17,6 @@ public class AtualizaCidadaoDTO {
     private String email;
 
     @ApiModelProperty(example = "83998115533")
-    @Column(length = 11)
-    @Size(min = 11, max = 11)
     private String telefone;
 
     @ApiModelProperty(example = "Estudante")

@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface FuncionarioAnaliseRepository extends JpaRepository<Funcionario, Long> {
 
     @Query("SELECT f FROM Funcionario f WHERE f.cidadao = (SELECT c FROM Cidadao c WHERE c.cpf = :cpf)")
-    Optional<Funcionario> findByCpf(@Param("cpf") String cpf);
+    Optional<Funcionario> findByCpf(@Param("cpf") Long cpf);
 }

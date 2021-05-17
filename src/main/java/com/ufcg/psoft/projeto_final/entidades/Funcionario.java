@@ -44,4 +44,12 @@ public class Funcionario {
 	public void setLocalTrabalho(String localTrabalho) {
 		this.localTrabalho = localTrabalho;
 	}
+
+    public Long getCpf() {
+		return this.cidadao.getCpf();
+    }
+
+	public String getSenha() {
+		return this.cidadao.getSenha();
+	}
 }

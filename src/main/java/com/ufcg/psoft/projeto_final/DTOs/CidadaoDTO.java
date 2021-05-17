@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
-import javax.validation.constraints.Size;
 
 public class CidadaoDTO {
 

@@ -34,24 +34,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-//                .antMatchers("/auth/login").permitAll()
-//                .antMatchers("/*/funcionario/").permitAll()
-//                .antMatchers("/*/cidadao/").permitAll()
-//                .antMatchers("/*/cidadao/**").hasAnyRole("CIDADAO", "FUNCIONARIO")
-//                .antMatchers("/*/funcionario/**").hasRole("FUNCIONARIO")
+                .antMatchers("/*/auth/login").permitAll()
+                .antMatchers("/*/cidadao").permitAll()
+                .antMatchers("/*/cidadao/cadastro").hasRole("CIDADAO")
+                .antMatchers("/*/funcionario").hasRole("CIDADAO")
+                .antMatchers("/*/cidadao/**").hasAnyRole("CIDADAO", "FUNCIONARIO")
+                .antMatchers("/*/funcionario/**/aprova_cadastro").hasRole("ADMIN")
+                .antMatchers("/*/funcionario/**").hasRole("FUNCIONARIO")
                 .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
-                .anyRequest().permitAll()
-                //  .anyRequest().authenticated()
+                //.anyRequest().authenticated()
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager()))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
-
-//    private AuthJWTFilter authTokenFilter() throws Exception {
-//        return new AuthJWTFilter(getApplicationContext());
-//    }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -68,8 +64,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Arrays.asList("*"));
-        // Maybe I can just say "*" for methods and headers
-        // I just copied these lists from another Dropwizard project
         config.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE", "OPTIONS", "HEAD"));
         config.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept",
                 "Authorization", "Access-Control-Allow-Credentials", "Access-Control-Allow-Headers", "Access-Control-Allow-Methods",

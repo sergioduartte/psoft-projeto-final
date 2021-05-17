@@ -20,37 +20,15 @@ public class JwtTokenService {
     @Autowired
     private LoginRepository userDAO;
 
-    public String getUserEmailFromJWTToken(String token) throws Exception {
-        byte[] signingKey = SecurityConstants.JWT_SECRET.getBytes();
-
-        Jws<Claims> parsedToken = Jwts.parser()
-                .setSigningKey(signingKey)
-                .parseClaimsJws(token.replace("Bearer ", ""));
-
-        String username = parsedToken
-                .getBody()
-                .getSubject();
-
-        return username;
-    }
-
-    // public static final String TOKEN_KEY = "p3swhJQ2rzLbwPIdfmSr2w";
-    public static final String TOKEN_KEY = "p3swhJQ2rzLbwPIdfmSr2vuherfr8ty5t5478y4bvr7857tyufvrg7c8g7dscw";
-
 
     public LoginResponse autentica(LoginDTO user) {
         String msgErro = "Login e/ou senha invalido(s). Login nao realizado";
 
         Optional<Login> optUsuario = userDAO.findByLogin(user.getLogin());
 
-
-
         if (optUsuario.isPresent()) {
 
-
-
             if (user.getSenha().equals(optUsuario.get().getSenha())) {
-
 
                 return new LoginResponse(geraToken(user));
             }
@@ -62,8 +40,8 @@ public class JwtTokenService {
     }
 
     private String geraToken(LoginDTO user) {
-        String token = Jwts.builder().setSubject(user.getLogin()).signWith(SignatureAlgorithm.HS256, TOKEN_KEY)
-                .setExpiration(new Date(System.currentTimeMillis() + 1 * 60 * 1000)).compact();
-        return token;
+        String token = Jwts.builder().setSubject(user.getLogin()).signWith(SignatureAlgorithm.HS256, SecurityConstants.TOKEN_KEY)
+                .setExpiration(new Date(System.currentTimeMillis() + 10 * 60 * 1000)).compact();
+        return "Bearer " + token;
     }
 }
