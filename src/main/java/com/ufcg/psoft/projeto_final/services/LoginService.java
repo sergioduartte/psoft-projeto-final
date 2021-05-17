@@ -10,5 +10,6 @@ public interface LoginService {
     Login criaLogin(Long login, String senha, String loginTipo) throws LoginTipoInvalido;
     LoginResponse login(LoginDTO loginDTO) throws LoginInvalido;
     Login findByUserLogin(String login);
-    
+
+    void habilitaFuncionario(String login) throws LoginTipoInvalido;
 }

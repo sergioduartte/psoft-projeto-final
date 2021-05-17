@@ -1,14 +1,11 @@
 package com.ufcg.psoft.projeto_final.web_security;
 
-import java.security.SecureRandom;
-
 public class SecurityConstants {
 
     public static final String AUTH_LOGIN_URL = "auth/login";
 
-    public static final String JWT_SECRET = "n2r5u8x/A%D" +
-            "*G-KaPdSgVkYp3" +
-            "s6v9y$B&E(H+MbQeThWmZq4t7w!z%C*F-J@NcRf";
+    public static final String TOKEN_KEY = "p3swhJQ2rzLbwPIdfmSr2vuherfr8ty5t5478y4bvr7857tyufvrg7c8g7dscw";
+
 
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";

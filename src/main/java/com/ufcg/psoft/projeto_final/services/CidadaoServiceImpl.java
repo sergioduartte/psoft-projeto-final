@@ -6,10 +6,10 @@ import com.ufcg.psoft.projeto_final.erro.*;
 import com.ufcg.psoft.projeto_final.exceptions.CadastroCidadaoException;
 import com.ufcg.psoft.projeto_final.repository.*;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,7 +21,7 @@ public class CidadaoServiceImpl implements CidadaoService {
     CidadaoRepository cidadaoRepository;
 
     @Autowired
-    LoginCidadaoService loginCidadaoService;
+    LoginService loginService;
 
     @Override
     public Cidadao saveCidadao (CidadaoDTO cidadaoDTO) throws LoginTipoInvalido, CidadaoCadastroInvalido {
@@ -44,7 +44,7 @@ public class CidadaoServiceImpl implements CidadaoService {
 
         try {
             cidadaoRepository.save(novoCidadao);
-            loginCidadaoService.criaLoginCidadao(novoCidadao);
+            loginService.criaLogin(novoCidadao.getCpf(), novoCidadao.getSenha(), "CIDADAO");
         } catch (ConstraintViolationException e){
             throw new CidadaoCadastroInvalido(e.getMessage());
         }

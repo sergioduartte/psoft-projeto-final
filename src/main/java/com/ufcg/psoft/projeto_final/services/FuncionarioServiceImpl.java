@@ -3,13 +3,14 @@ package com.ufcg.psoft.projeto_final.services;
 import com.ufcg.psoft.projeto_final.DTOs.FuncionarioDTO;
 import com.ufcg.psoft.projeto_final.entidades.Cidadao;
 import com.ufcg.psoft.projeto_final.entidades.Funcionario;
-import com.ufcg.psoft.projeto_final.entidades.LoginFuncionario;
 import com.ufcg.psoft.projeto_final.entidades.situacoes.EnumSituacoes;
 import com.ufcg.psoft.projeto_final.entidades.situacoes.Situacao;
 import com.ufcg.psoft.projeto_final.erro.ErroCidadao;
+import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
 import com.ufcg.psoft.projeto_final.repository.CidadaoRepository;
 import com.ufcg.psoft.projeto_final.repository.FuncionarioAnaliseRepository;
 
+import com.ufcg.psoft.projeto_final.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FuncionarioServiceImpl implements  FuncionarioService {
@@ -25,17 +25,24 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
     @Autowired
     CidadaoService cidadaoService;
 
-    @Autowired
-    FuncionarioAnaliseRepository funcionarioAnaliseRepository;
+	@Autowired
+	FuncionarioAnaliseRepository funcionarioAnaliseRepository;
+
+	@Autowired
+	FuncionarioRepository funcionarioRepository;
+
     @Autowired
     CidadaoRepository cidadaoRepository;
+
+    @Autowired
+	LoginService loginService;
    
 
     @Override
     public ResponseEntity<?> save(FuncionarioDTO funcionario) {
         Cidadao cidadao = cidadaoService.getCidadao(funcionario.getCpf());
 
-        if (cidadao !=null) {
+        if (cidadao == null) {
              return ErroCidadao.cidadaoInexistente(funcionario.getCpf());
         }
 
@@ -96,9 +103,20 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
 	}
 
 	@Override
-	public ResponseEntity<?> habilitaFuncionario(String cpf) {
+	public Funcionario aprovaCadastro(Long cpf) throws LoginTipoInvalido {
 		Funcionario funcionario = funcionarioAnaliseRepository.findByCpf(cpf).get();
-		System.out.println(funcionario);
-		return null;
+
+		loginService.habilitaFuncionario(funcionario.getCpf().toString());
+
+		funcionarioAnaliseRepository.delete(funcionario);
+
+		return funcionario;
+	}
+
+	@Override
+	public void reprovaCadastro(Long cpf) {
+		Funcionario funcionario = funcionarioAnaliseRepository.findByCpf(cpf).get();
+
+		funcionarioAnaliseRepository.delete(funcionario);
 	}
 }

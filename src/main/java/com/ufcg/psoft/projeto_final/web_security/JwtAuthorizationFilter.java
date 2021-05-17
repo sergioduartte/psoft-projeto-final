@@ -54,7 +54,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String token = request.getHeader(SecurityConstants.TOKEN_HEADER);
         if (token != null && !token.trim().isEmpty() && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
             try {
-                byte[] signingKey = SecurityConstants.JWT_SECRET.getBytes();
+                String signingKey = SecurityConstants.TOKEN_KEY;
 
                 Jws<Claims> parsedToken = Jwts.parser()
                         .setSigningKey(signingKey)

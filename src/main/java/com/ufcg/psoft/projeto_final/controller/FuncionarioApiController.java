@@ -5,6 +5,7 @@ import com.ufcg.psoft.projeto_final.DTOs.RegistroVacinacaoDTO;
 import com.ufcg.psoft.projeto_final.entidades.*;
 import com.ufcg.psoft.projeto_final.entidades.situacoes.EnumSituacoes;
 import com.ufcg.psoft.projeto_final.erro.ErroCidadao;
+import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
 import com.ufcg.psoft.projeto_final.erro.RegistroInvalido;
 import com.ufcg.psoft.projeto_final.services.FuncionarioService;
 import com.ufcg.psoft.projeto_final.services.CidadaoService;
@@ -42,9 +43,16 @@ public class FuncionarioApiController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/funcionario/{cpf}/aprova_cadastro/")
-    public ResponseEntity<?> aprovaFuncionario(@RequestParam String cpf){
-        return funcionarioService.habilitaFuncionario(cpf);
+    public ResponseEntity<?> aprovaFuncionario(@RequestParam Long cpf) throws LoginTipoInvalido {
+        Funcionario funcionario = funcionarioService.aprovaCadastro(cpf);
+        return new ResponseEntity<>(funcionario, HttpStatus.CREATED);
+    }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/funcionario/{cpf}/reprova_cadastro/")
+    public ResponseEntity<?> reprovaCadastroFuncionario(@PathVariable Long cpf){
+        funcionarioService.reprovaCadastro(cpf);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
