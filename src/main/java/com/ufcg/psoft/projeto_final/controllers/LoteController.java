@@ -29,7 +29,7 @@ public class LoteController {
     
     @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_FUNCIONARIO')")
     @GetMapping("/lote/{id}")
-    public ResponseEntity<Lote> getLoteById(@RequestParam Long id) throws Exception {
+    public ResponseEntity<Lote> getLoteById(@RequestBody Long id) throws Exception {
         Lote vacinaEncontrada = loteService.getLoteById(id);
         return new ResponseEntity<Lote>(vacinaEncontrada, HttpStatus.OK);
     }

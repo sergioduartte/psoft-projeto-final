@@ -40,36 +40,32 @@ public class FuncionarioController {
         return new ResponseEntity<Funcionario>(funcionario, HttpStatus.OK);
     }
 
-    @PostMapping("/funcionario/aprova_cadastro/{cpf}/")
-    public ResponseEntity<Funcionario> aprovaFuncionario(@RequestParam Long cpf) throws FuncionarioNaoEncontrado {
+    @PostMapping("/funcionario/aprova_cadastro/")
+    public ResponseEntity<Funcionario> aprovaFuncionario(@RequestBody Long cpf) throws FuncionarioNaoEncontrado {
         Funcionario funcionario = funcionarioService.aprovaCadastro(cpf);
         return new ResponseEntity<Funcionario>(funcionario, HttpStatus.CREATED);
     }
 
-    @PostMapping("/funcionario/reprova_cadastro/{cpf}/")
-    public ResponseEntity<?> reprovaCadastroFuncionario(@PathVariable Long cpf){
+    @PostMapping("/funcionario/reprova_cadastro/")
+    public ResponseEntity<?> reprovaCadastroFuncionario(@RequestBody Long cpf){
         funcionarioService.reprovaCadastro(cpf);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/funcionario/habilita_por_idade/{idade}")
-    public ResponseEntity<List<Cidadao>> habilitaCidadaoPorIdade(@RequestParam Integer idade){
+    @PostMapping("/funcionario/habilita_por_idade/")
+    public ResponseEntity<List<Cidadao>> habilitaCidadaoPorIdade(@RequestBody Integer idade){
         List<Cidadao> habilitados = funcionarioService.habilitaPorIdade(idade);
-
         return new ResponseEntity<List<Cidadao>>(habilitados, HttpStatus.OK);
-
     }
 
-    @PostMapping("/funcionario/habilita_por_comorbidade/{comorbidade}")
-    public ResponseEntity<List<Cidadao>> habilitaCidadaoPorComorbidade(@RequestParam String comorbidade){
+    @PostMapping("/funcionario/habilita_por_comorbidade/")
+    public ResponseEntity<List<Cidadao>> habilitaCidadaoPorComorbidade(@RequestBody String comorbidade){
         List<Cidadao> habilitados = funcionarioService.habilitaPorComorbidade(comorbidade);
-
         return new ResponseEntity<List<Cidadao>>(habilitados, HttpStatus.OK);
-
     }
 
-    @PostMapping("/funcionario/habilita_por_profissao/{profissao}")
-    public ResponseEntity<List<Cidadao>> habilitaCidadaoPorProfissao(@RequestParam String profissao){
+    @PostMapping("/funcionario/habilita_por_profissao/")
+    public ResponseEntity<List<Cidadao>> habilitaCidadaoPorProfissao(@RequestBody String profissao){
         List<Cidadao> habilitados = funcionarioService.habilitaPorComorbidade(profissao);
 
         return new ResponseEntity<List<Cidadao>>(habilitados, HttpStatus.OK);
