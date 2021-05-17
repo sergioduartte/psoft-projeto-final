@@ -3,11 +3,11 @@ package com.ufcg.psoft.projeto_final.entidades.situacoes;
 import com.ufcg.psoft.projeto_final.entidades.Cidadao;
 import com.ufcg.psoft.projeto_final.entidades.Vacina;
 
-public class TomouPrimeiraDose extends Situacao {
+public class EsperandoSegundaDose extends Situacao {
 
 	@Override
 	public String habilitaCidadao(Cidadao cidadao) {
-		EnumSituacoes situacao = EnumSituacoes.TOMOU_PRIMEIRA_DOSE;
+		EnumSituacoes situacao = EnumSituacoes.ESPERANDO_SEGUNDA_DOSE;
 		cidadao.setSituacao(situacao);
 		return ""; // TODO "O cidadão de cpf "+ cidadao.getCpf() + " agora se encontra apto para tomar a segunda dose da vacina";
 	}

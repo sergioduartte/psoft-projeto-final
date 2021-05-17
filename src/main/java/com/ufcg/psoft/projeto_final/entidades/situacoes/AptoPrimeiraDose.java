@@ -14,7 +14,7 @@ public class AptoPrimeiraDose  extends Situacao{
 	@Override
 	public String atualizaSituacao(Cidadao cidadao, Integer dosesNecessarias) {
 		 if(dosesNecessarias == 2){
-	            EnumSituacoes situacao = EnumSituacoes.TOMOU_PRIMEIRA_DOSE;
+	            EnumSituacoes situacao = EnumSituacoes.ESPERANDO_SEGUNDA_DOSE;
 	            cidadao.setSituacao(situacao);
 	        }else{
 	            EnumSituacoes situacao = EnumSituacoes.VACINACAO_FINALIZADA;
