@@ -13,8 +13,12 @@ import org.springframework.stereotype.Service;
 
 import com.ufcg.psoft.projeto_final.DTOs.RegistroVacinacaoDTO;
 import com.ufcg.psoft.projeto_final.entidades.RegistroVacinacao;
+import com.ufcg.psoft.projeto_final.entidades.Vacina;
+import com.ufcg.psoft.projeto_final.entidades.situacoes.EnumSituacoes;
+import com.ufcg.psoft.projeto_final.entidades.situacoes.Situacao;
 import com.ufcg.psoft.projeto_final.repository.CidadaoRepository;
 import com.ufcg.psoft.projeto_final.repository.RegistroVacinacaoRepository;
+import com.ufcg.psoft.projeto_final.repository.VacinaRepository;
 
 @Service
 public class RegistroVacinacaoServiceImpl implements RegistroVacinacaoService{
@@ -27,6 +31,8 @@ public class RegistroVacinacaoServiceImpl implements RegistroVacinacaoService{
 	LoteRepository loteRepository;
 	@Autowired
 	AgendaRepository agendaRepository;
+	@Autowired
+	VacinaRepository vacinaRepository;
 
 	@Override
     public RegistroVacinacao saveRegistro(RegistroVacinacaoDTO registroVacinacaoDTO) throws RegistroInvalido {
@@ -53,7 +59,14 @@ public class RegistroVacinacaoServiceImpl implements RegistroVacinacaoService{
 		}
 		Lote lote = optionalLote.get();
 
-		//TODO alterar os estados do cidadao, provavelmente depois disso a gente conclui as US 18/19
+		
+		EnumSituacoes enumSituacao = cidadao.getSituacao();
+		Situacao situacao = enumSituacao.getSituacao();
+		Integer dosesNecessarias = vacinaRepository.getOne(cidadao.getIdVacina()).getDosesNecessarias();
+		
+		
+		situacao.atualizaSituacao(cidadao, dosesNecessarias);
+		
 		RegistroVacinacao novoRegistro = new RegistroVacinacao(registroVacinacaoDTO.getIdCidadao(),
 				registroVacinacaoDTO.getIdLote(),registroVacinacaoDTO.getDataAplicacao());
 		registroVacinacaoRepository.save(novoRegistro);
