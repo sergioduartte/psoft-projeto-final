@@ -5,8 +5,11 @@ import com.ufcg.psoft.projeto_final.entidades.Cidadao;
 import com.ufcg.psoft.projeto_final.entidades.Funcionario;
 import com.ufcg.psoft.projeto_final.entidades.situacoes.EnumSituacoes;
 import com.ufcg.psoft.projeto_final.entidades.situacoes.Situacao;
-import com.ufcg.psoft.projeto_final.erro.ErroCidadao;
+import com.ufcg.psoft.projeto_final.erro.FuncionarioCadastroInvalido;
+import com.ufcg.psoft.projeto_final.erro.FuncionarioNaoEncontrado;
 import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
+import com.ufcg.psoft.projeto_final.exceptions.CadastroFuncionarioException;
+import com.ufcg.psoft.projeto_final.exceptions.CidadaoNaoEncontradoException;
 import com.ufcg.psoft.projeto_final.repository.CidadaoRepository;
 import com.ufcg.psoft.projeto_final.repository.FuncionarioAnaliseRepository;
 
@@ -39,19 +42,26 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
    
 
     @Override
-    public ResponseEntity<?> save(FuncionarioDTO funcionario) {
-        Cidadao cidadao = cidadaoService.getCidadao(funcionario.getCpf());
+    public Funcionario saveFuncionario(FuncionarioDTO funcionarioDTO) throws FuncionarioNaoEncontrado, FuncionarioCadastroInvalido {
+		Cidadao cidadao;
+    	try {
+			cidadao = cidadaoService.getCidadao(funcionarioDTO.getCpf());
+		} catch (CidadaoNaoEncontradoException e){
+    		throw new FuncionarioNaoEncontrado(funcionarioDTO.getCpf());
+		}
 
-        if (cidadao == null) {
-             return ErroCidadao.cidadaoInexistente(funcionario.getCpf());
-        }
+		Funcionario novoFuncionario;
 
-        Funcionario novoFuncionario = new Funcionario(cidadao, funcionario.getCargo(),
-                funcionario.getLocalTrabalho());
+		try {
+			novoFuncionario = new Funcionario(cidadao, funcionarioDTO.getCargo(),
+					funcionarioDTO.getLocalTrabalho());
+		} catch (CadastroFuncionarioException e){
+			throw new FuncionarioCadastroInvalido(e.getMessage());
+		}
 
         funcionarioAnaliseRepository.save(novoFuncionario);
 
-        return new ResponseEntity<>(novoFuncionario, HttpStatus.CREATED);
+        return novoFuncionario;
     }
 
 	@Override

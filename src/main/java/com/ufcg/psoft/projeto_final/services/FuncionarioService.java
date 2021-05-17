@@ -6,13 +6,15 @@ import com.ufcg.psoft.projeto_final.entidades.Funcionario;
 
 import java.util.List;
 
+import com.ufcg.psoft.projeto_final.erro.FuncionarioCadastroInvalido;
+import com.ufcg.psoft.projeto_final.erro.FuncionarioNaoEncontrado;
 import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface FuncionarioService {
-    public ResponseEntity<?> save(FuncionarioDTO funcionario);
+    public Funcionario saveFuncionario(FuncionarioDTO funcionarioDTO) throws FuncionarioNaoEncontrado, FuncionarioCadastroInvalido;
 
     public Cidadao habilita(Long id);
     

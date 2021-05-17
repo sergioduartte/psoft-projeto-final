@@ -15,7 +15,7 @@ public class CidadaoDTO {
     @ApiModelProperty(example = "Rua 7 de Setembro, 124, Centro, São Paulo - SP")
     private String endereco;
 
-    @ApiModelProperty(example = "00000000000")
+    @ApiModelProperty(example = "12345678900")
     private Long cpf;
 
     @ApiModelProperty(example = "294867205917493")

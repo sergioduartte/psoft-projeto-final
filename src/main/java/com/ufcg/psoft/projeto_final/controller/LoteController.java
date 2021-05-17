@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
-public class LoteApiController {
+public class LoteController {
 
     @Autowired
     LoteService loteService;

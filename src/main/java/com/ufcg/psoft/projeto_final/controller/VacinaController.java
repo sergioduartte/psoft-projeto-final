@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class VacinaApiController {
+public class VacinaController {
 	@Autowired
 	VacinaService vacinaService;
 

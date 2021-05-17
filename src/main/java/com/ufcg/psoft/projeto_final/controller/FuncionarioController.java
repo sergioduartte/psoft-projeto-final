@@ -3,8 +3,9 @@ package com.ufcg.psoft.projeto_final.controller;
 import com.ufcg.psoft.projeto_final.DTOs.FuncionarioDTO;
 import com.ufcg.psoft.projeto_final.DTOs.RegistroVacinacaoDTO;
 import com.ufcg.psoft.projeto_final.entidades.*;
-import com.ufcg.psoft.projeto_final.entidades.situacoes.EnumSituacoes;
-import com.ufcg.psoft.projeto_final.erro.ErroCidadao;
+
+import com.ufcg.psoft.projeto_final.erro.FuncionarioCadastroInvalido;
+import com.ufcg.psoft.projeto_final.erro.FuncionarioNaoEncontrado;
 import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
 import com.ufcg.psoft.projeto_final.erro.RegistroInvalido;
 import com.ufcg.psoft.projeto_final.services.FuncionarioService;
@@ -19,12 +20,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class FuncionarioApiController {
+public class FuncionarioController {
 
     @Autowired
     FuncionarioService funcionarioService;
@@ -36,9 +36,9 @@ public class FuncionarioApiController {
     RegistroVacinacaoService registroVacinacaoService;
 
     @PostMapping("/funcionario")
-    public ResponseEntity<?> cadastrarFuncionario(@RequestBody FuncionarioDTO funcionario) {
-
-        return funcionarioService.save(funcionario);
+    public ResponseEntity<Funcionario> funcionario(@RequestBody FuncionarioDTO funcionarioDTO) throws FuncionarioNaoEncontrado, FuncionarioCadastroInvalido {
+        Funcionario funcionario = funcionarioService.saveFuncionario(funcionarioDTO);
+        return new ResponseEntity<Funcionario>(funcionario, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

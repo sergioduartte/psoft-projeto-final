@@ -8,6 +8,7 @@ import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
 
 import java.text.ParseException;
 
+import com.ufcg.psoft.projeto_final.exceptions.CidadaoNaoEncontradoException;
 import org.springframework.stereotype.Service;
 
 
@@ -16,7 +17,7 @@ public interface CidadaoService {
 	
 	public Cidadao saveCidadao(CidadaoDTO cidadaoDTO) throws LoginTipoInvalido, CidadaoCadastroInvalido;
 
-	public Cidadao getCidadao(Long cpf);
+	public Cidadao getCidadao(Long cpf) throws CidadaoNaoEncontradoException;
 
-	public Cidadao atualizaCadastro(Long cpf, AtualizaCidadaoDTO atualizaCidadaoDTO);
+	public Cidadao atualizaCadastro(Long cpf, AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException;
 }
