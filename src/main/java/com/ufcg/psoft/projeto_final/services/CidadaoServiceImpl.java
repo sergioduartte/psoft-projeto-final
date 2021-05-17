@@ -3,11 +3,13 @@ package com.ufcg.psoft.projeto_final.services;
 import com.ufcg.psoft.projeto_final.DTOs.*;
 import com.ufcg.psoft.projeto_final.entidades.*;
 import com.ufcg.psoft.projeto_final.erro.*;
+import com.ufcg.psoft.projeto_final.exceptions.CadastroCidadaoException;
 import com.ufcg.psoft.projeto_final.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,16 +24,31 @@ public class CidadaoServiceImpl implements CidadaoService {
     LoginCidadaoService loginCidadaoService;
 
     @Override
-    public Login save (CidadaoDTO cidadaoDTO) throws ParseException, LoginTipoInvalido {
+    public Login saveCidadao (CidadaoDTO cidadaoDTO) throws LoginTipoInvalido, CidadaoCadastroInvalido {
+        Date dataNascimento;
+        Cidadao novoCidadao;
 
-        Date dataNascimento = new SimpleDateFormat("dd/MM/yyyy").parse(cidadaoDTO.getDataNascimento());
+        try {
+            dataNascimento = new SimpleDateFormat("dd/MM/yyyy").parse(cidadaoDTO.getDataNascimento());
+        } catch (ParseException e) {
+            throw new CidadaoCadastroInvalido("Data nao esta no formato \"dd/MM/yyyy\"." );
+        }
 
-        Cidadao novoCidadao = new Cidadao(cidadaoDTO.getNomeCompleto(), cidadaoDTO.getEndereco(),
-                cidadaoDTO.getCpf(), cidadaoDTO.getCartaoSus(), cidadaoDTO.getEmail(), dataNascimento,
-                cidadaoDTO.getTelefone(), cidadaoDTO.getProfissao(), cidadaoDTO.getComorbidades());
 
+        try {
+            novoCidadao = new Cidadao(cidadaoDTO.getNomeCompleto(), cidadaoDTO.getEndereco(),
+                    cidadaoDTO.getCpf(), cidadaoDTO.getCartaoSus(), cidadaoDTO.getEmail(), dataNascimento,
+                    cidadaoDTO.getTelefone(), cidadaoDTO.getProfissao(), cidadaoDTO.getComorbidades());
+        } catch (CadastroCidadaoException e) {
+            throw new CidadaoCadastroInvalido(e.getMessage());
 
-        cidadaoRepository.save(novoCidadao);
+        }
+
+        try {
+            cidadaoRepository.save(novoCidadao);
+        } catch (ConstraintViolationException e){
+            throw new CidadaoCadastroInvalido(e.getMessage());
+        }
         return loginCidadaoService.criaLoginCidadao(novoCidadao);
     
     }

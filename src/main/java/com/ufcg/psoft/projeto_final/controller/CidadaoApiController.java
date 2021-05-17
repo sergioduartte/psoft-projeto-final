@@ -5,6 +5,7 @@ import com.ufcg.psoft.projeto_final.DTOs.CidadaoDTO;
 import com.ufcg.psoft.projeto_final.entidades.*;
 import com.ufcg.psoft.projeto_final.entidades.situacoes.EnumSituacoes;
 import com.ufcg.psoft.projeto_final.erro.AgendamentoCadastroInvalido;
+import com.ufcg.psoft.projeto_final.erro.CidadaoCadastroInvalido;
 import com.ufcg.psoft.projeto_final.erro.ErroCidadao;
 import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
 import com.ufcg.psoft.projeto_final.services.AgendaService;
@@ -32,9 +33,9 @@ public class CidadaoApiController {
 
     @ApiOperation(value = "Cadastra um Cidadao")
     @PostMapping("/cidadao")
-    public ResponseEntity<Login> save(@RequestBody CidadaoDTO cidadaoDTO) throws ParseException, LoginTipoInvalido {
-        Login loginCidadao = cidadaoService.save(cidadaoDTO);
-        return new ResponseEntity<>(loginCidadao, HttpStatus.OK);
+    public ResponseEntity<Login> cidadao(@RequestBody CidadaoDTO cidadaoDTO) throws CidadaoCadastroInvalido, LoginTipoInvalido {
+        Login loginCidadao = cidadaoService.saveCidadao(cidadaoDTO);
+        return new ResponseEntity<Login>(loginCidadao, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Altera o cadastro de um Cidadao a partir de seu CPF")
