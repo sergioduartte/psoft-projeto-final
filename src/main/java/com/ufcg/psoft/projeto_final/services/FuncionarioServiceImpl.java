@@ -5,6 +5,7 @@ import com.ufcg.psoft.projeto_final.entidades.Cidadao;
 import com.ufcg.psoft.projeto_final.entidades.Funcionario;
 import com.ufcg.psoft.projeto_final.entidades.LoginFuncionario;
 import com.ufcg.psoft.projeto_final.entidades.situacoes.EnumSituacoes;
+import com.ufcg.psoft.projeto_final.entidades.situacoes.Situacao;
 import com.ufcg.psoft.projeto_final.erro.ErroCidadao;
 import com.ufcg.psoft.projeto_final.repository.CidadaoRepository;
 import com.ufcg.psoft.projeto_final.repository.FuncionarioAnaliseRepository;
@@ -50,24 +51,11 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
 	public Cidadao habilita(Long id) {
 		Cidadao cidadao = cidadaoRepository.getOne(id);
 		
-    	EnumSituacoes situacao = cidadao.getSituacao();
-    	EnumSituacoes novaSituacao;
-    	if(situacao.equals(EnumSituacoes.NAO_APTO)) {
-    		novaSituacao = EnumSituacoes.APTO_PRIMEIRA_DOSE;
-
-    	}else if(situacao.equals(EnumSituacoes.TOMOU_PRIMEIRA_DOSE)){
-    		 novaSituacao = EnumSituacoes.APTO_SEGUNDA_DOSE;
-
-    	}else if(situacao.equals(EnumSituacoes.VACINACAO_FINALIZADA)){
-    		novaSituacao = situacao;
-    	
-    	}else {
-    		novaSituacao = situacao;
-    		
-    	}
-    	cidadao.setSituacao(novaSituacao);
-    	cidadaoRepository.save(cidadao);
-    	return cidadao;
+		EnumSituacoes enumSituacao = cidadao.getSituacao();
+		Situacao situacao = enumSituacao.getSituacao();
+		
+		situacao.habilitaCidadao(cidadao);
+		return cidadao;
 	}
 
 	@Override

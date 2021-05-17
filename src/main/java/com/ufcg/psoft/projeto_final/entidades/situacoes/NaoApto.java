@@ -6,7 +6,7 @@ import com.ufcg.psoft.projeto_final.entidades.Vacina;
 public class NaoApto extends Situacao{
 
 	@Override
-	public String atualizaSituacao(Cidadao cidadao) {
+	public String habilitaCidadao(Cidadao cidadao) {
 		EnumSituacoes situacao = EnumSituacoes.APTO_PRIMEIRA_DOSE;
 		cidadao.setSituacao(situacao);
 		
@@ -14,7 +14,7 @@ public class NaoApto extends Situacao{
 	}
 
 	@Override
-	public String tomaVacina(Cidadao cidadao, Vacina vacina) {
+	public String atualizaSituacao(Cidadao cidadao, Integer dosesNecessarias) {
 		 return ""; // TODO "O cidadão de cpf " + cidadao.getCpf() + "não está apto para a vacinação";
 	}
 

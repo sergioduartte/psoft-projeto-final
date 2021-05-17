@@ -7,14 +7,14 @@ import com.ufcg.psoft.projeto_final.entidades.Vacina;
 public class AptoPrimeiraDose  extends Situacao{
 
 	@Override
-	public String atualizaSituacao(Cidadao cidadao) {
+	public String habilitaCidadao(Cidadao cidadao) {
 		 return ""; // TODO ""O cidadão de CPF "+ cidadao.getCpf() +" não pode passar para a próxima fase  da vacinação sem ter tomado a primeira dose da vacina.";
 	}
 
 	@Override
-	public String tomaVacina(Cidadao cidadao, Vacina vacina) {
-		 if(vacina.getDosesNecessarias() == 2){
-	            EnumSituacoes situacao = EnumSituacoes.TOMOU_PRIMEIRA_DOSE;
+	public String atualizaSituacao(Cidadao cidadao, Integer dosesNecessarias) {
+		 if(dosesNecessarias == 2){
+	            EnumSituacoes situacao = EnumSituacoes.ESPERANDO_SEGUNDA_DOSE;
 	            cidadao.setSituacao(situacao);
 	        }else{
 	            EnumSituacoes situacao = EnumSituacoes.VACINACAO_FINALIZADA;

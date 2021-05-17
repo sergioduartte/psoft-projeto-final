@@ -6,7 +6,7 @@ import com.ufcg.psoft.projeto_final.entidades.Vacina;
 public abstract class Situacao {
 	
 	 Situacao(){};
-	 public abstract String atualizaSituacao(Cidadao cidadao);
-	 public abstract String tomaVacina(Cidadao cidadao, Vacina vacina);
+	 public abstract String habilitaCidadao(Cidadao cidadao);
+	 public abstract String atualizaSituacao(Cidadao cidadao, Integer dosesNecessarias);
 
 }
