@@ -6,8 +6,8 @@ import com.ufcg.psoft.projeto_final.models.Vacina;
 import com.ufcg.psoft.projeto_final.errors.LoteCadastroInvalido;
 import com.ufcg.psoft.projeto_final.errors.LoteNaoEncontrado;
 import com.ufcg.psoft.projeto_final.exceptions.CadastroLoteException;
-import com.ufcg.psoft.projeto_final.repositories.*;
-
+import com.ufcg.psoft.projeto_final.repositories.LoteRepository;
+import com.ufcg.psoft.projeto_final.repositories.VacinaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +26,10 @@ public class LoteServiceImpl implements  LoteService{
     @Autowired
     VacinaRepository vacinaRepository;
 
-
     @Override
     public Lote saveLote(LoteDTO loteDTO) throws LoteCadastroInvalido {
 
-        Date data_validade; //refatorar data
+        Date data_validade;
         try {
             data_validade = new SimpleDateFormat("yyyy-MM-dd").parse(loteDTO.getDataValidade());
         } catch (ParseException e) {
