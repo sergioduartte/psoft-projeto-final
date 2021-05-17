@@ -89,33 +89,43 @@ public class CidadaoServiceImpl implements CidadaoService {
         return cidadao.getSituacao();
     }
 
+    @Override
+    public void notificaAptoParaVacina(Long cpf) {
+        // AQUI DEVERIA SER ONDE AS NOTIFICACOES ACONTECEM AUTOMATICAMENTE
+        Cidadao cidadao = cidadaoRepository.getOne(cpf);
+
+        System.out.println("\n============================================");
+        System.out.println(cidadao.getSituacao().toString());
+        System.out.println("\n============================================");
+    }
+
     private void validaAtualizacao(AtualizaCidadaoDTO atualizaCidadaoDTO) throws CadastroCidadaoException {
-        // TODO nome nao pode ser vazio ou menor que 4 letras
+        // nome nao pode ser vazio ou menor que 4 letras
         if (atualizaCidadaoDTO.getNomeCompleto().length() < 5 || atualizaCidadaoDTO.getNomeCompleto().trim().isEmpty()) {
             throw new CadastroCidadaoException ("Novo nome do Cidadao nao pode ter menos de 5 caracteres.");
         }
-        // TODO endereco nao pode ser vazio
+        // endereco nao pode ser vazio
         if (atualizaCidadaoDTO.getEndereco().trim().isEmpty()){
             throw new CadastroCidadaoException ("Novo endereco nao pode ser vazio.");
         }
-        // TODO padrao <palavra><numero><.%+->@<palavra><numero><.->.<palavraDeTamanho2a6>
+        // padrao <palavra><numero><.%+->@<palavra><numero><.->.<palavraDeTamanho2a6>
         Pattern p = Pattern.compile("[\\w\\d_\\.%\\+-]+@[\\w\\d\\.-]+\\.[\\w]{2,6}");
         Matcher m = p.matcher(atualizaCidadaoDTO.getEmail());
         if (!m.matches()) {
             throw new CadastroCidadaoException( "Novo email do cidadao nao esta no formato fulano@email.dominio");
         }
-        // TODO checar se nao nasceu depois de hoje
+        // checar se nao nasceu depois de hoje
         Date hoje = java.util.Calendar.getInstance().getTime();
 
-        // TODO telefone tem de ter 11 digitos// TODO cartaoSus tem de ter 15 digitos
+        // telefone tem de ter 11 digitos// TODO cartaoSus tem de ter 15 digitos
         if (atualizaCidadaoDTO.getTelefone().length() < 11) {
             throw new CadastroCidadaoException ("O novo numero do Telefone esta fora do formato \"83999998888\".");
         }
-        // TODO profissao nao pode ser vazio
+        // profissao nao pode ser vazio
         if (atualizaCidadaoDTO.getProfissao().trim().isEmpty()){
             throw new CadastroCidadaoException ("Nova profissao nao pode ser vazia.");
         }
-        // TODO comorbidades pode ser vazio, não nulo
+        // comorbidades pode ser vazio, não nulo
         if (atualizaCidadaoDTO.getComorbidades() == null) {
             throw new CadastroCidadaoException ("Comorbidades nao pode ser nula.");
         }

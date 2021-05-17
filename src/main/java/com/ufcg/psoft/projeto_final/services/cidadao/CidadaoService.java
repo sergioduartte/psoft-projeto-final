@@ -20,4 +20,6 @@ public interface CidadaoService {
 	Cidadao atualizaCadastro(AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException, CadastroCidadaoException;
 
 	EnumSituacoes getSituacao(Long cpf) throws CidadaoNaoEncontradoException;
+
+	void notificaAptoParaVacina(Long id);
 }

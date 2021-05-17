@@ -70,8 +70,10 @@ public class FuncionarioServiceImpl implements  FuncionarioService {
 		
 		EnumSituacoes enumSituacao = cidadao.getSituacao();
 		Situacao situacao = enumSituacao.getSituacao();
-		
 		situacao.habilitaCidadao(cidadao);
+
+		cidadaoService.notificaAptoParaVacina(id);
+
 		return cidadao;
 	}
 

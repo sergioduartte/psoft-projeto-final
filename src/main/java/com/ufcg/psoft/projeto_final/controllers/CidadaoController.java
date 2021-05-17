@@ -44,12 +44,13 @@ public class CidadaoController {
     }
 
     @ApiOperation(value = "Retorna a situacao de um Cidadao a partir de seu CPF")
-    @GetMapping("/cidadao/consulta_situacao")
-    public ResponseEntity<EnumSituacoes> getSituacao(@RequestParam Long cpf) throws CidadaoNaoEncontradoException {
+    @GetMapping("/cidadao/situacao")
+    public ResponseEntity<EnumSituacoes> getSituacao(@RequestBody Long cpf) throws CidadaoNaoEncontradoException {
     	EnumSituacoes situacao = cidadaoService.getSituacao(cpf);
     	return new ResponseEntity<>(situacao, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Agenda a vacinacao de um cidadao de acordo com os parametros")
     @PostMapping("/agenda")
     public ResponseEntity<Agenda> agenda(@RequestBody AgendaDTO agendaDTO) throws AgendamentoCadastroInvalido {
         Agenda agendamento = agendaService.alocaHorario(agendaDTO);
