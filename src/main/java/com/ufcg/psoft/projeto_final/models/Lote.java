@@ -2,7 +2,9 @@ package com.ufcg.psoft.projeto_final.models;
 
 import com.ufcg.psoft.projeto_final.exceptions.CadastroLoteException;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 
 
@@ -13,45 +15,42 @@ public class Lote {
     @GeneratedValue
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "vacina_id") //TODO comentei isso pois não entendi a importancia de ter Vacina no Lote, se só
-//    private Vacina vacina;          //TODO precisa de saber o tipo, que é o ID do tipo da vacina, esse join n casa os IDs, casa as tabelas
-
-
     private Date dataValidade;
     private int qtdDosesTotal;
     private String fabricante;
     private Long idTipoVacina;
     private int qtdDosesReservadas;
+    private int qtdDosesUsadas;
 
     public Lote() {
         super();
     }
 
-    public Lote(Date dataValidade, int qtdDosesTotal, String fabricante, Long idTipoVacina) throws CadastroLoteException{
+    public Lote(Date dataValidade, int qtdDosesTotal, String fabricante, Long idTipoVacina) throws CadastroLoteException {
         super();
         validaLote(dataValidade, qtdDosesTotal);
         this.dataValidade = dataValidade;
         this.qtdDosesTotal = qtdDosesTotal;
         this.fabricante = fabricante;
-        this.idTipoVacina = idTipoVacina; //TODO Conversar sobre esse design
+        this.idTipoVacina = idTipoVacina;
         this.qtdDosesReservadas = 0;
+        this.qtdDosesUsadas = 0;
 
     }
 
-    private void validaLote(Date dataValidade, int qtdDoses) throws CadastroLoteException{
+    private void validaLote(Date dataValidade, int qtdDoses) throws CadastroLoteException {
         //TODO ver como testar a data
         if (qtdDoses <= 0) {
             throw new CadastroLoteException("Quantidade de doses não pode ser menor que 1.");
         }
     }
 
-    public int getQtdDosesTotal(){
+    public int getQtdDosesTotal() {
         return qtdDosesTotal;
     }
 
-    public int getQtdDosesDisponiveis(){
-        return getQtdDosesDisponiveis();
+    public int getQtdDosesDisponiveis() {
+        return this.qtdDosesTotal - this.qtdDosesUsadas;
     }
 
     public Date getDataValidade() {
@@ -84,6 +83,10 @@ public class Lote {
         if (qtdDosesReservadas < qtdDosesTotal) {
             qtdDosesReservadas++;
         }
+    }
+
+    public void usaDose() {
+        qtdDosesUsadas++;
     }
 }
 

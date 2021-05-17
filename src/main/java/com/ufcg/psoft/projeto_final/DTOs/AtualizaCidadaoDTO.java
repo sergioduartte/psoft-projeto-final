@@ -2,7 +2,6 @@ package com.ufcg.psoft.projeto_final.DTOs;
 
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.Column;
 import java.util.List;
 
 public class AtualizaCidadaoDTO {
@@ -55,5 +54,7 @@ public class AtualizaCidadaoDTO {
         return comorbidades;
     }
 
-    public Long getCPF() { return cpf; }
+    public Long getCPF() {
+        return cpf;
+    }
 }

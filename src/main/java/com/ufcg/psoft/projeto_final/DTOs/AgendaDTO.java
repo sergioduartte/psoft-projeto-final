@@ -7,7 +7,7 @@ public class AgendaDTO {
 
     private Long id;
     private Long idCidadao;
-    private Date horario;
+    private final Date horario;
 
     private Integer dosagem;
 
@@ -20,11 +20,11 @@ public class AgendaDTO {
         this.horario = horario;
     }
 
-    public Date getHorario(){
+    public Date getHorario() {
         return horario;
     }
 
-    public Long getIdCidadao(){
+    public Long getIdCidadao() {
         return idCidadao;
     }
 

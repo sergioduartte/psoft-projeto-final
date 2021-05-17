@@ -4,8 +4,8 @@ import javax.persistence.*;
 
 @Entity
 public class Login {
-	
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -16,7 +16,8 @@ public class Login {
     @OneToOne
     private LoginTipo loginTipo;
 
-    public Login() { }
+    public Login() {
+    }
 
     public Login(String login, String senha, LoginTipo loginTipo) {
         this.login = login;
@@ -36,11 +37,11 @@ public class Login {
         return loginTipo.getLoginTipo();
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setLoginTipo(LoginTipo loginTipo) {
         this.loginTipo = loginTipo;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

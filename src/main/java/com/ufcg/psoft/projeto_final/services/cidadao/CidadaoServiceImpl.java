@@ -1,15 +1,14 @@
 package com.ufcg.psoft.projeto_final.services.cidadao;
 
-import com.ufcg.psoft.projeto_final.DTOs.*;
-import com.ufcg.psoft.projeto_final.models.*;
-import com.ufcg.psoft.projeto_final.errors.*;
+import com.ufcg.psoft.projeto_final.DTOs.AtualizaCidadaoDTO;
+import com.ufcg.psoft.projeto_final.DTOs.CidadaoDTO;
+import com.ufcg.psoft.projeto_final.errors.CidadaoCadastroInvalido;
 import com.ufcg.psoft.projeto_final.exceptions.CadastroCidadaoException;
 import com.ufcg.psoft.projeto_final.exceptions.CidadaoNaoEncontradoException;
+import com.ufcg.psoft.projeto_final.models.Cidadao;
 import com.ufcg.psoft.projeto_final.models.situacoes.EnumSituacoes;
-import com.ufcg.psoft.projeto_final.repositories.*;
-
+import com.ufcg.psoft.projeto_final.repositories.CidadaoRepository;
 import com.ufcg.psoft.projeto_final.services.login.LoginService;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,22 +20,22 @@ import java.util.regex.Pattern;
 
 @Service
 public class CidadaoServiceImpl implements CidadaoService {
-	
-	@Autowired
+
+    @Autowired
     CidadaoRepository cidadaoRepository;
 
     @Autowired
     LoginService loginService;
 
     @Override
-    public Cidadao saveCidadao (CidadaoDTO cidadaoDTO) throws CidadaoCadastroInvalido {
+    public Cidadao saveCidadao(CidadaoDTO cidadaoDTO) throws CidadaoCadastroInvalido {
         Date dataNascimento;
         Cidadao novoCidadao;
 
         try {
             dataNascimento = new SimpleDateFormat("dd/MM/yyyy").parse(cidadaoDTO.getDataNascimento());
         } catch (ParseException e) {
-            throw new CidadaoCadastroInvalido("Data nao esta no formato \"dd/MM/yyyy\"." );
+            throw new CidadaoCadastroInvalido("Data nao esta no formato \"dd/MM/yyyy\".");
         }
 
         try {
@@ -50,7 +49,7 @@ public class CidadaoServiceImpl implements CidadaoService {
         try {
             cidadaoRepository.save(novoCidadao);
             loginService.criaLogin(novoCidadao.getCpf(), novoCidadao.getSenha(), "CIDADAO");
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new CidadaoCadastroInvalido(e.getMessage());
         }
 
@@ -61,7 +60,7 @@ public class CidadaoServiceImpl implements CidadaoService {
     @Override
     public Cidadao getCidadao(Long cpf) throws CidadaoNaoEncontradoException {
         Cidadao cidadao = cidadaoRepository.findById(cpf).get();
-        if( cidadao == null){
+        if (cidadao == null) {
             throw new CidadaoNaoEncontradoException("");
         }
         return cidadao;
@@ -102,32 +101,30 @@ public class CidadaoServiceImpl implements CidadaoService {
     private void validaAtualizacao(AtualizaCidadaoDTO atualizaCidadaoDTO) throws CadastroCidadaoException {
         // nome nao pode ser vazio ou menor que 4 letras
         if (atualizaCidadaoDTO.getNomeCompleto().length() < 5 || atualizaCidadaoDTO.getNomeCompleto().trim().isEmpty()) {
-            throw new CadastroCidadaoException ("Novo nome do Cidadao nao pode ter menos de 5 caracteres.");
+            throw new CadastroCidadaoException("Novo nome do Cidadao nao pode ter menos de 5 caracteres.");
         }
         // endereco nao pode ser vazio
-        if (atualizaCidadaoDTO.getEndereco().trim().isEmpty()){
-            throw new CadastroCidadaoException ("Novo endereco nao pode ser vazio.");
+        if (atualizaCidadaoDTO.getEndereco().trim().isEmpty()) {
+            throw new CadastroCidadaoException("Novo endereco nao pode ser vazio.");
         }
         // padrao <palavra><numero><.%+->@<palavra><numero><.->.<palavraDeTamanho2a6>
         Pattern p = Pattern.compile("[\\w\\d_\\.%\\+-]+@[\\w\\d\\.-]+\\.[\\w]{2,6}");
         Matcher m = p.matcher(atualizaCidadaoDTO.getEmail());
         if (!m.matches()) {
-            throw new CadastroCidadaoException( "Novo email do cidadao nao esta no formato fulano@email.dominio");
+            throw new CadastroCidadaoException("Novo email do cidadao nao esta no formato fulano@email.dominio");
         }
-        // checar se nao nasceu depois de hoje
-        Date hoje = java.util.Calendar.getInstance().getTime();
 
-        // telefone tem de ter 11 digitos// TODO cartaoSus tem de ter 15 digitos
+        // telefone tem de ter 11 digitos
         if (atualizaCidadaoDTO.getTelefone().length() < 11) {
-            throw new CadastroCidadaoException ("O novo numero do Telefone esta fora do formato \"83999998888\".");
+            throw new CadastroCidadaoException("O novo numero do Telefone esta fora do formato \"83999998888\".");
         }
         // profissao nao pode ser vazio
-        if (atualizaCidadaoDTO.getProfissao().trim().isEmpty()){
-            throw new CadastroCidadaoException ("Nova profissao nao pode ser vazia.");
+        if (atualizaCidadaoDTO.getProfissao().trim().isEmpty()) {
+            throw new CadastroCidadaoException("Nova profissao nao pode ser vazia.");
         }
         // comorbidades pode ser vazio, não nulo
         if (atualizaCidadaoDTO.getComorbidades() == null) {
-            throw new CadastroCidadaoException ("Comorbidades nao pode ser nula.");
+            throw new CadastroCidadaoException("Adicao de comorbidades nao pode ser nula.");
         }
     }
 }

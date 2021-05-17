@@ -6,7 +6,8 @@ public class TokenDTO implements Serializable {
 
     private String token;
 
-    public TokenDTO(){}
+    public TokenDTO() {
+    }
 
     public TokenDTO(String token) {
         this.token = token;

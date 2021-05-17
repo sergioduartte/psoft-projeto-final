@@ -13,21 +13,21 @@ public class LoginDTO {
     public LoginDTO() {
     }
 
-	public String getLogin() {
-		return login;
-	}
+    public String getLogin() {
+        return login;
+    }
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-	public String getSenha() {
-		return password;
-	}
+    public String getSenha() {
+        return password;
+    }
 
-	public void setSenha(String senha) {
-		this.password = senha;
-	}
+    public void setSenha(String senha) {
+        this.password = senha;
+    }
 
 
 }

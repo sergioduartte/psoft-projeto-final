@@ -1,9 +1,9 @@
 package com.ufcg.psoft.projeto_final.DTOs;
 
 public class FuncionarioDTO {
-    private Long cpf;
-    private String cargo;
-    private String localTrabalho;
+    private final Long cpf;
+    private final String cargo;
+    private final String localTrabalho;
 
     public FuncionarioDTO(Long cpf, String cargo, String localTrabalho) {
         this.cpf = cpf;

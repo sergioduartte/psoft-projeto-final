@@ -2,26 +2,23 @@ package com.ufcg.psoft.projeto_final.controllers;
 
 
 import com.ufcg.psoft.projeto_final.DTOs.VacinaDTO;
-import com.ufcg.psoft.projeto_final.models.Vacina;
 import com.ufcg.psoft.projeto_final.errors.VacinaCadastroInvalido;
 import com.ufcg.psoft.projeto_final.errors.VacinaNaoEncontrada;
+import com.ufcg.psoft.projeto_final.models.Vacina;
 import com.ufcg.psoft.projeto_final.services.vacina.VacinaService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class VacinaController {
-	@Autowired
-	VacinaService vacinaService;
 
+    @Autowired
+    VacinaService vacinaService;
 
     @GetMapping("/vacina")
     public ResponseEntity<List<Vacina>> getVacinas() {

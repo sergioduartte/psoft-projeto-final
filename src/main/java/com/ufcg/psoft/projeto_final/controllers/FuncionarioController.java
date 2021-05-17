@@ -2,23 +2,21 @@ package com.ufcg.psoft.projeto_final.controllers;
 
 import com.ufcg.psoft.projeto_final.DTOs.FuncionarioDTO;
 import com.ufcg.psoft.projeto_final.DTOs.RegistroVacinacaoDTO;
-import com.ufcg.psoft.projeto_final.models.*;
-
 import com.ufcg.psoft.projeto_final.errors.FuncionarioCadastroInvalido;
 import com.ufcg.psoft.projeto_final.errors.FuncionarioNaoEncontrado;
-import com.ufcg.psoft.projeto_final.errors.LoginTipoInvalido;
 import com.ufcg.psoft.projeto_final.errors.RegistroInvalido;
-import com.ufcg.psoft.projeto_final.services.funcionario.FuncionarioService;
+import com.ufcg.psoft.projeto_final.models.Cidadao;
+import com.ufcg.psoft.projeto_final.models.Funcionario;
+import com.ufcg.psoft.projeto_final.models.RegistroVacinacao;
 import com.ufcg.psoft.projeto_final.services.cidadao.CidadaoService;
-
-import java.util.List;
-
+import com.ufcg.psoft.projeto_final.services.funcionario.FuncionarioService;
 import com.ufcg.psoft.projeto_final.services.registro.RegistroVacinacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -47,25 +45,25 @@ public class FuncionarioController {
     }
 
     @PostMapping("/funcionario/reprova_cadastro/")
-    public ResponseEntity<?> reprovaCadastroFuncionario(@RequestBody Long cpf){
+    public ResponseEntity<?> reprovaCadastroFuncionario(@RequestBody Long cpf) {
         funcionarioService.reprovaCadastro(cpf);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/funcionario/habilita_por_idade/")
-    public ResponseEntity<List<Cidadao>> habilitaCidadaoPorIdade(@RequestBody Integer idade){
+    public ResponseEntity<List<Cidadao>> habilitaCidadaoPorIdade(@RequestBody Integer idade) {
         List<Cidadao> habilitados = funcionarioService.habilitaPorIdade(idade);
         return new ResponseEntity<List<Cidadao>>(habilitados, HttpStatus.OK);
     }
 
     @PostMapping("/funcionario/habilita_por_comorbidade/")
-    public ResponseEntity<List<Cidadao>> habilitaCidadaoPorComorbidade(@RequestBody String comorbidade){
+    public ResponseEntity<List<Cidadao>> habilitaCidadaoPorComorbidade(@RequestBody String comorbidade) {
         List<Cidadao> habilitados = funcionarioService.habilitaPorComorbidade(comorbidade);
         return new ResponseEntity<List<Cidadao>>(habilitados, HttpStatus.OK);
     }
 
     @PostMapping("/funcionario/habilita_por_profissao/")
-    public ResponseEntity<List<Cidadao>> habilitaCidadaoPorProfissao(@RequestBody String profissao){
+    public ResponseEntity<List<Cidadao>> habilitaCidadaoPorProfissao(@RequestBody String profissao) {
         List<Cidadao> habilitados = funcionarioService.habilitaPorComorbidade(profissao);
 
         return new ResponseEntity<List<Cidadao>>(habilitados, HttpStatus.OK);

@@ -1,16 +1,16 @@
 package com.ufcg.psoft.projeto_final.services.login;
 
-import java.util.Optional;
-
+import com.ufcg.psoft.projeto_final.DTOs.LoginDTO;
+import com.ufcg.psoft.projeto_final.errors.LoginInvalido;
+import com.ufcg.psoft.projeto_final.errors.LoginTipoInvalido;
+import com.ufcg.psoft.projeto_final.models.Login;
+import com.ufcg.psoft.projeto_final.models.LoginTipo;
+import com.ufcg.psoft.projeto_final.repositories.LoginRepository;
 import com.ufcg.psoft.projeto_final.web_security.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ufcg.psoft.projeto_final.DTOs.*;
-import com.ufcg.psoft.projeto_final.models.*;
-import com.ufcg.psoft.projeto_final.errors.*;
-import com.ufcg.psoft.projeto_final.repositories.*;
-
+import java.util.Optional;
 
 
 @Service
@@ -62,7 +62,7 @@ public class LoginServiceImpl implements LoginService {
 
         Optional<Login> loginEncontrado = loginRepository.findByLogin(login);
 
-        if (loginEncontrado.isPresent()){
+        if (loginEncontrado.isPresent()) {
             loginEncontrado.get().setLoginTipo(loginTipoEncontrado);
         }
 
