@@ -54,7 +54,7 @@ public class CidadaoController {
 
     @ApiOperation(value = "Agenda a vacinação de um cidadao de acordo com os parametros")
     @PostMapping("/agenda")
-    public ResponseEntity<Agenda> agenda(@RequestBody AgendaDTO agendaDTO, @RequestHeader HttpHeaders headers) throws AgendamentoCadastroInvalido, NaoAutorizadoException {
+    public ResponseEntity<Agenda> agenda(@RequestBody AgendaDTO agendaDTO, @RequestHeader HttpHeaders headers) throws AgendamentoCadastroInvalido, NaoAutorizadoException, CidadaoCadastroInvalido, CidadaoNaoEncontradoException {
         Agenda agendamento = agendaService.alocaHorario(agendaDTO, headers);
         return new ResponseEntity<Agenda>(agendamento, HttpStatus.OK);
     }

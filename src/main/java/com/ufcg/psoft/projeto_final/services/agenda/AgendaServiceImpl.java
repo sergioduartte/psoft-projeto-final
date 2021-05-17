@@ -2,7 +2,9 @@ package com.ufcg.psoft.projeto_final.services.agenda;
 
 import com.ufcg.psoft.projeto_final.DTOs.AgendaDTO;
 import com.ufcg.psoft.projeto_final.errors.AgendamentoCadastroInvalido;
+import com.ufcg.psoft.projeto_final.errors.CidadaoCadastroInvalido;
 import com.ufcg.psoft.projeto_final.exceptions.CadastroAgendamentoException;
+import com.ufcg.psoft.projeto_final.exceptions.CidadaoNaoEncontradoException;
 import com.ufcg.psoft.projeto_final.exceptions.NaoAutorizadoException;
 import com.ufcg.psoft.projeto_final.models.Agenda;
 import com.ufcg.psoft.projeto_final.models.Cidadao;
@@ -50,7 +52,7 @@ public class AgendaServiceImpl implements AgendaService {
     }
 
     @Override
-    public Agenda alocaHorario(AgendaDTO agendaDTO, HttpHeaders headers) throws AgendamentoCadastroInvalido, NaoAutorizadoException {
+    public Agenda alocaHorario(AgendaDTO agendaDTO, HttpHeaders headers) throws AgendamentoCadastroInvalido, NaoAutorizadoException, CidadaoCadastroInvalido, CidadaoNaoEncontradoException {
 
         Optional<Cidadao> optionalCidadao = cidadaoRepository.findById(agendaDTO.getIdCidadao());
         if (!optionalCidadao.isPresent()) {
