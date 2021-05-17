@@ -8,6 +8,7 @@ import com.ufcg.psoft.projeto_final.errors.CidadaoCadastroInvalido;
 import com.ufcg.psoft.projeto_final.errors.LoginTipoInvalido;
 import com.ufcg.psoft.projeto_final.exceptions.CadastroCidadaoException;
 import com.ufcg.psoft.projeto_final.exceptions.CidadaoNaoEncontradoException;
+import com.ufcg.psoft.projeto_final.exceptions.NaoAutorizadoException;
 import com.ufcg.psoft.projeto_final.models.Agenda;
 import com.ufcg.psoft.projeto_final.models.Cidadao;
 import com.ufcg.psoft.projeto_final.models.situacoes.EnumSituacoes;
@@ -15,6 +16,7 @@ import com.ufcg.psoft.projeto_final.services.agenda.AgendaService;
 import com.ufcg.psoft.projeto_final.services.cidadao.CidadaoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,22 +40,22 @@ public class CidadaoController {
 
     @ApiOperation(value = "Altera o cadastro de um Cidadao a partir de seu CPF")
     @PostMapping("/cidadao/cadastro")
-    public ResponseEntity<Cidadao> editaCadastro(@RequestBody AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException, CadastroCidadaoException {
-        Cidadao cidadao = cidadaoService.atualizaCadastro(atualizaCidadaoDTO);
+    public ResponseEntity<Cidadao> editaCadastro(@RequestBody AtualizaCidadaoDTO atualizaCidadaoDTO, @RequestHeader HttpHeaders headers) throws CidadaoNaoEncontradoException, CadastroCidadaoException, CidadaoCadastroInvalido, NaoAutorizadoException {
+        Cidadao cidadao = cidadaoService.atualizaCadastro(atualizaCidadaoDTO, headers);
         return new ResponseEntity<Cidadao>(cidadao, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Retorna a situação de um Cidadao a partir de seu CPF")
     @GetMapping("/cidadao/situacao")
-    public ResponseEntity<EnumSituacoes> getSituacao(@RequestBody Long cpf) throws CidadaoNaoEncontradoException {
-        EnumSituacoes situacao = cidadaoService.getSituacao(cpf);
+    public ResponseEntity<EnumSituacoes> getSituacao(@RequestBody Long cpf, @RequestHeader HttpHeaders headers) throws CidadaoNaoEncontradoException, CidadaoCadastroInvalido, NaoAutorizadoException {
+        EnumSituacoes situacao = cidadaoService.getSituacao(cpf, headers);
         return new ResponseEntity<>(situacao, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Agenda a vacinação de um cidadao de acordo com os parametros")
     @PostMapping("/agenda")
-    public ResponseEntity<Agenda> agenda(@RequestBody AgendaDTO agendaDTO) throws AgendamentoCadastroInvalido {
-        Agenda agendamento = agendaService.alocaHorario(agendaDTO);
+    public ResponseEntity<Agenda> agenda(@RequestBody AgendaDTO agendaDTO, @RequestHeader HttpHeaders headers) throws AgendamentoCadastroInvalido, NaoAutorizadoException {
+        Agenda agendamento = agendaService.alocaHorario(agendaDTO, headers);
         return new ResponseEntity<Agenda>(agendamento, HttpStatus.OK);
     }
 

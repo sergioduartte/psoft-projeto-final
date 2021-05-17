@@ -3,6 +3,7 @@ package com.ufcg.psoft.projeto_final.services.agenda;
 import com.ufcg.psoft.projeto_final.DTOs.AgendaDTO;
 import com.ufcg.psoft.projeto_final.errors.AgendamentoCadastroInvalido;
 import com.ufcg.psoft.projeto_final.exceptions.CadastroAgendamentoException;
+import com.ufcg.psoft.projeto_final.exceptions.NaoAutorizadoException;
 import com.ufcg.psoft.projeto_final.models.Agenda;
 import com.ufcg.psoft.projeto_final.models.Cidadao;
 import com.ufcg.psoft.projeto_final.models.Lote;
@@ -10,7 +11,9 @@ import com.ufcg.psoft.projeto_final.models.situacoes.EnumSituacoes;
 import com.ufcg.psoft.projeto_final.repositories.AgendaRepository;
 import com.ufcg.psoft.projeto_final.repositories.CidadaoRepository;
 import com.ufcg.psoft.projeto_final.repositories.LoteRepository;
+import com.ufcg.psoft.projeto_final.services.cidadao.CidadaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,6 +32,9 @@ public class AgendaServiceImpl implements AgendaService {
     @Autowired
     LoteRepository loteRepository;
 
+    @Autowired
+    CidadaoService cidadaoService;
+
     @Override
     public List<Agenda> getHorarios() {
 
@@ -44,18 +50,23 @@ public class AgendaServiceImpl implements AgendaService {
     }
 
     @Override
-    public Agenda alocaHorario(AgendaDTO agendaDTO) throws AgendamentoCadastroInvalido {
+    public Agenda alocaHorario(AgendaDTO agendaDTO, HttpHeaders headers) throws AgendamentoCadastroInvalido, NaoAutorizadoException {
 
         Optional<Cidadao> optionalCidadao = cidadaoRepository.findById(agendaDTO.getIdCidadao());
         if (!optionalCidadao.isPresent()) {
             throw new AgendamentoCadastroInvalido("Usuario nao encontrado");
         }
 
-        List<Lote> lotes = loteRepository.findAll();
+            List<Lote> lotes = loteRepository.findAll();
         Lote loteVacina;
         Cidadao cidadao = optionalCidadao.get();
 
-        if (cidadao.getIdVacina() == null) {
+        if (!cidadaoService.usuarioTemPermissao(headers, cidadao.getCpf())) {
+            throw new NaoAutorizadoException();
+        }
+
+
+            if (cidadao.getIdVacina() == null) {
             loteVacina = encontraLoteDisponivel(lotes);
 
         } else {
@@ -108,4 +119,6 @@ public class AgendaServiceImpl implements AgendaService {
         throw new AgendamentoCadastroInvalido(
                 "Nao ha lote com vacinas com id " + cidadao.getIdVacina() + " disponiveis no momento.");
     }
+
+
 }
