@@ -13,6 +13,9 @@ public class AtualizaCidadaoDTO {
     @ApiModelProperty(example = "Rua 7 de Setembro, 124, Centro, São Paulo - SP")
     private String endereco;
 
+    @ApiModelProperty(example = "12345678900")
+    private Long cpf;
+
     @ApiModelProperty(example = "jose123@gmail.com")
     private String email;
 
@@ -22,7 +25,7 @@ public class AtualizaCidadaoDTO {
     @ApiModelProperty(example = "Estudante")
     private String profissao;
 
-    @ApiModelProperty(example = "[\"diabetes\", \"câncer\"]")
+    @ApiModelProperty(example = "[\"diabetes\", \"hipertensao\"]")
     private List<String> comorbidades;
 
 
@@ -51,4 +54,6 @@ public class AtualizaCidadaoDTO {
     public List<String> getComorbidades() {
         return comorbidades;
     }
+
+    public Long getCPF() { return cpf; }
 }

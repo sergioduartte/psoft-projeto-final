@@ -2,6 +2,7 @@ package com.ufcg.psoft.projeto_final.controllers;
 
 import com.ufcg.psoft.projeto_final.DTOs.AgendaDTO;
 import com.ufcg.psoft.projeto_final.DTOs.CidadaoDTO;
+import com.ufcg.psoft.projeto_final.exceptions.CadastroCidadaoException;
 import com.ufcg.psoft.projeto_final.models.*;
 import com.ufcg.psoft.projeto_final.models.situacoes.EnumSituacoes;
 import com.ufcg.psoft.projeto_final.errors.AgendamentoCadastroInvalido;
@@ -37,22 +38,15 @@ public class CidadaoController {
 
     @ApiOperation(value = "Altera o cadastro de um Cidadao a partir de seu CPF")
     @PostMapping("/cidadao/cadastro")
-    public ResponseEntity<?> editaCadastro(@RequestParam Long cpf, @RequestBody AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException {
-        Cidadao cidadao = cidadaoService.getCidadao(cpf);
-        if(cidadao == null) {
-            //return ErroCidadao.cidadaoInexistente(cpf);
-        }
-
-        return new ResponseEntity<>(cidadaoService.atualizaCadastro(cpf, atualizaCidadaoDTO), HttpStatus.OK);
+    public ResponseEntity<Cidadao> editaCadastro(@RequestBody AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException, CadastroCidadaoException {
+        Cidadao cidadao = cidadaoService.atualizaCadastro(atualizaCidadaoDTO);
+        return new ResponseEntity<Cidadao>(cidadao, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Retorna a situacao de um Cidadao a partir de seu CPF")
     @GetMapping("/cidadao/consulta_situacao")
     public ResponseEntity<?> getSituacao(@RequestParam Long cpf) throws CidadaoNaoEncontradoException {
     	Cidadao cidadao = cidadaoService.getCidadao(cpf);
-    	if(cidadao != null) {
-    		//return ErroCidadao.cidadaoInexistente(cpf);
-    	}
     	EnumSituacoes situacao = cidadao.getSituacao();
     	return new ResponseEntity<>(situacao, HttpStatus.OK);
     }

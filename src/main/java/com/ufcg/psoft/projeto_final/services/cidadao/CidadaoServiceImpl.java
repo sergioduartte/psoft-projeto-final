@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class CidadaoServiceImpl implements CidadaoService {
@@ -26,7 +28,7 @@ public class CidadaoServiceImpl implements CidadaoService {
     LoginService loginService;
 
     @Override
-    public Cidadao saveCidadao (CidadaoDTO cidadaoDTO) throws LoginTipoInvalido, CidadaoCadastroInvalido {
+    public Cidadao saveCidadao (CidadaoDTO cidadaoDTO) throws CidadaoCadastroInvalido {
         Date dataNascimento;
         Cidadao novoCidadao;
 
@@ -47,7 +49,7 @@ public class CidadaoServiceImpl implements CidadaoService {
         try {
             cidadaoRepository.save(novoCidadao);
             loginService.criaLogin(novoCidadao.getCpf(), novoCidadao.getSenha(), "CIDADAO");
-        } catch (ConstraintViolationException e){
+        } catch (Exception e){
             throw new CidadaoCadastroInvalido(e.getMessage());
         }
 
@@ -57,26 +59,58 @@ public class CidadaoServiceImpl implements CidadaoService {
 
     @Override
     public Cidadao getCidadao(Long cpf) throws CidadaoNaoEncontradoException {
-        Cidadao c = cidadaoRepository.findById(cpf).get();
-        if( c == null){
+        Cidadao cidadao = cidadaoRepository.findById(cpf).get();
+        if( cidadao == null){
             throw new CidadaoNaoEncontradoException("");
         }
-        return c;
+        return cidadao;
     }
 
     @Override
-    public Cidadao atualizaCadastro(Long cpf, AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException {
+    public Cidadao atualizaCadastro(AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException, CadastroCidadaoException {
 
-        Cidadao cidadao = this.getCidadao(cpf);
+        Cidadao cidadaoAtualizado = this.getCidadao(atualizaCidadaoDTO.getCPF());
+        validaAtualizacao(atualizaCidadaoDTO);
+        cidadaoAtualizado.setProfissao(atualizaCidadaoDTO.getProfissao());
+        cidadaoAtualizado.setNome(atualizaCidadaoDTO.getNomeCompleto());
+        cidadaoAtualizado.setEndereco(atualizaCidadaoDTO.getEndereco());
+        cidadaoAtualizado.setTelefone(atualizaCidadaoDTO.getTelefone());
+        cidadaoAtualizado.setComorbidades(atualizaCidadaoDTO.getComorbidades());
 
-        cidadao.setProfissao(atualizaCidadaoDTO.getProfissao());
-        cidadao.setNome(atualizaCidadaoDTO.getNomeCompleto());
-        cidadao.setEndereco(atualizaCidadaoDTO.getEndereco());
-        cidadao.setTelefone(atualizaCidadaoDTO.getTelefone());
-        cidadao.setComorbidades(atualizaCidadaoDTO.getComorbidades());
+        cidadaoRepository.save(cidadaoAtualizado);
 
-        cidadaoRepository.save(cidadao);
+        return cidadaoAtualizado;
+    }
 
-        return cidadao;
+    private void validaAtualizacao(AtualizaCidadaoDTO atualizaCidadaoDTO) throws CadastroCidadaoException {
+        // TODO nome nao pode ser vazio ou menor que 4 letras
+        if (atualizaCidadaoDTO.getNomeCompleto().length() < 5 || atualizaCidadaoDTO.getNomeCompleto().trim().isEmpty()) {
+            throw new CadastroCidadaoException ("Novo nome do Cidadao nao pode ter menos de 5 caracteres.");
+        }
+        // TODO endereco nao pode ser vazio
+        if (atualizaCidadaoDTO.getEndereco().trim().isEmpty()){
+            throw new CadastroCidadaoException ("Novo endereco nao pode ser vazio.");
+        }
+        // TODO padrao <palavra><numero><.%+->@<palavra><numero><.->.<palavraDeTamanho2a6>
+        Pattern p = Pattern.compile("[\\w\\d_\\.%\\+-]+@[\\w\\d\\.-]+\\.[\\w]{2,6}");
+        Matcher m = p.matcher(atualizaCidadaoDTO.getEmail());
+        if (!m.matches()) {
+            throw new CadastroCidadaoException( "Novo email do cidadao nao esta no formato fulano@email.dominio");
+        }
+        // TODO checar se nao nasceu depois de hoje
+        Date hoje = java.util.Calendar.getInstance().getTime();
+
+        // TODO telefone tem de ter 11 digitos// TODO cartaoSus tem de ter 15 digitos
+        if (atualizaCidadaoDTO.getTelefone().length() < 11) {
+            throw new CadastroCidadaoException ("O novo numero do Telefone esta fora do formato \"83999998888\".");
+        }
+        // TODO profissao nao pode ser vazio
+        if (atualizaCidadaoDTO.getProfissao().trim().isEmpty()){
+            throw new CadastroCidadaoException ("Nova profissao nao pode ser vazia.");
+        }
+        // TODO comorbidades pode ser vazio, não nulo
+        if (atualizaCidadaoDTO.getComorbidades() == null) {
+            throw new CadastroCidadaoException ("Comorbidades nao pode ser nula.");
+        }
     }
 }

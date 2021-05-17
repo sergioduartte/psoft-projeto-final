@@ -84,7 +84,6 @@ public class Cidadao {
         if (nome.length() < 5 || nome.trim().isEmpty()) {
             throw new CadastroCidadaoException ("Nome do Cidadao nao pode ter menos de 5 caracteres.");
         }
-
         // TODO endereco nao pode ser vazio
         if (endereco.trim().isEmpty()){
             throw new CadastroCidadaoException ("Endereco nao pode ser vazio.");
@@ -97,7 +96,7 @@ public class Cidadao {
         if (cartaoSus.length() < 15) {
             throw new CadastroCidadaoException ("O numero do cartao do SUS esta fora do formato.");
         }
-        // TODO email procurar como validar (projetoP2-sergio)
+        // TODO padrao <palavra><numero><.%+->@<palavra><numero><.->.<palavraDeTamanho2a6>
         Pattern p = Pattern.compile("[\\w\\d_\\.%\\+-]+@[\\w\\d\\.-]+\\.[\\w]{2,6}");
         Matcher m = p.matcher(email);
 
