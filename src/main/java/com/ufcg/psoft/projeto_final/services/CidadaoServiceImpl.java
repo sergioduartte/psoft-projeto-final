@@ -24,7 +24,7 @@ public class CidadaoServiceImpl implements CidadaoService {
     LoginCidadaoService loginCidadaoService;
 
     @Override
-    public Login saveCidadao (CidadaoDTO cidadaoDTO) throws LoginTipoInvalido, CidadaoCadastroInvalido {
+    public Cidadao saveCidadao (CidadaoDTO cidadaoDTO) throws LoginTipoInvalido, CidadaoCadastroInvalido {
         Date dataNascimento;
         Cidadao novoCidadao;
 
@@ -34,23 +34,22 @@ public class CidadaoServiceImpl implements CidadaoService {
             throw new CidadaoCadastroInvalido("Data nao esta no formato \"dd/MM/yyyy\"." );
         }
 
-
         try {
             novoCidadao = new Cidadao(cidadaoDTO.getNomeCompleto(), cidadaoDTO.getEndereco(),
                     cidadaoDTO.getCpf(), cidadaoDTO.getCartaoSus(), cidadaoDTO.getEmail(), dataNascimento,
-                    cidadaoDTO.getTelefone(), cidadaoDTO.getProfissao(), cidadaoDTO.getComorbidades());
+                    cidadaoDTO.getTelefone(), cidadaoDTO.getProfissao(), cidadaoDTO.getComorbidades(), cidadaoDTO.getSenha());
         } catch (CadastroCidadaoException e) {
             throw new CidadaoCadastroInvalido(e.getMessage());
-
         }
 
         try {
             cidadaoRepository.save(novoCidadao);
+            loginCidadaoService.criaLoginCidadao(novoCidadao);
         } catch (ConstraintViolationException e){
             throw new CidadaoCadastroInvalido(e.getMessage());
         }
-        return loginCidadaoService.criaLoginCidadao(novoCidadao);
-    
+
+        return novoCidadao;
     }
 
 
