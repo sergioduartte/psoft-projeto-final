@@ -11,55 +11,55 @@ import java.util.Date;
 
 @Entity
 public class Agenda {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
-	private Long idCidadao;
+    private Long idCidadao;
 
-	@NotNull
-	private Date data;
-	private Integer dosagem;
+    @NotNull
+    private Date data;
+    private Integer dosagem;
 
-	public Agenda() {
-	}
+    public Agenda() {
+    }
 
-	public Agenda(Date data) {
-		this.data = data;
-	} // TODO throws CadastroAgendaException
+    public Agenda(Date data) {
+        this.data = data;
+    }
 
-	public Agenda(Long idCidadao, Date data, Integer dosagem) throws CadastroAgendamentoException {
-		validaAgendamento(data);
-		this.idCidadao = idCidadao;
-		this.data = data;
-		this.dosagem = dosagem;
-	}
+    public Agenda(Long idCidadao, Date data, Integer dosagem) throws CadastroAgendamentoException {
+        validaAgendamento(data);
+        this.idCidadao = idCidadao;
+        this.data = data;
+        this.dosagem = dosagem;
+    }
 
-	private void validaAgendamento(Date data) throws CadastroAgendamentoException {
-		Date hoje = java.util.Calendar.getInstance().getTime();
+    private void validaAgendamento(Date data) throws CadastroAgendamentoException {
+        Date hoje = java.util.Calendar.getInstance().getTime();
 
-		if (!data.after(hoje)) {
-			throw new CadastroAgendamentoException("Data da vacinacao tem de ser posterior ao dia do agendamento.");
-		}
-	}
+        if (!data.after(hoje)) {
+            throw new CadastroAgendamentoException("Data da vacinacao tem de ser posterior ao dia do agendamento.");
+        }
+    }
 
-	public Long getId() {
-		return this.id;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public Date getHorario() {
-		return data;
-	}
+    public Date getHorario() {
+        return data;
+    }
 
-	public Long getIdCidadao() {
-		return idCidadao;
-	}
+    public Long getIdCidadao() {
+        return idCidadao;
+    }
 
-	public Integer getDosagem() {
-		return dosagem;
-	}
+    public Integer getDosagem() {
+        return dosagem;
+    }
 
-	public boolean possuiAlocacao() {
-		return idCidadao == null;
-	}
+    public boolean possuiAlocacao() {
+        return idCidadao == null;
+    }
 }

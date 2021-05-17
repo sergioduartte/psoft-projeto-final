@@ -4,21 +4,19 @@ import com.ufcg.psoft.projeto_final.models.Cidadao;
 
 public class EsperandoSegundaDose extends Situacao {
 
-	@Override
-	public String habilitaCidadao(Cidadao cidadao) {
-		EnumSituacoes situacao = EnumSituacoes.ESPERANDO_SEGUNDA_DOSE;
-		cidadao.setSituacao(situacao);
-		return ""; // TODO "O cidadão de cpf "+ cidadao.getCpf() + " agora se encontra apto para tomar a segunda dose da vacina";
-	}
+    @Override
+    public void habilitaCidadao(Cidadao cidadao) {
+        EnumSituacoes situacao = EnumSituacoes.ESPERANDO_SEGUNDA_DOSE;
+        cidadao.setSituacao(situacao);
+    }
 
-	@Override
-	public String atualizaSituacao(Cidadao cidadao, Integer dosesNecessarias) {
-		 return ""; // TODO "O cidadão de cpf " + cidadao.getCpf() + " ainda não está apto para tomar a segunda dose da vacina ";
-	}
-	
-	@Override
-    public String toString(){
-        return "Esperando segunda dose";
+    @Override
+    public void atualizaSituacao(Cidadao cidadao, Integer dosesNecessarias) {
+    }
+
+    @Override
+    public String toString() {
+        return "Esperando segunda dose!";
     }
 
 }

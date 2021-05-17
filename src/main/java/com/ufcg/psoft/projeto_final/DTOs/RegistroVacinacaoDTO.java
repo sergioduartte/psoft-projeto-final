@@ -3,14 +3,14 @@ package com.ufcg.psoft.projeto_final.DTOs;
 import java.sql.Date;
 
 public class RegistroVacinacaoDTO {
-	
-	private Long idCidadao;
 
-    private Long idLote;
+    private final Long idCidadao;
 
-    private Date dataAplicacao;
+    private final Long idLote;
 
-    public RegistroVacinacaoDTO(Long cpfCidadao, Long idVacina, Date dataAplicacao){
+    private final Date dataAplicacao;
+
+    public RegistroVacinacaoDTO(Long cpfCidadao, Long idVacina, Date dataAplicacao) {
         this.idCidadao = cpfCidadao;
         this.idLote = idVacina;
         this.dataAplicacao = dataAplicacao;

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
 public class VacinaNaoEncontrada extends Exception {
-	
+
     static final String VACINA_NAO_ENCONTRADA = "A vacina com o ID %s não foi encontrada.";
 
     public VacinaNaoEncontrada(Long idVacina) {

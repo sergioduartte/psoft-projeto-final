@@ -1,11 +1,9 @@
 package com.ufcg.psoft.projeto_final.DTOs;
 
-import java.util.List;
-
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
+import java.util.List;
 
 public class CidadaoDTO {
 
@@ -45,12 +43,12 @@ public class CidadaoDTO {
     }
 
     public String getProfissao() {
-            return profissao;
-        }
+        return profissao;
+    }
 
-        public List<String> getComorbidades() {
-            return comorbidades;
-        }
+    public List<String> getComorbidades() {
+        return comorbidades;
+    }
 
     public String getEndereco() {
         return endereco;
@@ -76,5 +74,7 @@ public class CidadaoDTO {
         return telefone;
     }
 
-    public String getSenha() { return this.senha; }
+    public String getSenha() {
+        return this.senha;
+    }
 }
