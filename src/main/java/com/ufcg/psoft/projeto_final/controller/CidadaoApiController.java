@@ -33,9 +33,9 @@ public class CidadaoApiController {
 
     @ApiOperation(value = "Cadastra um Cidadao")
     @PostMapping("/cidadao")
-    public ResponseEntity<Login> cidadao(@RequestBody CidadaoDTO cidadaoDTO) throws CidadaoCadastroInvalido, LoginTipoInvalido {
-        Login loginCidadao = cidadaoService.saveCidadao(cidadaoDTO);
-        return new ResponseEntity<Login>(loginCidadao, HttpStatus.OK);
+    public ResponseEntity<Cidadao> cidadao(@RequestBody CidadaoDTO cidadaoDTO) throws CidadaoCadastroInvalido, LoginTipoInvalido {
+        Cidadao cidadao = cidadaoService.saveCidadao(cidadaoDTO);
+        return new ResponseEntity<Cidadao>(cidadao, HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Altera o cadastro de um Cidadao a partir de seu CPF")

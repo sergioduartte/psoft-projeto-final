@@ -59,14 +59,15 @@ public class Cidadao {
     private EnumSituacoes situacao;
     private Long idVacina;
     private Long idUltimoAgendamento;
+    private String senha;
 
     public Cidadao() {}
 
     public Cidadao(String nome, String endereco, Long cpf, String cartaoSus, String email, Date dataNascimento,
-                   String telefone, String profissao, List<String> comorbidades) throws CadastroCidadaoException {
+                   String telefone, String profissao, List<String> comorbidades, String senha) throws CadastroCidadaoException {
 
         validaCidadao(nome, endereco, cpf, cartaoSus, email, dataNascimento,
-                telefone, profissao, comorbidades);
+                telefone, profissao, comorbidades, senha);
         this.nome = nome;
         this.endereco = endereco;
         this.cpf = cpf;
@@ -77,10 +78,11 @@ public class Cidadao {
         this.profissao = profissao;
         this.comorbidades = comorbidades;
         this.situacao = EnumSituacoes.NAO_APTO;
+        this.senha = senha;
     }
 
     private void validaCidadao(String nome, String endereco, Long cpf, String cartaoSus, String email, Date dataNascimento,
-                               String telefone, String profissao, List<String> comorbidades) throws CadastroCidadaoException {
+                               String telefone, String profissao, List<String> comorbidades, String senha) throws CadastroCidadaoException {
 
         // TODO nome nao pode ser vazio ou menor que 4 letras
         if (nome.length() < 5 || nome.trim().isEmpty()) {
@@ -112,9 +114,9 @@ public class Cidadao {
         if (!dataNascimento.before(hoje)) {
             throw new CadastroCidadaoException( "Data de Nascimento deve ser apos o dia corrente.");
         }
-        // TODO telefone tem de ter 13 digitos// TODO cartaoSus tem de ter 15 digitos
-        if (telefone.length() < 13) {
-            throw new CadastroCidadaoException ("O numero do Telefone esta fora do formato \"5583999998888\".");
+        // TODO telefone tem de ter 11 digitos// TODO cartaoSus tem de ter 15 digitos
+        if (telefone.length() < 11) {
+            throw new CadastroCidadaoException ("O numero do Telefone esta fora do formato \"83999998888\".");
         }
 
         // TODO profissao nao pode ser vazio
@@ -124,6 +126,12 @@ public class Cidadao {
         // TODO comorbidades pode ser vazio, não nulo
         if (comorbidades == null) {
             throw new CadastroCidadaoException ("Comorbidades nao pode ser nula.");
+        }
+        // TODO senha deve ter letras e numeros
+        Pattern pSenha = Pattern.compile("[\\w\\d]{8}");
+        Matcher matcher = pSenha.matcher(senha);
+        if (!matcher.matches()){
+            throw new CadastroCidadaoException( "Formato da senha deve ter 8 caracteres e ser formado por letras e numeros");
         }
     }
 
@@ -181,7 +189,7 @@ public class Cidadao {
 
     public void setUltimoAgendamento(Long idUltimoAgendamento) { this.idUltimoAgendamento = idUltimoAgendamento; }
 
-    public Long getCpf() {
-        return cpf;
-    }
+    public Long getCpf() { return cpf; }
+
+    public String getSenha() { return this.senha; }
 }

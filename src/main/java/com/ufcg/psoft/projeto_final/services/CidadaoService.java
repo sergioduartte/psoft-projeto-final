@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CidadaoService {
 	
-	public Login saveCidadao(CidadaoDTO cidadaoDTO) throws LoginTipoInvalido, CidadaoCadastroInvalido;
+	public Cidadao saveCidadao(CidadaoDTO cidadaoDTO) throws LoginTipoInvalido, CidadaoCadastroInvalido;
 
 	public Cidadao getCidadao(Long cpf);
 

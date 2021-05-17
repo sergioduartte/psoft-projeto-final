@@ -17,13 +17,9 @@ public class CidadaoDTO {
     private String endereco;
 
     @ApiModelProperty(example = "00000000000")
-    @Column(length = 11)
-    @Size(min = 11, max = 11)
     private Long cpf;
 
     @ApiModelProperty(example = "294867205917493")
-    @Column(length = 15)
-    @Size(min = 15, max = 15)
     private String cartaoSus;
 
     @ApiModelProperty(example = "jose123@gmail.com")
@@ -34,8 +30,6 @@ public class CidadaoDTO {
     private String dataNascimento;
 
     @ApiModelProperty(example = "83998115533")
-    @Column(length = 11)
-    @Size(min = 11, max = 11)
     private String telefone;
 
     @ApiModelProperty(example = "Estudante")
@@ -43,6 +37,9 @@ public class CidadaoDTO {
 
     @ApiModelProperty(example = "[\"diabetes\", \"câncer\"]")
     private List<String> comorbidades;
+
+    @ApiModelProperty(example = "1234abcd")
+    private String senha;
 
     public String getNomeCompleto() {
         return nomeCompleto;
@@ -79,4 +76,6 @@ public class CidadaoDTO {
     public String getTelefone() {
         return telefone;
     }
+
+    public String getSenha() { return this.senha; }
 }

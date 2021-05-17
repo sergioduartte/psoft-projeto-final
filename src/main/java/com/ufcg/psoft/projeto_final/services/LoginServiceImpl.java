@@ -10,14 +10,9 @@ import com.ufcg.psoft.projeto_final.DTOs.*;
 import com.ufcg.psoft.projeto_final.entidades.*;
 import com.ufcg.psoft.projeto_final.erro.*;
 import com.ufcg.psoft.projeto_final.repository.*;
-import com.ufcg.psoft.projeto_final.util.LoginUtil;
-//import com.ufcg.psoft.projeto_final.web_security.AuthTokenService;
 
-/**
- * falta fazer o  e autenticacao
- * @author mort4
- *
- */
+
+
 @Service
 public class LoginServiceImpl implements LoginService {
 
@@ -34,10 +29,10 @@ public class LoginServiceImpl implements LoginService {
 //    AuthTokenService authTokenService;
 
     @Override
-    public Login criaLogin(Long login, String loginTipo) throws LoginTipoInvalido {
+    public Login criaLogin(Long login, String senha, String loginTipo) throws LoginTipoInvalido {
         
     	LoginTipo loginTipoEncontrado = loginTipoService.findByLoginTipo(loginTipo);
-        Login novoLogin = new Login(login.toString(), LoginUtil.geraSenha(), loginTipoEncontrado);
+        Login novoLogin = new Login(login.toString(), senha, loginTipoEncontrado);
         loginRepository.save(novoLogin);
         
         return novoLogin;
