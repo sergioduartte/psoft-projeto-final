@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/*/funcionario/aprova_cadastro/**").hasRole("ADMIN")
                 .antMatchers("/*/funcionario/reprova_cadastro/**").hasRole("ADMIN")
                 .antMatchers("/*/funcionario/**").hasRole("FUNCIONARIO")
+                .antMatchers("/*/vacina/**").hasRole("ADMIN")
                 .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
                 //.anyRequest().authenticated()
                 .and()

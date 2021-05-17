@@ -21,7 +21,13 @@ public class VacinaServiceImpl implements VacinaService {
 
 	@Override
 	public Vacina saveVacina(VacinaDTO vacinaDTO) throws VacinaCadastroInvalido {
-		//TODO Checar se a vacina ja existe
+		List<Vacina> vacinas = getVacina();
+		for (Vacina v : vacinas) {
+			if (v.getFabricante().equals(vacinaDTO.getFabricante())) {
+				throw new VacinaCadastroInvalido("Vacina do fabricante informado ja cadastrada.");
+			}
+		}
+
 		Vacina novaVacina;
 		try {
 			novaVacina = new Vacina(vacinaDTO.getFabricante(), vacinaDTO.getDosesNecessarias(), vacinaDTO.getIntervaloDoses());
@@ -38,12 +44,12 @@ public class VacinaServiceImpl implements VacinaService {
 	}
 
 	@Override
-	public Optional<Vacina> getVacinaById(Long id) throws VacinaNaoEncontrada {
+	public Vacina getVacinaById(Long id) throws VacinaNaoEncontrada {
 		Optional<Vacina> vacinaEncontrada = vacinaRepository.findById(id);
 		if (!vacinaEncontrada.isPresent()){
 			throw new VacinaNaoEncontrada(id);
 		}
-		return vacinaRepository.findById(id);
+		return vacinaRepository.findById(id).get();
 	}
 }
 

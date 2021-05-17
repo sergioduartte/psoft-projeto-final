@@ -22,22 +22,19 @@ public class VacinaController {
 	@Autowired
 	VacinaService vacinaService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_FUNCIONARIO')")
+
     @GetMapping("/vacina")
     public ResponseEntity<List<Vacina>> getVacinas() {
         List<Vacina> vacinas = vacinaService.getVacina();
         return new ResponseEntity<List<Vacina>>(vacinas, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_FUNCIONARIO')")
     @GetMapping("/vacina/{id}")
     public ResponseEntity<Vacina> getVacinaById(@RequestParam Long id) throws VacinaNaoEncontrada {
-        Optional<Vacina> optionalVacina = vacinaService.getVacinaById(id);
-        Vacina vacina = optionalVacina.get();
+        Vacina vacina = vacinaService.getVacinaById(id);
         return new ResponseEntity<Vacina>(vacina, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/vacina")
     public ResponseEntity<Vacina> vacina(@RequestBody VacinaDTO vacinaDTO) throws VacinaCadastroInvalido {
         Vacina novaVacina = vacinaService.saveVacina(vacinaDTO);

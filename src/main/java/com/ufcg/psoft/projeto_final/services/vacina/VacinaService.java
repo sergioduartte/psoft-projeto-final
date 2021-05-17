@@ -14,5 +14,5 @@ import java.util.Optional;
 public interface VacinaService {
 	Vacina saveVacina(VacinaDTO vacinaDto) throws VacinaCadastroInvalido;
 	List<Vacina> getVacina();
-	Optional<Vacina> getVacinaById(Long id) throws VacinaNaoEncontrada;
+	Vacina getVacinaById(Long id) throws VacinaNaoEncontrada;
 }
