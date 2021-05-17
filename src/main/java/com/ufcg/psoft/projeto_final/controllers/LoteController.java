@@ -20,21 +20,18 @@ public class LoteController {
     @Autowired
     LoteService loteService;
 
-    @PreAuthorize("hasRole('ROLE_FUNCIONARIO')")
     @PostMapping("/lote")
     public ResponseEntity<Lote> addLote(@RequestBody LoteDTO loteDTO) throws Exception { //TODO passei meia hora tentando solucionar isso, ta chiando pra deixar com Exception, wtf
         Lote novoLote = loteService.saveLote(loteDTO);
         return new ResponseEntity<Lote>(novoLote, HttpStatus.CREATED);
     }
-    
-    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_FUNCIONARIO')")
+
     @GetMapping("/lote/{id}")
     public ResponseEntity<Lote> getLoteById(@RequestBody Long id) throws Exception {
         Lote vacinaEncontrada = loteService.getLoteById(id);
         return new ResponseEntity<Lote>(vacinaEncontrada, HttpStatus.OK);
     }
-    
-    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_FUNCIONARIO')")
+
     @GetMapping("/lote")
     public ResponseEntity<List<Lote>> getAllLoteVacina() {
         List<Lote> todosOsLotes = loteService.getLote();
