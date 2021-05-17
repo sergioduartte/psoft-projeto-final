@@ -6,8 +6,8 @@ import com.ufcg.psoft.projeto_final.entidades.*;
 import com.ufcg.psoft.projeto_final.entidades.situacoes.EnumSituacoes;
 import com.ufcg.psoft.projeto_final.erro.AgendamentoCadastroInvalido;
 import com.ufcg.psoft.projeto_final.erro.CidadaoCadastroInvalido;
-import com.ufcg.psoft.projeto_final.erro.ErroCidadao;
 import com.ufcg.psoft.projeto_final.erro.LoginTipoInvalido;
+import com.ufcg.psoft.projeto_final.exceptions.CidadaoNaoEncontradoException;
 import com.ufcg.psoft.projeto_final.services.AgendaService;
 import com.ufcg.psoft.projeto_final.services.AgendaServiceImpl;
 import com.ufcg.psoft.projeto_final.services.CidadaoService;
@@ -25,7 +25,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class CidadaoApiController {
+public class CidadaoController {
 
     @Autowired
     private CidadaoService cidadaoService;
@@ -40,10 +40,10 @@ public class CidadaoApiController {
 
     @ApiOperation(value = "Altera o cadastro de um Cidadao a partir de seu CPF")
     @PostMapping("/cidadao/cadastro")
-    public ResponseEntity<?> editaCadastro(@RequestParam Long cpf, @RequestBody AtualizaCidadaoDTO atualizaCidadaoDTO){
+    public ResponseEntity<?> editaCadastro(@RequestParam Long cpf, @RequestBody AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException {
         Cidadao cidadao = cidadaoService.getCidadao(cpf);
         if(cidadao == null) {
-            return ErroCidadao.cidadaoInexistente(cpf);
+            //return ErroCidadao.cidadaoInexistente(cpf);
         }
 
         return new ResponseEntity<>(cidadaoService.atualizaCadastro(cpf, atualizaCidadaoDTO), HttpStatus.OK);
@@ -51,10 +51,10 @@ public class CidadaoApiController {
 
     @ApiOperation(value = "Retorna a situacao de um Cidadao a partir de seu CPF")
     @GetMapping("/cidadao/consulta_situacao")
-    public ResponseEntity<?> getSituacao(@RequestParam Long cpf){
+    public ResponseEntity<?> getSituacao(@RequestParam Long cpf) throws CidadaoNaoEncontradoException {
     	Cidadao cidadao = cidadaoService.getCidadao(cpf);
     	if(cidadao != null) {
-    		return ErroCidadao.cidadaoInexistente(cpf);
+    		//return ErroCidadao.cidadaoInexistente(cpf);
     	}
     	EnumSituacoes situacao = cidadao.getSituacao();
     	return new ResponseEntity<>(situacao, HttpStatus.OK);

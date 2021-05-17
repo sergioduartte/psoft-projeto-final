@@ -4,6 +4,7 @@ import com.ufcg.psoft.projeto_final.DTOs.*;
 import com.ufcg.psoft.projeto_final.entidades.*;
 import com.ufcg.psoft.projeto_final.erro.*;
 import com.ufcg.psoft.projeto_final.exceptions.CadastroCidadaoException;
+import com.ufcg.psoft.projeto_final.exceptions.CidadaoNaoEncontradoException;
 import com.ufcg.psoft.projeto_final.repository.*;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -54,19 +55,16 @@ public class CidadaoServiceImpl implements CidadaoService {
 
 
     @Override
-    public Cidadao getCidadao(Long cpf) {
-        return cidadaoRepository.findById(cpf).get(); //TODO REFATORAR!!
+    public Cidadao getCidadao(Long cpf) throws CidadaoNaoEncontradoException {
+        Cidadao c = cidadaoRepository.findById(cpf).get();
+        if( c == null){
+            throw new CidadaoNaoEncontradoException("");
+        }
+        return c;
     }
 
-//    @Override
-//    public EnumSituacoes getSituacao(Long cpf) {
-//        Cidadao cidadao = this.getCidadao(cpf);
-//        EnumSituacoes situacao = cidadao.getSituacao();
-//        return situacao;
-//    }
-
     @Override
-    public Cidadao atualizaCadastro(Long cpf, AtualizaCidadaoDTO atualizaCidadaoDTO) {
+    public Cidadao atualizaCadastro(Long cpf, AtualizaCidadaoDTO atualizaCidadaoDTO) throws CidadaoNaoEncontradoException {
 
         Cidadao cidadao = this.getCidadao(cpf);
 
