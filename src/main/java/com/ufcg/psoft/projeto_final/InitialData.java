@@ -1,9 +1,9 @@
 package com.ufcg.psoft.projeto_final;
 
-import com.ufcg.psoft.projeto_final.entidades.Login;
-import com.ufcg.psoft.projeto_final.entidades.LoginTipo;
-import com.ufcg.psoft.projeto_final.repository.LoginRepository;
-import com.ufcg.psoft.projeto_final.repository.LoginTipoRepository;
+import com.ufcg.psoft.projeto_final.models.Login;
+import com.ufcg.psoft.projeto_final.models.LoginTipo;
+import com.ufcg.psoft.projeto_final.repositories.LoginRepository;
+import com.ufcg.psoft.projeto_final.repositories.LoginTipoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

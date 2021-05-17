@@ -1,8 +1,8 @@
 package com.ufcg.psoft.projeto_final.web_security;
 
 
-import com.ufcg.psoft.projeto_final.entidades.Login;
-import com.ufcg.psoft.projeto_final.services.LoginService;
+import com.ufcg.psoft.projeto_final.models.Login;
+import com.ufcg.psoft.projeto_final.services.login.LoginService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
