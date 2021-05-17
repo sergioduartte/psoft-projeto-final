@@ -1,14 +1,13 @@
 package com.ufcg.psoft.projeto_final.web_security;
 
-import com.ufcg.psoft.projeto_final.entidades.Login;
-import com.ufcg.psoft.projeto_final.services.LoginService;
+import com.ufcg.psoft.projeto_final.models.Login;
+import com.ufcg.psoft.projeto_final.services.login.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service

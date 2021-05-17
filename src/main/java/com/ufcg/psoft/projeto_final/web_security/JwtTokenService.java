@@ -1,11 +1,9 @@
 package com.ufcg.psoft.projeto_final.web_security;
 
 import com.ufcg.psoft.projeto_final.DTOs.LoginDTO;
-import com.ufcg.psoft.projeto_final.entidades.Login;
-import com.ufcg.psoft.projeto_final.repository.LoginRepository;
-import com.ufcg.psoft.projeto_final.services.LoginResponse;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
+import com.ufcg.psoft.projeto_final.models.Login;
+import com.ufcg.psoft.projeto_final.repositories.LoginRepository;
+import com.ufcg.psoft.projeto_final.services.login.LoginResponse;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
